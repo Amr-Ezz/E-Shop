@@ -7,7 +7,7 @@ display: flex;
 flex-direction: row;
 justify-content: space-between;
 align-items: center;
-padding: 1rem;
+border-bottom: 2px solid #eee;
 `
 const Logo = styled.h1`
 font-size: 30px;
@@ -38,11 +38,8 @@ background-color: #fff;
 font-weight: bold;
 font-size: 20px;
 cursor: pointer;
-
 img {
   width: 24px;
-
-
 }
 `
 const ButtonDiv = styled.div`
