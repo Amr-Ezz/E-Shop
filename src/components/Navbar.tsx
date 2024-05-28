@@ -1,7 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 
-
+const NavbarContainer = styled.div`
+width: 100%;
+margin: 0;
+padding: 0;
+`
 const HeaderStyling = styled.header`
 display: flex;
 flex-direction: row;
@@ -11,7 +15,7 @@ border-bottom: 2px solid #eee;
 `
 const Logo = styled.h1`
 font-size: 30px;
-fonr-weight: bold;
+font-weight: bold;
 span {
   color: #E08CFF;
 }
@@ -62,6 +66,7 @@ border-left: 1px solid #8B8B8B;
 `
 const Navbar: React.FC = () => {
   return (
+    <NavbarContainer>
     <HeaderStyling>
           <Logo><span>Go</span> Shop</Logo>
           <Nav>
@@ -84,6 +89,8 @@ const Navbar: React.FC = () => {
          
 
     </HeaderStyling>
+    </NavbarContainer>
+
     
   )
 }
