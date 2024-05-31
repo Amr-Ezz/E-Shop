@@ -23,10 +23,10 @@ const FontSection = styled.div`
   p {
     font-size: 24px;
     margin: 8px 0;
-    color: #8b8b8b;
+    color: ${props => props.theme.colors.grey};
   }
   button {
-    color: #000;
+    color: ${props => props.theme.colors.black};
     background-color: #e08cff;
     border-radius: 50px;
     width: 200px;
@@ -36,7 +36,7 @@ const FontSection = styled.div`
     margin-top: 16px;
     cursor: pointer;
     &:hover {
-      background-color: white;
+      background-color: ${props => props.theme.colors.white};
     }
   }
 `;

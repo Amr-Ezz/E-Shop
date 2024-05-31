@@ -17,7 +17,7 @@ const Logo = styled.h1`
 font-size: 30px;
 font-weight: bold;
 span {
-  color: #E08CFF;
+  color: ${props => props.theme.colors.primary};
 }
 ` 
 const Nav = styled.nav`
@@ -31,14 +31,14 @@ a {
 
   cursor: pointer;
   &:hover {
-      color: #E08CFF;
+      color: ${props => props.theme.colors.primary};
 
   }
 }
 `
 const Button = styled.button`
 border-style: none;
-background-color: #fff;
+background-color: ${props => props.theme.colors.white};
 font-weight: bold;
 font-size: 20px;
 cursor: pointer;
@@ -62,7 +62,7 @@ img {
 const VerticalLine = styled.hr`
 border: none;
 height: 20px;
-border-left: 1px solid #8B8B8B;
+border-left: 1px solid ${props => props.theme.colors.grey};
 `
 const Navbar: React.FC = () => {
   return (
