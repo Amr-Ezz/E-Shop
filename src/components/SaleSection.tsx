@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 
 const MainSection = styled.div`
@@ -86,8 +87,64 @@ justify-content: space-between;
     background-color: #05697C;
   }
 `;
+const HighlightedButtons = styled.div`
+display: flex;
+flex-direction: row;
+padding-top: 4rem; 
+gap: 10px;
+justify-content: space-between;
+align-items: center;
+// button:nth-child(1) {
+//   width: 24px;
+//   height: 12px;
+//   border-radius: 100px;
+//   border-style: none;
+//   background-color: ${props => props.theme.colors.primary}
+// }
+// button:nth-child(2) {
+//   width: 12px;
+//   height: 12px;
+//   border-radius: 100%;
+//   background-color: ${props => props.theme.colors.grey};
+//   border-style: none;
+
+// }
+// button:nth-child(3) {
+//   border-style: none;
+//   width: 12px;
+//   height: 12px;
+//   border-radius: 100%;
+//   background-color: ${props => props.theme.colors.grey};
+// }
+// button:nth-child(4) {
+//   width: 12px;
+//   height: 12px;
+//   border-radius: 100%;
+//   border-style: none;
+//   background-color: ${props => props.theme.colors.grey};
+// } 
+
+`
+const StyledButton = styled.button<StyledButtonProps>`
+width: ${(props) => (props.clicked ? '24px' : '12px')};
+height: 12px;
+border-radius: ${(props) => (props.clicked ? '100px' : '100%')};
+border-style: none;
+background-color: ${(props) => (props.clicked ? props.theme.colors.primary : props.theme.colors.grey)};
+cursor: pointer;
+
+`
+interface StyledButtonProps {
+  clicked: boolean;
+}
+
 
 const SaleSection = () => {
+  const [clickedButton, setClickedButton] = useState([true, false, false, false]);
+  const handleClick = (index: number) => {
+    const newClickedButtons = clickedButton.map((_, i) => i === index);
+    setClickedButton(newClickedButtons);
+  }
   return (
     <MainSection>
       <h1>Flash Sale</h1>
@@ -150,6 +207,16 @@ const SaleSection = () => {
           </PriceHolder>
         </Card>
       </GridContainer>
+      <HighlightedButtons>
+        {clickedButton.map((clicked, index) => (
+          <StyledButton key={index} clicked={clicked} onClick={() => handleClick(index)}></StyledButton>
+        ))}
+        {/* <StyledButton clicked={clicked} onClick={handleClick}></StyledButton>
+        <StyledButton clicked={clicked} onClick={handleClick}></StyledButton>
+        <StyledButton clicked={clicked} onClick={handleClick}></StyledButton>
+        <StyledButton clicked={clicked} onClick={handleClick}></StyledButton> */}
+
+      </HighlightedButtons>
     </MainSection>
   );
 };
