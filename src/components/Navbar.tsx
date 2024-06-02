@@ -9,6 +9,7 @@ padding: 10px;
 const HeaderStyling = styled.header`
 display: flex;
 flex-direction: row;
+padding-left: 4rem;
 justify-content: space-between;
 align-items: center;
 border-bottom: 2px solid #eee;

@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import SaleSection from "./components/SaleSection";
 import { theme } from "./Theme/themeContext";
 import AdsSection from "./components/AdsSection";
+import CommentsSection from "./components/CommentsSection";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <HeroSection />
         <SaleSection />
         <AdsSection />
+        <CommentsSection />
       </div>
     </ThemeProvider>
   );
