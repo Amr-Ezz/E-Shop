@@ -6,6 +6,7 @@ import SaleSection from "./components/SaleSection";
 import { theme } from "./Theme/themeContext";
 import AdsSection from "./components/AdsSection";
 import CommentsSection from "./components/CommentsSection";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <SaleSection />
         <AdsSection />
         <CommentsSection />
+        <Footer />
       </div>
     </ThemeProvider>
   );

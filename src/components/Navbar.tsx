@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const NavbarContainer = styled.div`
-width: 100%;
+width: 1340px;
 margin: 0;
 padding: 10px;
 `

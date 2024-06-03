@@ -7,7 +7,6 @@ const HeroDiv = styled.div`
   gap: 2rem;
   align-items: center;
   padding: 2rem;
-  width: 100%;
 `;
 const FontSection = styled.div`
   display: flex;
@@ -23,10 +22,10 @@ const FontSection = styled.div`
   p {
     font-size: 24px;
     margin: 8px 0;
-    color: ${props => props.theme.colors.grey};
+    color: ${(props) => props.theme.colors.grey};
   }
   button {
-    color: ${props => props.theme.colors.black};
+    color: ${(props) => props.theme.colors.black};
     background-color: #e08cff;
     border-radius: 50px;
     width: 200px;
@@ -36,9 +35,9 @@ const FontSection = styled.div`
     margin-top: 16px;
     cursor: pointer;
     &:hover {
-      background-color: ${props => props.theme.colors.white};
-      border: 1px solid ${props => props.theme.colors.primary};
-      color: ${props => props.theme.colors.primary};
+      background-color: ${(props) => props.theme.colors.white};
+      border: 1px solid ${(props) => props.theme.colors.primary};
+      color: ${(props) => props.theme.colors.primary};
     }
   }
 `;
@@ -50,13 +49,13 @@ overflow: hidden;
 white-space: nowrap;
 position relative;
 border: 1px solid black;
-`
+`;
 const TextBox = styled.div`
-display: inline-block;
-padding: 10px;
-white-space: nowrap;
-animation: scroll 10s linear infinite;
-@keyframes scroll {
+  display: inline-block;
+  padding: 10px;
+  white-space: nowrap;
+  animation: scroll 10s linear infinite;
+  @keyframes scroll {
     0% {
       transform: translateX(0);
     }
@@ -64,40 +63,38 @@ animation: scroll 10s linear infinite;
       transform: translateX(-20%);
     }
   }
-`
+`;
 const ContainerDiv = styled.div`
-width: 100%;
-display: flex;
-flex-direction: column;
-align-items: flex-start;
-justify-content: space-between;`
+  width: 1350px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+
+`;
 
 const HeroSection = () => {
   return (
     <ContainerDiv>
- <HeroDiv>
-      <FontSection>
-        <h1>New Summer Collection</h1>
-        <p>Shop the best clothes in the world</p>
-        <button>SHOP NOW</button>
-      
-      </FontSection>
-      <div>
-        <img src="/Rectangle 3.png" alt="Model Image" />
-      </div>
-     
-     
-    </HeroDiv>
-    <FooterHeroSection>
+      <HeroDiv>
+        <FontSection>
+          <h1>New Summer Collection</h1>
+          <p>Shop the best clothes in the world</p>
+          <button>SHOP NOW</button>
+        </FontSection>
+        <div>
+          <img src="/Rectangle 3.png" alt="Model Image" />
+        </div>
+      </HeroDiv>
+      <FooterHeroSection>
         <TextBox>
-        .Customer Support. .Customer Support. .Customer Support. .Customer Support. .Customer Support. .Customer Support.
-  .Customer Support. .Customer Support. .Customer Support. .Customer Support. .Customer Support. .Customer Support.
+          .Customer Support. .Customer Support. .Customer Support. .Customer
+          Support. .Customer Support. .Customer Support. .Customer Support.
+          .Customer Support. .Customer Support. .Customer Support. .Customer
+          Support. .Customer Support.
         </TextBox>
-
       </FooterHeroSection>
     </ContainerDiv>
-   
-    
   );
 };
 
