@@ -9,7 +9,7 @@ const AdsMain = styled.div`
 `;
 const ImageDiv = styled.div`
 position: relative;
-
+  
 img {
     width: 450px;
     height: 300px;
