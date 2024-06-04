@@ -34,6 +34,8 @@ const FontSection = styled.div`
     font-size: 24px;
     margin-top: 16px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+
     &:hover {
       background-color: ${(props) => props.theme.colors.white};
       border: 1px solid ${(props) => props.theme.colors.primary};

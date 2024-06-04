@@ -5,16 +5,14 @@ const AdsMain = styled.div`
   width: fit-content;
   height: 300px;
   padding-top: 1rem;
-
 `;
 const ImageDiv = styled.div`
-position: relative;
-  
-img {
+  position: relative;
+  img {
     width: 450px;
     height: 300px;
-}
-h1 {
+  }
+  h1 {
     position: absolute;
     width: 151px;
     height: 96px;
@@ -24,8 +22,8 @@ h1 {
     text-align: center;
     color: white;
     top: 102px;
-    left: 129px;    
-}
+    left: 129px;
+  }
 `;
 
 const AdsSection = () => {

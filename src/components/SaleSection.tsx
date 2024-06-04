@@ -32,7 +32,7 @@ const GridContainer = styled.div`
 const Card = styled.div`
   display: flex;
   flex-direction: column;
-  border: 1px solid ${props => props.theme.colors.black};
+  border: 1px solid ${(props) => props.theme.colors.black};
   padding: 0 1rem;
   align-items: flex-start;
   justify-content: space-around;
@@ -56,18 +56,19 @@ const PriceHolder = styled.div`
     color: ${(props) => props.theme.colors.primary};
     border: 1px solid ${(props) => props.theme.colors.primary};
     cursor: pointer;
+    transition: background-color 0.3s ease;
     &:hover {
       background-color: ${(props) => props.theme.colors.primary};
-      color: ${(props) => props.theme.colors.white}
+      color: ${(props) => props.theme.colors.white};
     }
   }
 `;
 const CircleDiv = styled.div`
-display: flex;
-flex-direction: row;
-width: 108px;
-height: 28px;
-justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  width: 108px;
+  height: 28px;
+  justify-content: space-between;
 
   div:nth-child(1) {
     width: 28px;
@@ -79,45 +80,47 @@ justify-content: space-between;
     width: 28px;
     height: 28px;
     border-radius: 100%;
-    background-color: #FAC585;
+    background-color: #fac585;
   }
   div:nth-child(3) {
     width: 28px;
     height: 28px;
     border-radius: 100%;
-    background-color: #05697C;
+    background-color: #05697c;
   }
 `;
 const HighlightedButtons = styled.div`
-display: flex;
-flex-direction: row;
-padding-top: 4rem; 
-gap: 10px;
-justify-content: space-between;
-align-items: center;
-
-
-`
+  display: flex;
+  flex-direction: row;
+  padding-top: 4rem;
+  gap: 10px;
+  justify-content: space-between;
+  align-items: center;
+`;
 const StyledButton = styled.button<StyledButtonProps>`
-width: ${(props) => (props.clicked ? '24px' : '12px')};
-height: 12px;
-border-radius: ${(props) => (props.clicked ? '100px' : '100%')};
-border-style: none;
-background-color: ${(props) => (props.clicked ? props.theme.colors.primary : props.theme.colors.grey)};
-cursor: pointer;
-
-`
+  width: ${(props) => (props.clicked ? "24px" : "12px")};
+  height: 12px;
+  border-radius: ${(props) => (props.clicked ? "100px" : "100%")};
+  border-style: none;
+  background-color: ${(props) =>
+    props.clicked ? props.theme.colors.primary : props.theme.colors.grey};
+  cursor: pointer;
+`;
 interface StyledButtonProps {
   clicked: boolean;
 }
 
-
 const SaleSection = () => {
-  const [clickedButton, setClickedButton] = useState([true, false, false, false]);
+  const [clickedButton, setClickedButton] = useState([
+    true,
+    false,
+    false,
+    false,
+  ]);
   const handleClick = (index: number) => {
     const newClickedButtons = clickedButton.map((_, i) => i === index);
     setClickedButton(newClickedButtons);
-  }
+  };
   return (
     <MainSection>
       <h1>Flash Sale</h1>
@@ -182,13 +185,16 @@ const SaleSection = () => {
       </GridContainer>
       <HighlightedButtons>
         {clickedButton.map((clicked, index) => (
-          <StyledButton key={index} clicked={clicked} onClick={() => handleClick(index)}></StyledButton>
+          <StyledButton
+            key={index}
+            clicked={clicked}
+            onClick={() => handleClick(index)}
+          ></StyledButton>
         ))}
         {/* <StyledButton clicked={clicked} onClick={handleClick}></StyledButton>
         <StyledButton clicked={clicked} onClick={handleClick}></StyledButton>
         <StyledButton clicked={clicked} onClick={handleClick}></StyledButton>
         <StyledButton clicked={clicked} onClick={handleClick}></StyledButton> */}
-
       </HighlightedButtons>
     </MainSection>
   );
