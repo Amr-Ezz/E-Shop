@@ -84,11 +84,11 @@ const Navbar: React.FC = () => {
         </Nav>
         <ButtonDiv>
           <img
-            src="public/icons/magnifying-glass-solid.svg"
+            src="/icons/magnifying-glass-solid.svg"
             alt=" Search Icon"
           />
           <VerticalLine />
-          <img src="public/icons/user-regular.svg" alt="User img" />
+          <img src="/icons/user-regular.svg" alt="User img" />
           <Button
             onClick={() => {
               setIsRegister(false);

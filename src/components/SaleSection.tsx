@@ -97,18 +97,22 @@ const HighlightedButtons = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
+interface StyledButtonProps {
+  $clicked: boolean;
+};
+
 const StyledButton = styled.button<StyledButtonProps>`
-  width: ${(props) => (props.clicked ? "24px" : "12px")};
+  width: ${(props) => (props.$clicked ? "24px" : "12px")};
   height: 12px;
-  border-radius: ${(props) => (props.clicked ? "100px" : "100%")};
+  border-radius: ${(props) => (props.$clicked ? "100px" : "100%")};
   border-style: none;
   background-color: ${(props) =>
-    props.clicked ? props.theme.colors.primary : props.theme.colors.grey};
+    props.$clicked ? props.theme.colors.primary : props.theme.colors.grey};
   cursor: pointer;
+  transition: width 0.3s, height 0.3s;
+
 `;
-interface StyledButtonProps {
-  clicked: boolean;
-}
+
 
 const SaleSection = () => {
   const [clickedButton, setClickedButton] = useState([
@@ -187,14 +191,10 @@ const SaleSection = () => {
         {clickedButton.map((clicked, index) => (
           <StyledButton
             key={index}
-            clicked={clicked}
+            $clicked={clicked}
             onClick={() => handleClick(index)}
-          ></StyledButton>
+          />
         ))}
-        {/* <StyledButton clicked={clicked} onClick={handleClick}></StyledButton>
-        <StyledButton clicked={clicked} onClick={handleClick}></StyledButton>
-        <StyledButton clicked={clicked} onClick={handleClick}></StyledButton>
-        <StyledButton clicked={clicked} onClick={handleClick}></StyledButton> */}
       </HighlightedButtons>
     </MainSection>
   );

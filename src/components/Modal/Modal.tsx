@@ -41,6 +41,7 @@ const Modal: React.FC<ModalProps> = ({ show, onClose, children }) => {
     <ModalBackground onClick={onClose}>
       <ModalWrapper onClick={(e) => e.stopPropagation()}>
         <CloseButton onClick={onClose}>&times;</CloseButton>
+
         {children}
       </ModalWrapper>
     </ModalBackground>
