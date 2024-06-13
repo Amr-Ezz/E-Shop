@@ -27,6 +27,7 @@ const ImageDiv = styled.div`
 `;
 
 const AdsSection = () => {
+  
   return (
     <AdsMain>
       <ImageDiv>

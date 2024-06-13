@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { fetchProducts } from "../api/requests";
 
 const MainSection = styled.div`
   display: flex;
@@ -125,6 +126,11 @@ const SaleSection = () => {
     const newClickedButtons = clickedButton.map((_, i) => i === index);
     setClickedButton(newClickedButtons);
   };
+  const productSale = () => {
+    useEffect(() => {
+      fetchProducts();
+
+  }, []) }
   return (
     <MainSection>
       <h1>Flash Sale</h1>
@@ -136,6 +142,7 @@ const SaleSection = () => {
       </ul>
       <GridContainer>
         <Card>
+          
           <img src="/Rectangle 1.png" alt="Model Image" />
           <h1>Blazer</h1>
           <CircleDiv>
