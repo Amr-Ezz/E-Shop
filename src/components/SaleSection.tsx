@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { fetchProducts } from "../api/requests";
+import { fetchProducts, Product } from "../api/requests";
 
 const MainSection = styled.div`
   display: flex;
@@ -35,8 +35,14 @@ const Card = styled.div`
   flex-direction: column;
   border: 1px solid ${(props) => props.theme.colors.black};
   padding: 0 1rem;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-around;
+  img {
+    width: 200px;
+  }
+  h1 {
+    font-size: 1.5rem;
+  }
   p {
     text-align: start;
     color: ${(props) => props.theme.colors.grey};
@@ -100,7 +106,7 @@ const HighlightedButtons = styled.div`
 `;
 interface StyledButtonProps {
   $clicked: boolean;
-};
+}
 
 const StyledButton = styled.button<StyledButtonProps>`
   width: ${(props) => (props.$clicked ? "24px" : "12px")};
@@ -111,9 +117,7 @@ const StyledButton = styled.button<StyledButtonProps>`
     props.$clicked ? props.theme.colors.primary : props.theme.colors.grey};
   cursor: pointer;
   transition: width 0.3s, height 0.3s;
-
 `;
-
 
 const SaleSection = () => {
   const [clickedButton, setClickedButton] = useState([
@@ -122,84 +126,61 @@ const SaleSection = () => {
     false,
     false,
   ]);
-  const handleClick = (index: number) => {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [selectedCategory, setSelectedCategory] =
+    useState<string>('men\'s clothing');
+
+  const handleClick = (index: number, category: string) => {
     const newClickedButtons = clickedButton.map((_, i) => i === index);
     setClickedButton(newClickedButtons);
+    setSelectedCategory(category);
   };
-  const productSale = () => {
-    useEffect(() => {
-      fetchProducts();
+  const truncateDescription = (description: string, maxLength: number) => {
+    if (description.length <= maxLength) return description;
+    return `${description.substring(0, maxLength)}... <a href="#">See more</a>`;
+  };
 
-  }, []) }
+  useEffect(() => {
+    const getProducts = async () => {
+      const productData = await fetchProducts(selectedCategory);
+      setProducts(productData.slice(0, 3));
+    };
+    getProducts();
+  }, [selectedCategory]);
+
   return (
     <MainSection>
       <h1>Flash Sale</h1>
       <ul>
-        <li>Men</li>
-        <li>Women</li>
-        <li>Kids</li>
-        <li>Accessories</li>
+        <li onClick={() => handleClick(0, "men's clothing")}>Men</li>
+        <li onClick={() => handleClick(1, "women's clothing")}>Women</li>
+        <li onClick={() => handleClick(2, "jewelery")}>Jewelry</li>
+        <li onClick={() => handleClick(3, "electronics")}>Electronics</li>
       </ul>
       <GridContainer>
-        <Card>
-          
-          <img src="/Rectangle 1.png" alt="Model Image" />
-          <h1>Blazer</h1>
-          <CircleDiv>
-            <div></div>
-            <div></div>
-            <div></div>
-          </CircleDiv>
-          <p>
-            Turn heads with the Elegant Floral Midi Dress, a perfect blend of
-            sophistication and charm.
-          </p>
-          <PriceHolder>
-            <p>120$</p>
-            <button>BUY</button>
-          </PriceHolder>
-        </Card>
-        <Card>
-          <img src="Rectangle 1 (2).png" alt="Model Image 2" />
-          <h1>T shirt</h1>
-          <CircleDiv>
-            <div></div>
-            <div></div>
-            <div></div>
-          </CircleDiv>
-          <p>
-            Turn heads with the Elegant Floral Midi Dress, a perfect blend of
-            sophistication and charm.
-          </p>
-          <PriceHolder>
-            <p>120$</p>
-            <button>BUY</button>
-          </PriceHolder>
-        </Card>
-        <Card>
-          <img src="/Rectangle 1(3).png" />
-          <h1>Black Casual</h1>
-          <CircleDiv>
-            <div></div>
-            <div></div>
-            <div></div>
-          </CircleDiv>
-          <p>
-            Turn heads with the Elegant Floral Midi Dress, a perfect blend of
-            sophistication and charm.
-          </p>
-          <PriceHolder>
-            <p>120$</p>
-            <button>BUY</button>
-          </PriceHolder>
-        </Card>
+        {products.map((product) => (
+          <Card key={product.id}>
+            <img src={product.image} alt={product.name} />
+            <h1>{product.title}</h1>
+            <CircleDiv>
+              <div></div>
+              <div></div>
+              <div></div>
+            </CircleDiv>
+            <p dangerouslySetInnerHTML={{ __html: truncateDescription(product.description, 100) }}></p>
+            <PriceHolder>
+              <p>{product.price}$</p>
+              <button>BUY</button>
+            </PriceHolder>
+          </Card>
+        ))}
       </GridContainer>
       <HighlightedButtons>
         {clickedButton.map((clicked, index) => (
           <StyledButton
             key={index}
             $clicked={clicked}
-            onClick={() => handleClick(index)}
+            onClick={() => handleClick(index, selectedCategory)}
           />
         ))}
       </HighlightedButtons>
