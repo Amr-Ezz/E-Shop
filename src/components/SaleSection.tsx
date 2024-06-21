@@ -39,6 +39,7 @@ const Card = styled.div`
   justify-content: space-around;
   img {
     width: 200px;
+    height: 300px;
   }
   h1 {
     font-size: 1.5rem;
@@ -46,16 +47,41 @@ const Card = styled.div`
   p {
     text-align: start;
     color: ${(props) => props.theme.colors.grey};
+    span {
+      padding: 1rem;
+    }
   }
 `;
 const PriceHolder = styled.div`
   display: flex;
+  flex-direction: column;
   width: 100%;
-  justify-content: space-between;
-  p {
+  justify-content: space-around;
+  p:nth-child(1) {
     color: ${(props) => props.theme.colors.black};
-  }
+    img {
+      width: 15px;
+      height: 15px;
+    }
+  };
+  p:nth-child(2) {
+    align-self: flex-end;
+    img {
+      width: 15px;
+      height: 15px;
+    }
+    
+  };
+  p:nth-child(3) {
+    align-self: flex-end;
+    img {
+      width: 15px;
+      height: 15px;
+    }
+  };
+  
   button {
+    align-self: flex-start;
     width: 86px;
     height: 50px;
     border-radius: 50px;
@@ -127,18 +153,33 @@ const SaleSection = () => {
     false,
   ]);
   const [products, setProducts] = useState<Product[]>([]);
+  const [toggleDescription, setToggleDescription] = useState<{
+    [key: number]: boolean;
+  }>({});
   const [selectedCategory, setSelectedCategory] =
-    useState<string>('men\'s clothing');
+    useState<string>("men's clothing");
 
   const handleClick = (index: number, category: string) => {
     const newClickedButtons = clickedButton.map((_, i) => i === index);
     setClickedButton(newClickedButtons);
     setSelectedCategory(category);
   };
-  const truncateDescription = (description: string, maxLength: number) => {
-    if (description.length <= maxLength) return description;
-    return `${description.substring(0, maxLength)}... <a href="#">See more</a>`;
+  const toggleHandler = (id: number) => {
+    setToggleDescription((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
   };
+  const truncateDescription = (
+    description: string,
+    maxLength: number,
+    id: number
+  ) => {
+    if (toggleDescription[id]) return description;
+    if (description.length <= maxLength) return description;
+    return `${description.substring(0, maxLength)}....`;
+  };
+ 
 
   useEffect(() => {
     const getProducts = async () => {
@@ -167,9 +208,22 @@ const SaleSection = () => {
               <div></div>
               <div></div>
             </CircleDiv>
-            <p dangerouslySetInnerHTML={{ __html: truncateDescription(product.description, 100) }}></p>
+            <p>
+            {truncateDescription(product.description, 100, product.id)}
+            {product.description.length > 100 && (
+              <span
+                onClick={() => toggleHandler(product.id)}
+                style={{ color: "#007bff", cursor: "pointer", textAlign: 'left' }}
+              >
+                {toggleDescription[product.id] ? "See less" : "See more"}
+              </span>
+            )}
+            </p>
+           
             <PriceHolder>
-              <p>{product.price}$</p>
+              <p>{product.price} $</p>
+              <p>{product.rating.rate}<img src={'/icons/star.png'} /></p>
+              <p>{product.rating.count}</p>
               <button>BUY</button>
             </PriceHolder>
           </Card>
