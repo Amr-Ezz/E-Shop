@@ -59,27 +59,27 @@ const PriceHolder = styled.div`
   justify-content: space-around;
   p:nth-child(1) {
     color: ${(props) => props.theme.colors.black};
+    font-size: 1.5rem;
     img {
-      width: 15px;
-      height: 15px;
+      width: 20px;
+      height: 20px;
     }
-  };
+  }
   p:nth-child(2) {
     align-self: flex-end;
     img {
       width: 15px;
       height: 15px;
     }
-    
-  };
+  }
   p:nth-child(3) {
     align-self: flex-end;
     img {
       width: 15px;
       height: 15px;
     }
-  };
-  
+  }
+
   button {
     align-self: flex-start;
     width: 86px;
@@ -146,12 +146,12 @@ const StyledButton = styled.button<StyledButtonProps>`
 `;
 
 const SaleSection = () => {
-  const [clickedButton, setClickedButton] = useState([
-    true,
-    false,
-    false,
-    false,
-  ]);
+  // const [clickedButton, setClickedButton] = useState([
+  //   true,
+  //   false,
+  //   false,
+  //   false,
+  // ]);
   const [products, setProducts] = useState<Product[]>([]);
   const [toggleDescription, setToggleDescription] = useState<{
     [key: number]: boolean;
@@ -159,11 +159,14 @@ const SaleSection = () => {
   const [selectedCategory, setSelectedCategory] =
     useState<string>("men's clothing");
 
-  const handleClick = (index: number, category: string) => {
-    const newClickedButtons = clickedButton.map((_, i) => i === index);
-    setClickedButton(newClickedButtons);
-    setSelectedCategory(category);
-  };
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
+  // const handleClick = (index: number, category: string) => {
+  //   const newClickedButtons = clickedButton.map((_, i) => i === index);
+  //   setClickedButton(newClickedButtons);
+  //   setSelectedCategory(category);
+  //   setCurrentPage(1);
+  // };
   const toggleHandler = (id: number) => {
     setToggleDescription((prev) => ({
       ...prev,
@@ -179,27 +182,36 @@ const SaleSection = () => {
     if (description.length <= maxLength) return description;
     return `${description.substring(0, maxLength)}....`;
   };
- 
 
   useEffect(() => {
     const getProducts = async () => {
       const productData = await fetchProducts(selectedCategory);
-      setProducts(productData.slice(0, 3));
+      setProducts(productData);
     };
     getProducts();
   }, [selectedCategory]);
+
+  const handlePage = (index: number) => {
+    setCurrentPage(index + 1);
+  };
+  const handleCategory = (category: string) => {
+    setSelectedCategory(category);
+    setCurrentPage(1);
+  };
+  const startIndex = (currentPage - 1) * 3;
+  const displayedProducts = products.slice(startIndex, startIndex + 3);
 
   return (
     <MainSection>
       <h1>Flash Sale</h1>
       <ul>
-        <li onClick={() => handleClick(0, "men's clothing")}>Men</li>
-        <li onClick={() => handleClick(1, "women's clothing")}>Women</li>
-        <li onClick={() => handleClick(2, "jewelery")}>Jewelry</li>
-        <li onClick={() => handleClick(3, "electronics")}>Electronics</li>
+        <li onClick={() => handleCategory("men's clothing")}>Men</li>
+        <li onClick={() => handleCategory("women's clothing")}>Women</li>
+        <li onClick={() => handleCategory("jewelery")}>Jewelry</li>
+        <li onClick={() => handleCategory("electronics")}>Electronics</li>
       </ul>
       <GridContainer>
-        {products.map((product) => (
+        {displayedProducts.map((product) => (
           <Card key={product.id}>
             <img src={product.image} alt={product.name} />
             <h1>{product.title}</h1>
@@ -209,34 +221,48 @@ const SaleSection = () => {
               <div></div>
             </CircleDiv>
             <p>
-            {truncateDescription(product.description, 100, product.id)}
-            {product.description.length > 100 && (
-              <span
-                onClick={() => toggleHandler(product.id)}
-                style={{ color: "#007bff", cursor: "pointer", textAlign: 'left' }}
-              >
-                {toggleDescription[product.id] ? "See less" : "See more"}
-              </span>
-            )}
+              {truncateDescription(product.description, 100, product.id)}
+              {product.description.length > 100 && (
+                <span
+                  onClick={() => toggleHandler(product.id)}
+                  style={{
+                    color: "#007bff",
+                    cursor: "pointer",
+                    textAlign: "left",
+                  }}
+                >
+                  {toggleDescription[product.id] ? "See less" : "See more"}
+                </span>
+              )}
             </p>
-           
+
             <PriceHolder>
-              <p>{product.price} $</p>
-              <p>{product.rating.rate}<img src={'/icons/star.png'} /></p>
-              <p>{product.rating.count}</p>
+              <p>
+                {product.price}
+                <img src="/icons/dollar-symbol.png" alt="dollar" />
+              </p>
+              <p>
+                {product.rating.rate} <img src={"/icons/star.png"} />
+              </p>
+              <p>
+                {product.rating.count}{" "}
+                <img src="/icons/trolley.png" alt="Items left" />
+              </p>
               <button>BUY</button>
             </PriceHolder>
           </Card>
         ))}
       </GridContainer>
       <HighlightedButtons>
-        {clickedButton.map((clicked, index) => (
-          <StyledButton
-            key={index}
-            $clicked={clicked}
-            onClick={() => handleClick(index, selectedCategory)}
-          />
-        ))}
+        {Array(Math.ceil(products.length / 3))
+          .fill(0)
+          .map((_, index) => (
+            <StyledButton
+              key={index}
+              $clicked={index + 1 === currentPage}
+              onClick={() => handlePage(index)}
+            />
+          ))}
       </HighlightedButtons>
     </MainSection>
   );
