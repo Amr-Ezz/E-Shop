@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Modal from "./Modal/Modal";
 import RegisterForm from "./RegisterForm/RegisterForm";
 import LoginForm from "./LoginForm/LoginForm";
+import { Link } from "react-router-dom";
 
 const NavbarContainer = styled.div`
   width: 1340px;
@@ -29,11 +30,12 @@ const Nav = styled.nav`
   justify-content: space-between;
   padding: 8px 16px;
 
-  a {
+  li {
     padding: 1rem;
+    list-style-type: none;
     font-size: 20px;
     cursor: pointer;
-    transition:  0.3s ease;
+    transition: 0.3s ease;
 
     &:hover {
       color: ${(props) => props.theme.colors.primary};
@@ -77,16 +79,17 @@ const Navbar: React.FC = () => {
           <span>Go</span> Shop
         </Logo>
         <Nav>
-          <a>Home</a>
-          <a>About us</a>
-          <a>Services</a>
-          <a>Contact</a>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>About us</li>
+          <li>
+            <Link to="/pages/Services">Services</Link>
+          </li>
+          <li>Contact</li>
         </Nav>
         <ButtonDiv>
-          <img
-            src="/icons/magnifying-glass-solid.svg"
-            alt=" Search Icon"
-          />
+          <img src="/icons/magnifying-glass-solid.svg" alt=" Search Icon" />
           <VerticalLine />
           <img src="/icons/user-regular.svg" alt="User img" />
           <Button

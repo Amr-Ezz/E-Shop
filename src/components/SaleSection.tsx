@@ -51,6 +51,8 @@ const Card = styled.div`
       padding: 1rem;
     }
   }
+  button {
+  }
 `;
 const PriceHolder = styled.div`
   display: flex;
@@ -80,19 +82,24 @@ const PriceHolder = styled.div`
     }
   }
 
-  button {
-    align-self: flex-start;
-    width: 86px;
-    height: 50px;
-    border-radius: 50px;
-    background-color: ${(props) => props.theme.colors.white};
-    color: ${(props) => props.theme.colors.primary};
-    border: 1px solid ${(props) => props.theme.colors.primary};
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    &:hover {
-      background-color: ${(props) => props.theme.colors.primary};
-      color: ${(props) => props.theme.colors.white};
+  div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 1rem;
+    button {
+      width: 86px;
+      height: 50px;
+      border-radius: 50px;
+      background-color: ${(props) => props.theme.colors.white};
+      color: ${(props) => props.theme.colors.primary};
+      border: 1px solid ${(props) => props.theme.colors.primary};
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      &:hover {
+        background-color: ${(props) => props.theme.colors.primary};
+        color: ${(props) => props.theme.colors.white};
+      }
     }
   }
 `;
@@ -248,7 +255,10 @@ const SaleSection = () => {
                 {product.rating.count}{" "}
                 <img src="/icons/trolley.png" alt="Items left" />
               </p>
-              <button>BUY</button>
+              <div>
+                <button>BUY</button>
+                <button>Add To Cart</button>
+              </div>
             </PriceHolder>
           </Card>
         ))}

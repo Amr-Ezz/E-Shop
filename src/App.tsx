@@ -1,24 +1,25 @@
 import { ThemeProvider } from "styled-components";
 import "./App.css";
-import HeroSection from "./components/HeroSection";
 import Navbar from "./components/Navbar";
-import SaleSection from "./components/SaleSection";
 import { theme } from "./Theme/themeContext";
-import AdsSection from "./components/AdsSection";
-import CommentsSection from "./components/CommentsSection";
 import Footer from "./components/Footer";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Services from "./pages/Services";
+import Home from "./pages/Home";
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <div className="container">
+      <Router>
         <Navbar />
-        <HeroSection />
-        <SaleSection />
-        <AdsSection />
-        <CommentsSection />
+
+        <Routes>
+          <Route path="/pages/Services" element={<Services />}></Route>
+          <Route path="/" element={<Home />}></Route>
+        </Routes>
+        <div className="container"></div>
         <Footer />
-      </div>
+      </Router>
     </ThemeProvider>
   );
 }
