@@ -5,5 +5,9 @@ export const theme = {
     grey: "#8B8B8B",
     white: "#FFFFFF",
   },
-  
+  font: {
+    fontSize: "76px",
+    lineHeight: "1.1",
+    fontWeight: "600",
+  },
 };
