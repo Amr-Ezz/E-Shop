@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const FooterMain = styled.div`
-width: 1340px;
+width: 100%;
 height: 512px;
 background-image: url('/pexels-godisable1.png');
 background-size: cover; /* This makes the image cover the entire div */

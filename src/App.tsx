@@ -10,6 +10,7 @@ import Home from "./pages/Home";
 function App() {
   return (
     <ThemeProvider theme={theme}>
+      <div className="Container">
       <Router>
         <Navbar />
 
@@ -20,6 +21,8 @@ function App() {
         <div className="container"></div>
         <Footer />
       </Router>
+      </div>
+      
     </ThemeProvider>
   );
 }

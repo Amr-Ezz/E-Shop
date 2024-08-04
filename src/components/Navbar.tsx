@@ -6,7 +6,8 @@ import LoginForm from "./LoginForm/LoginForm";
 import { Link } from "react-router-dom";
 
 const NavbarContainer = styled.div`
-  width: 1340px;
+  width: 100%;
+  max-width: 100vw;
   margin: 0;
   padding: 10px;
 `;
