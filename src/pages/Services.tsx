@@ -5,6 +5,7 @@ const PageContainer = styled.div`
   max-width: 100vw;
   height: fit-content;
   overflow-x: hidden;
+  overflow-y: hidden;
 `;
 const Main = styled.div`
   display: flex;
@@ -27,6 +28,7 @@ const TextSection = styled.div`
   h1 {
     font-size: ${(props) => props.theme.font.fontSize};
     font-weight: ${(props) => props.theme.font.fontWeight};
+    text-align: left;
     span {
       color: ${(props) => props.theme.colors.primary};
       background-color: white;
@@ -44,12 +46,13 @@ const ImageHolder = styled.div`
     width: 100%;
     height: 100vh;
     clip-path: inset(0px 10px 20px 0 round 100px);
+    z-index: 0;
   }
 `;
 const TagBrand = styled.div`
   background-color: ${(props) => props.theme.colors.primary};
   width: 100%;
-  height: 15vh;
+  height: 20vh;
   margin-top: 2rem;
   padding: 2px;
 
@@ -73,6 +76,7 @@ const ArrivalSection = styled.div`
 `;
 const HeadingText = styled.h3`
   font-family: poppins;
+  text-align: left;
   font-size: 48px;
   padding-left: 2rem;
   position: relative;
@@ -81,7 +85,7 @@ const HeadingText = styled.h3`
 const BackgroundVector = styled.img`
   position: absolute;
   top: 25px;
-  right: 400px;
+  left: 260px;
   bottom: 0;
   object-fit: cover;
   z-index: 1;
@@ -123,10 +127,11 @@ const Card = styled.div`
 const SaleBanner = styled.div`
   width: 100%;
   max-width: 100vw;
-  height: auto;
-  min-height: 984px;
+  height: 101vh;
+  min-height: 553px;
   background-image: url("/purple_background.jpg");
-  background-size: contain; /* This makes the image cover the entire div */
+  background-size: cover; /* This makes the image cover the entire div */
+
   background-repeat: no-repeat; /* Prevents the image from repeating */
   background-position: center;
   div {
@@ -134,7 +139,6 @@ const SaleBanner = styled.div`
     flex-direction: row-reverse;
     justify-content: space-around;
     align-items: center;
-    height: 100%;
     position: relative;
 
     img {
@@ -157,25 +161,25 @@ const SaleOffer = styled.div`
       font-size: 78px;
       font-weight: 800;
       font-family: poppins;
-      margin-bottom: 0; 
+      margin-bottom: 0;
     }
     h3 {
       font-size: 58px;
       font-weight: 800;
       font-family: poppins;
-        margin-top: 0; 
-      margin-bottom: 1rem; 
+      margin-top: 0;
+      margin-bottom: 1rem;
     }
   }
 `;
 const ParagraphSection = styled.div`
-display: flex;
-flex-direction: column;
+  display: flex;
+  flex-direction: column;
   align-items: flex-start;
   p {
     font-size: 18px;
-      margin: 0 0 0.5rem 0; 
-    text-align: left; 
+    margin: 0 0 0.5rem 0;
+    text-align: left;
 
     span {
       font-weight: 700;
@@ -197,6 +201,81 @@ flex-direction: column;
       border: 1px solid white;
       color: black;
     }
+  }
+`;
+const YoungSelection = styled.div`
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  position: relative;
+`;
+const YoungFavourite = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  width: 100%;
+`;
+const CardTrending = styled.div`
+  width: fit-content;
+  height: 100vh;
+  min-height: auto;
+  padding: 1rem;
+  img {
+    width: 100%;
+  }
+  h4 {
+    text-align: left;
+  }
+  p {
+    color: #7f7f7f;
+    text-align: left;
+  }
+`;
+const CommunitySection = styled.div`
+  background-color: ${(props) => props.theme.colors.primary};
+  width: 100%;
+  height: 50vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  h3 {
+    font-size: 38px;
+    font-weight: 800;
+    color: white;
+  }
+  p {
+    color: white;
+  }
+`;
+const FormContainer = styled.form`
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  margin: 0 auto;
+  padding: 1rem;
+`;
+const InputField = styled.input`
+  padding: 10px;
+  margin-bottom: 20px;
+  text-align: right;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  position: relative;
+`;
+
+const SubmitButton = styled.button`
+  padding: 10px;
+  background-color: black;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  position: absolute;
+  &:hover {
+    opacity: 0.9;
   }
 `;
 
@@ -281,6 +360,30 @@ const Services: React.FC = () => {
           <img src="/Purple.PNG" alt="model" />
         </div>
       </SaleBanner>
+      <YoungSelection>
+        <BackgroundVector src="/Vector 8.png" />
+        <HeadingText>Young's Favourite</HeadingText>
+        <YoungFavourite>
+          <CardTrending>
+            <img src="/Rectangle 50.png" alt="models" />
+            <h4>Trending on instagram</h4>
+            <p>Explore Now!</p>
+          </CardTrending>
+          <CardTrending>
+            <img src="/Group 80.png" alt="models" />
+            <h4>All Under $40</h4>
+            <p>Explore Now!</p>
+          </CardTrending>
+        </YoungFavourite>
+      </YoungSelection>
+      <CommunitySection>
+        <h3>JOIN SHOPPING COMMUNITY TO GET MONTHLY PROMO</h3>
+        <p>Type your email down below and be young wild generation</p>
+        <FormContainer>
+          <InputField type="text" placeholder="Enter your email here" />
+          <SubmitButton type="submit">Send</SubmitButton>
+        </FormContainer>
+      </CommunitySection>
     </PageContainer>
   );
 };

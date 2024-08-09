@@ -2,9 +2,9 @@ import styled from "styled-components";
 
 const CommentsMain = styled.div`
   display: flex;
-  padding: 5rem;
+  padding: 5rem 0;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
 `;
 const CommentsDiv = styled.div`
@@ -16,7 +16,7 @@ const CommentsDiv = styled.div`
 const CommentRow = styled.div`
   display: flex;
   flex-direction: row;
-  padding-left: 4rem;
+  padding: 0 4rem;
   padding-top: 2rem;
   height: 252px;
   gap: 20px;

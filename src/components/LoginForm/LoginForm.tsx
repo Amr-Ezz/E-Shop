@@ -6,6 +6,7 @@ import { useState } from "react";
 const Form = styled.form`
   display: flex;
   flex-direction: column;
+  z-index: 1;
 `;
 const Button = styled.button`
   margin-top: 1rem;
