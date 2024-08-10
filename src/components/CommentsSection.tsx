@@ -20,7 +20,6 @@ const CommentRow = styled.div`
   padding-top: 2rem;
   height: 252px;
   gap: 20px;
-  background-color: ${(props) => props.theme.colors.white};
 `;
 const Comment = styled.div`
   display: flex;

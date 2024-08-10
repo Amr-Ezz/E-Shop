@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import Modal from "./Modal/Modal";
 import RegisterForm from "./RegisterForm/RegisterForm";
@@ -7,52 +7,53 @@ import { Link } from "react-router-dom";
 
 const NavbarContainer = styled.div`
   width: 100%;
-  max-width: 100vw;
-  margin: 0;
   padding: 10px;
+  margin: 0;
+  max-width: 100vw;
 `;
-const HeaderStyling = styled.header`
+
+const Header = styled.header`
   display: flex;
-  flex-direction: row;
-  padding-left: 4rem;
   justify-content: space-between;
   align-items: center;
+  padding-left: 4rem;
   border-bottom: 2px solid #eee;
 `;
+
 const Logo = styled.h1`
   font-size: 30px;
   font-weight: bold;
+
   span {
-    color: ${(props) => props.theme.colors.primary};
+    color: ${(props) => props.theme.colors.white};
   }
 `;
+
 const Nav = styled.nav`
-  display: flex;
-  justify-content: space-between;
-  padding: 8px 16px;
-
-  li {
-    padding: 1rem;
+  ul {
+    display: flex;
     list-style-type: none;
-    font-size: 20px;
-    cursor: pointer;
-    transition: 0.3s ease;
+    margin: 0;
+    padding: 0;
 
-    &:hover {
-      color: ${(props) => props.theme.colors.primary};
+    li {
+      padding: 1rem;
+      font-size: 20px;
+      cursor: pointer;
+      transition: color 0.3s ease;
+
+      &:hover {
+        color: ${(props) => props.theme.colors.white};
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
     }
   }
 `;
-const Button = styled.button`
-  border-style: none;
-  background-color: ${(props) => props.theme.colors.white};
-  font-weight: bold;
-  font-size: 20px;
-  cursor: pointer;
-  img {
-    width: 24px;
-  }
-`;
+
 const ButtonDiv = styled.div`
   display: flex;
   width: 220px;
@@ -63,36 +64,56 @@ const ButtonDiv = styled.div`
     padding-right: 0.2rem;
   }
 `;
+
+const Button = styled.button`
+  background-color: transparent;
+  font-weight: bold;
+  font-size: 20px;
+  cursor: pointer;
+  border: none;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: ${(props) => props.theme.colors.white};
+  }
+`;
+
 const VerticalLine = styled.hr`
   border: none;
   height: 20px;
   border-left: 1px solid ${(props) => props.theme.colors.grey};
 `;
-const Navbar: React.FC = () => {
+
+const Navbar = () => {
   const [showModal, setShowModal] = useState(false);
-  const [IsRegister, setIsRegister] = useState(true);
+  const [isRegister, setIsRegister] = useState(true);
+
   const toggleModal = () => setShowModal(!showModal);
 
   return (
     <NavbarContainer>
-      <HeaderStyling>
+      <Header>
         <Logo>
           <span>Go</span> Shop
         </Logo>
         <Nav>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>About us</li>
-          <li>
-            <Link to="/pages/Services">Services</Link>
-          </li>
-          <li>Contact</li>
+          <ul>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>About us</li>
+            <li>
+              <Link to="/pages/Services">Services</Link>
+            </li>
+            <li>
+              <Link to="/pages/ContactUs">Contact Us</Link>
+            </li>
+          </ul>
         </Nav>
         <ButtonDiv>
-          <img src="/icons/magnifying-glass-solid.svg" alt=" Search Icon" />
+          <img src="/icons/magnifying-glass-solid.svg" alt="Search Icon" />
           <VerticalLine />
-          <img src="/icons/user-regular.svg" alt="User img" />
+          <img src="/icons/user-regular.svg" alt="User Icon" />
           <Button
             onClick={() => {
               setIsRegister(false);
@@ -112,9 +133,9 @@ const Navbar: React.FC = () => {
           </Button>
         </ButtonDiv>
         <Modal show={showModal} onClose={toggleModal}>
-          {IsRegister ? <RegisterForm /> : <LoginForm />}
+          {isRegister ? <RegisterForm /> : <LoginForm />}
         </Modal>
-      </HeaderStyling>
+      </Header>
     </NavbarContainer>
   );
 };

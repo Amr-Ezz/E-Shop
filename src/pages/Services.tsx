@@ -37,6 +37,8 @@ const TextSection = styled.div`
   }
   p {
     padding-top: 1rem;
+    text-align: left;
+    font-size: 28px;
   }
 `;
 const ImageHolder = styled.div`
@@ -288,10 +290,7 @@ const Services: React.FC = () => {
             Your choice is our first and foremost <span>Priority</span>
           </h1>
           <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus
-            natus quibusdam ab unde. Consequuntur voluptate dolores veniam nam
-            libero quam rerum temporibus mollitia consectetur et, voluptatum
-            magnam iusto, sint quae.
+          Live for Influential and Innovative fashion!
           </p>
         </TextSection>
         <ImageHolder>
