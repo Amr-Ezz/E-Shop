@@ -5,9 +5,10 @@
   text-align: center;
   background-color: white;
   padding: 0;
-  background: rgb(255,205,241);
-background: radial-gradient(circle, rgba(255,205,241,0.3337710084033614) 0%, rgba(224,140,255,1) 100%);
+  background: rgb(255, 205, 241);
+  background: radial-gradient(
+    circle,
+    rgba(255, 205, 241, 0.3337710084033614) 0%,
+    rgba(224, 140, 255, 1) 100%
+  );
 }
-
-
-
