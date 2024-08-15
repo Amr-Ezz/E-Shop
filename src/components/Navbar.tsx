@@ -14,14 +14,11 @@ const NavbarContainer = styled.div`
   top: 0;
   z-index: 10;
   background-color: ${(props) => props.theme.colors.primary};
-    border-bottom: 1px solid #eee;
-
-  
-  
+  border-bottom: 1px solid #eee;
 `;
 const NavbarSpace = styled.div`
-height: 60px;
-`
+  height: 60px;
+`;
 const Header = styled.header`
   display: flex;
   justify-content: space-between;
@@ -101,60 +98,56 @@ const Navbar = () => {
 
   return (
     <>
-              <NavbarSpace />
-              <NavbarContainer>
-
-<Header>
-  <Logo>
-    <span>Go</span> Shop
-  </Logo>
-  <Nav>
-    <ul>
-      <li>
-        <Link to="/">Home</Link>
-      </li>
-      <li>
-      <Link to="/pages/AboutUs">About Us</Link>
-
-      </li>
-      <li>
-        <Link to="/pages/Services">Services</Link>
-      </li>
-      <li>
-        <Link to="/pages/ContactUs">Contact Us</Link>
-      </li>
-    </ul>
-  </Nav>
-  <ButtonDiv>
-    <img src="/icons/magnifying-glass-solid.svg" alt="Search Icon" />
-    <VerticalLine />
-    <img src="/icons/user-regular.svg" alt="User Icon" />
-    <Button
-      onClick={() => {
-        setIsRegister(false);
-        toggleModal();
-      }}
-    >
-      Login
-    </Button>
-    /
-    <Button
-      onClick={() => {
-        setIsRegister(true);
-        toggleModal();
-      }}
-    >
-      Register
-    </Button>
-  </ButtonDiv>
-  <Modal show={showModal} onClose={toggleModal}>
-    {isRegister ? <RegisterForm /> : <LoginForm />}
-  </Modal>
-</Header>
-</NavbarContainer>
-
+      <NavbarSpace />
+      <NavbarContainer>
+        <Header>
+          <Logo>
+            <span>Go</span> Shop
+          </Logo>
+          <Nav>
+            <ul>
+              <li>
+                <Link to="/">Home</Link>
+              </li>
+              <li>
+                <Link to="/pages/AboutUs">About Us</Link>
+              </li>
+              <li>
+                <Link to="/pages/Services">Services</Link>
+              </li>
+              <li>
+                <Link to="/pages/ContactUs">Contact Us</Link>
+              </li>
+            </ul>
+          </Nav>
+          <ButtonDiv>
+            <img src="/icons/magnifying-glass-solid.svg" alt="Search Icon" />
+            <VerticalLine />
+            <img src="/icons/user-regular.svg" alt="User Icon" />
+            <Button
+              onClick={() => {
+                setIsRegister(false);
+                toggleModal();
+              }}
+            >
+              Login
+            </Button>
+            /
+            <Button
+              onClick={() => {
+                setIsRegister(true);
+                toggleModal();
+              }}
+            >
+              Register
+            </Button>
+          </ButtonDiv>
+          <Modal show={showModal} onClose={toggleModal}>
+            {isRegister ? <RegisterForm /> : <LoginForm />}
+          </Modal>
+        </Header>
+      </NavbarContainer>
     </>
-   
   );
 };
 

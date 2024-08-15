@@ -25,6 +25,9 @@ const TextHolder = styled.div`
       color: white;
     }
   }
+  p {
+    line-height: 26px;
+  }
 `;
 const ImageHolder = styled.img`
   object-fit: cover;
@@ -70,42 +73,9 @@ const CardRating = styled.div`
     font-weight: 800;
   }
 `;
-const CardRatingOrange = styled.div`
+const CardRatingOrange = styled(CardRating)`
   background-color: ${(props) => props.theme.colors.primary};
-  display: flex;
-  flex-direction: column;
-  padding: 1rem;
-  margin: 1rem;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  width: 270px;
-  height: 230px;
-  border-radius: 4px;
   color: white;
-  div {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 80px;
-    height: 80px;
-    border-radius: 100%;
-    img {
-      width: 80px;
-      height: 80px;
-      color: white;
-      border-radius: 100%;
-      padding: 5px;
-    }
-  }
-  h3 {
-    font-size: 32px;
-    font-weight: 800;
-  }
-  P {
-    font-size: 16px;
-    line-height: 24px;
-  }
 `;
 const CastGrid = styled.div`
   display: grid;
@@ -129,7 +99,7 @@ const CardDiv = styled.div`
       object-fit: cover;
       object-position: 50% 100%;
     }
-  }
+  };
   h3 {
     font-size: 32px;
     margin-top: 20px;
@@ -138,13 +108,22 @@ const CardDiv = styled.div`
     letter-spacing: 4%;
   }
 `;
-const SocialMediaIcons = styled.div`
-  background-color: transparent;
+
+const SocialMediaIcons = styled.span`
+  display: flex;
+  flex-direction: row;
+  wdith: 104px;
+  height: 24px;
+  justify-content: flex-start;
+  gap: 10px;
+  margin-top: 10px;
   img {
     width: 24px;
     height: 24px;
+    cursor: pointer;
   }
 `;
+
 const FullServiceDiv = styled.div`
   display: flex;
   flex-direction: row;
@@ -152,21 +131,23 @@ const FullServiceDiv = styled.div`
   align-items: center;
   gap: 88px;
 `;
+
 const ServiceCard = styled.div`
-display: flex;
-flex-direction: column;
-padding: 1rem;
-h3 {
-text-align: left;
-font-size: 20px;
-font-weight: 600; 
-}
-p {
-text-align: left;
-font-size: 14px;
-line-height: 21px;
-}
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  h3 {
+    text-align: left;
+    font-size: 20px;
+    font-weight: 600;
+  }
+  p {
+    text-align: left;
+    font-size: 14px;
+    line-height: 21px;
+  }
 `;
+
 const AboutUs = () => {
   return (
     <>
@@ -176,17 +157,17 @@ const AboutUs = () => {
             <span>Our</span>Story
           </h3>
           <p>
-            Launced in 2015, Exclusive is South Asia’s premier online shopping
-            makterplace with an active presense in Bangladesh. Supported by wide
-            range of tailored marketing, data and service solutions, Exclusive
-            has 10,500 sallers and 300 brands and serves 3 millioons customers
+            Launched in 2015, Exclusive is South Asia’s premier online shopping
+            marketplace with an active presence in Bangladesh. Supported by a wide
+            range of tailored marketing, data, and service solutions, Exclusive
+            has 10,500 sellers and 300 brands and serves 3 million customers
             across the region.
           </p>
           <br />
           <p>
             Exclusive has more than 1 Million products to offer, growing at a
-            very fast. Exclusive offers a diverse assotment in categories
-            ranging from consumer.
+            very fast pace. Exclusive offers a diverse assortment in categories
+            ranging from consumer electronics to fashion.
           </p>
         </TextHolder>
         <ImageHolder src="/portrait-two-african-females.png" alt="models" />
@@ -197,28 +178,28 @@ const AboutUs = () => {
             <img src="/icons/Services (1).svg" alt="shop icon" />
           </div>
           <h3>10.5k</h3>
-          <p>Sailers active our site</p>
+          <p>Sellers active on our site</p>
         </CardRating>
         <CardRatingOrange>
           <div>
             <img src="/icons/Services.svg" alt="shop icon" />
           </div>
           <h3>33K</h3>
-          <p>Monthly Product Sale</p>
+          <p>Monthly Product Sales</p>
         </CardRatingOrange>
         <CardRating>
           <div>
             <img src="/icons/Services (2).svg" alt="shop icon" />
           </div>
           <h3>45.5K</h3>
-          <p>Customer Active In Our Site</p>
+          <p>Customers Active on Our Site</p>
         </CardRating>
         <CardRating>
           <div>
             <img src="/icons/Services (3).svg" alt="shop icon" />
           </div>
           <h3>25K</h3>
-          <p>Annual gross sale in our site</p>
+          <p>Annual Gross Sales on Our Site</p>
         </CardRating>
       </RatingsDiv>
       <CastGrid>
@@ -227,12 +208,12 @@ const AboutUs = () => {
             <img src="/image 46.png" alt="Cast Member" />
           </div>
           <h3>Tom Cruise</h3>
-          <p>Founder & Chairman </p>
-          {/* <SocialMediaIcons>
-          <img src="/icons/Icon-Twitter.svg" alt="twitter icon" />
-          <img src="/icons/Icon-Linkedin.svg" alt="LinkedIn icon" />
-          <img src="/icons/icon-instagram.svg" alt="Instagram icon" />
-        </SocialMediaIcons> */}
+          <p>Founder & Chairman</p>
+          <SocialMediaIcons>
+            <img src="/icons/Icon-Twitter.svg" alt="Twitter icon" />
+            <img src="/icons/Icon-Linkedin.svg" alt="LinkedIn icon" />
+            <img src="/icons/icon-instagram.svg" alt="Instagram icon" />
+          </SocialMediaIcons>
         </CardDiv>
         <CardDiv>
           <div>
@@ -240,11 +221,11 @@ const AboutUs = () => {
           </div>
           <h3>Will Smith</h3>
           <p>Product Designer</p>
-          {/* <SocialMediaIcons>
-          <img src="/icons/Icon-Twitter.svg" alt="twitter icon" />
-          <img src="/icons/Icon-Linkedin.svg" alt="LinkedIn icon" />
-          <img src="/icons/icon-instagram.svg" alt="Instagram icon" />
-        </SocialMediaIcons> */}
+          <SocialMediaIcons>
+            <img src="/icons/Icon-Twitter.svg" alt="Twitter icon" />
+            <img src="/icons/Icon-Linkedin.svg" alt="LinkedIn icon" />
+            <img src="/icons/icon-instagram.svg" alt="Instagram icon" />
+          </SocialMediaIcons>
         </CardDiv>
         <CardDiv>
           <div>
@@ -252,11 +233,11 @@ const AboutUs = () => {
           </div>
           <h3>Emma Watson</h3>
           <p>Managing Director</p>
-          {/* <SocialMediaIcons>
-          <img src="/icons/Icon-Twitter.svg" alt="twitter icon" />
-          <img src="/icons/Icon-Linkedin.svg" alt="LinkedIn icon" />
-          <img src="/icons/icon-instagram.svg" alt="Instagram icon" />
-        </SocialMediaIcons> */}
+          <SocialMediaIcons>
+            <img src="/icons/Icon-Twitter.svg" alt="Twitter icon" />
+            <img src="/icons/Icon-Linkedin.svg" alt="LinkedIn icon" />
+            <img src="/icons/icon-instagram.svg" alt="Instagram icon" />
+          </SocialMediaIcons>
         </CardDiv>
       </CastGrid>
       <FullServiceDiv>
@@ -279,7 +260,7 @@ const AboutUs = () => {
             <img src="/icons/Services (5).svg" alt="shop icon" />
           </div>
           <h3>MONEY BACK GUARANTEE</h3>
-          <p>We reurn money within 30 days</p>
+          <p>We return money within 30 days</p>
         </ServiceCard>
       </FullServiceDiv>
     </>
