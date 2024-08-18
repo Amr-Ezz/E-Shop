@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { fetchProducts, Product } from "../api/requests";
+import BuyModal from "./Modal/BuyModal";
 
 const MainSection = styled.div`
   display: flex;
@@ -91,6 +92,7 @@ const PriceHolder = styled.div`
       width: 86px;
       height: 50px;
       border-radius: 50px;
+      font-weight: 600;
       background-color: ${(props) => props.theme.colors.white};
       color: ${(props) => props.theme.colors.primary};
       border: 1px solid ${(props) => props.theme.colors.primary};
@@ -140,18 +142,17 @@ const HighlightedButtons = styled.div`
 interface StyledButtonProps {
   $clicked: boolean;
 }
-interface ProductType {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-}
-interface CardProps {
-  product: ProductType;
-  onBuy: (product: ProductType) => void;
-  onAddToCart: (product: ProductType) => void;
-
-}
+// interface ProductType {
+//   id: string;
+//   name: string;
+//   description: string;
+//   price: number;
+// }
+// interface CardProps {
+//   product: ProductType;
+//   onBuy: (product: ProductType) => void;
+//   onAddToCart: (product: ProductType) => void;
+// }
 
 const StyledButton = styled.button<StyledButtonProps>`
   width: ${(props) => (props.$clicked ? "24px" : "12px")};
@@ -163,6 +164,9 @@ const StyledButton = styled.button<StyledButtonProps>`
   cursor: pointer;
   transition: width 0.3s, height 0.3s;
 `;
+interface CartItem extends Product {
+  quantity: number;
+}
 
 const SaleSection = () => {
   // const [clickedButton, setClickedButton] = useState([
@@ -172,6 +176,10 @@ const SaleSection = () => {
   //   false,
   // ]);
   const [products, setProducts] = useState<Product[]>([]);
+  const [showBuyModal, setShowBuyModal] = useState<boolean>(false);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+
   const [toggleDescription, setToggleDescription] = useState<{
     [key: number]: boolean;
   }>({});
@@ -219,6 +227,24 @@ const SaleSection = () => {
   };
   const startIndex = (currentPage - 1) * 3;
   const displayedProducts = products.slice(startIndex, startIndex + 3);
+  const handleBuy = (product: Product) => {
+    setSelectedProduct(product);
+    setShowBuyModal(true);
+  };
+  const handleAddToCart = (product: Product) => {
+    setCartItems(prevItems => {
+      const exisitingItems = prevItems.findIndex(item => item.id === product.id);
+      if (exisitingItems !== -1) {
+        return prevItems.map((item, index) =>    
+          index === exisitingItems
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      } else {
+        return [...prevItems, { ...product, quantity: 1 }];
+      }
+    });
+  };
 
   return (
     <MainSection>
@@ -230,7 +256,7 @@ const SaleSection = () => {
         <li onClick={() => handleCategory("electronics")}>Electronics</li>
       </ul>
       <GridContainer>
-        {displayedProducts.map((product, onBuy, onAddToCart) => (
+        {displayedProducts.map((product) => (
           <Card key={product.id}>
             <img src={product.image} alt={product.name} />
             <h1>{product.title}</h1>
@@ -268,8 +294,10 @@ const SaleSection = () => {
                 <img src="/icons/trolley.png" alt="Items left" />
               </p>
               <div>
-                <button onClick={() => onBuy(product)}>BUY</button>
-                <button onClick={() => onAddToCart(product)}>Add To Cart</button>
+                <button onClick={() => handleBuy(product)}>BUY</button>
+                <button onClick={() => handleAddToCart(product)}>
+                  Add To Cart
+                </button>
               </div>
             </PriceHolder>
           </Card>
@@ -286,6 +314,10 @@ const SaleSection = () => {
             />
           ))}
       </HighlightedButtons>
+      {showBuyModal && selectedProduct && (
+        <BuyModal product={selectedProduct}
+        onClose={() => setShowBuyModal(false)} />
+      )}
     </MainSection>
   );
 };

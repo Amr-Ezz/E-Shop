@@ -5,9 +5,11 @@ const AdsMain = styled.div`
   width: fit-content;
   height: 300px;
   padding-top: 1rem;
+  z-index: 0;
 `;
 const ImageDiv = styled.div`
   position: relative;
+  z-index: 0;
   img {
     width: 450px;
     height: 300px;

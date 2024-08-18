@@ -8,7 +8,7 @@ export interface Product {
   image: string;
   price: number;
   category: string;
-  rating: {rate: number, count: number}
+  rating: {rate: number, count: number};
 }
 export const fetchProducts = async (category: string): Promise<Product[]> => {
   try {
