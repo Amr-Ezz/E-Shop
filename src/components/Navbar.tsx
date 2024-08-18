@@ -4,6 +4,7 @@ import Modal from "./Modal/Modal";
 import RegisterForm from "./RegisterForm/RegisterForm";
 import LoginForm from "./LoginForm/LoginForm";
 import { Link } from "react-router-dom";
+import { useCart } from "../Context/CartContext";
 
 const NavbarContainer = styled.div`
   width: 100%;
@@ -55,6 +56,7 @@ const Nav = styled.nav`
       a {
         text-decoration: none;
         color: inherit;
+        position: relative;
       }
     }
   }
@@ -89,12 +91,29 @@ const VerticalLine = styled.hr`
   height: 20px;
   border-left: 1px solid ${(props) => props.theme.colors.grey};
 `;
+const CartCount = styled.div`
+ position: absolute;
+  top: -10px;
+  right: -20px;
+  background-color: purple;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 12px;
+`
+
 
 const Navbar = () => {
   const [showModal, setShowModal] = useState(false);
   const [isRegister, setIsRegister] = useState(true);
+  const [cartModal, setCartModal] = useState(false);
 
   const toggleModal = () => setShowModal(!showModal);
+  const toggleCart = () => {
+    setCartModal(!cartModal);
+    console.log("Entered");
+  };
+  const {cartItemsCount} = useCart();
 
   return (
     <>
@@ -117,6 +136,9 @@ const Navbar = () => {
               </li>
               <li>
                 <Link to="/pages/ContactUs">Contact Us</Link>
+              </li>
+              <li>
+                <a onClick={toggleCart}>Cart {cartItemsCount > 0 && <CartCount>{cartItemsCount}</CartCount>}</a>
               </li>
             </ul>
           </Nav>

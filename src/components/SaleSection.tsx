@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { fetchProducts, Product } from "../api/requests";
 import BuyModal from "./Modal/BuyModal";
+import { useCart } from "../Context/CartContext";
 
 const MainSection = styled.div`
   display: flex;
@@ -38,6 +39,7 @@ const Card = styled.div`
   padding: 0 1rem;
   align-items: center;
   justify-content: space-around;
+  background-color: white;
   img {
     width: 200px;
     height: 300px;
@@ -231,11 +233,15 @@ const SaleSection = () => {
     setSelectedProduct(product);
     setShowBuyModal(true);
   };
+  const { incrementCartItems } = useCart();
+
   const handleAddToCart = (product: Product) => {
-    setCartItems(prevItems => {
-      const exisitingItems = prevItems.findIndex(item => item.id === product.id);
+    setCartItems((prevItems) => {
+      const exisitingItems = prevItems.findIndex(
+        (item) => item.id === product.id
+      );
       if (exisitingItems !== -1) {
-        return prevItems.map((item, index) =>    
+        return prevItems.map((item, index) =>
           index === exisitingItems
             ? { ...item, quantity: item.quantity + 1 }
             : item
@@ -244,6 +250,7 @@ const SaleSection = () => {
         return [...prevItems, { ...product, quantity: 1 }];
       }
     });
+    incrementCartItems();
   };
 
   return (
@@ -315,8 +322,10 @@ const SaleSection = () => {
           ))}
       </HighlightedButtons>
       {showBuyModal && selectedProduct && (
-        <BuyModal product={selectedProduct}
-        onClose={() => setShowBuyModal(false)} />
+        <BuyModal
+          product={selectedProduct}
+          onClose={() => setShowBuyModal(false)}
+        />
       )}
     </MainSection>
   );

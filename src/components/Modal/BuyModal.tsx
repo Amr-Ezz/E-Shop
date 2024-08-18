@@ -21,8 +21,8 @@ const ModalOverlay = styled.div`
 `;
 
 const ModalWrapper = styled.div`
-background: rgb(131,58,180);
-background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(224,140,255,1) 100%);  border-radius: 30px;
+background: white;
+  border-radius: 30px;
   padding: 34px;
   width: 90%;
   max-width: 500px;
@@ -30,7 +30,6 @@ background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%,
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: white;
 `;
 
 const ProductImage = styled.img`
@@ -48,7 +47,7 @@ const ProductTitle = styled.h3`
 
 const ProductDescription = styled.p`
   font-size: 0.9rem;
-  color: white;
+  color: #666;
   margin-bottom: 16px;
   text-align: left;
 `;

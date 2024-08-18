@@ -8,27 +8,29 @@ import Services from "./pages/Services";
 import Home from "./pages/Home";
 import ContactUs from "./pages/ContactUs";
 import AboutUs from "./pages/AboutUs";
+import { CartProvider } from "./Context/CartContext";
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <div className="Container">
-      <Router>
-        <Navbar />
+        <Router>
+          <CartProvider>
+            <Navbar />
 
-        <Routes>
-          <Route path="/pages/Services" element={<Services />}></Route>
-          <Route path="/" element={<Home />}></Route>
-          <Route path="/pages/ContactUs" element={<ContactUs />}></Route>
-          <Route path="/pages/AboutUs" element={<AboutUs />}></Route>
+          <Routes>
+            <Route path="/pages/Services" element={<Services />}></Route>
+            <Route path="/" element={<Home />}>
+            </Route>
+            <Route path="/pages/ContactUs" element={<ContactUs />}></Route>
+            <Route path="/pages/AboutUs" element={<AboutUs />}></Route>
+          </Routes>
+          <div className="container"></div>
+          <Footer />
+          </CartProvider>
 
-          
-        </Routes>
-        <div className="container"></div>
-        <Footer />
-      </Router>
+        </Router>
       </div>
-      
     </ThemeProvider>
   );
 }
