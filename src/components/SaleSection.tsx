@@ -140,6 +140,18 @@ const HighlightedButtons = styled.div`
 interface StyledButtonProps {
   $clicked: boolean;
 }
+interface ProductType {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+}
+interface CardProps {
+  product: ProductType;
+  onBuy: (product: ProductType) => void;
+  onAddToCart: (product: ProductType) => void;
+
+}
 
 const StyledButton = styled.button<StyledButtonProps>`
   width: ${(props) => (props.$clicked ? "24px" : "12px")};
@@ -218,7 +230,7 @@ const SaleSection = () => {
         <li onClick={() => handleCategory("electronics")}>Electronics</li>
       </ul>
       <GridContainer>
-        {displayedProducts.map((product) => (
+        {displayedProducts.map((product, onBuy, onAddToCart) => (
           <Card key={product.id}>
             <img src={product.image} alt={product.name} />
             <h1>{product.title}</h1>
@@ -256,8 +268,8 @@ const SaleSection = () => {
                 <img src="/icons/trolley.png" alt="Items left" />
               </p>
               <div>
-                <button>BUY</button>
-                <button>Add To Cart</button>
+                <button onClick={() => onBuy(product)}>BUY</button>
+                <button onClick={() => onAddToCart(product)}>Add To Cart</button>
               </div>
             </PriceHolder>
           </Card>
