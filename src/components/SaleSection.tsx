@@ -26,8 +26,6 @@ const MainSection = styled.div`
 `;
 const GridContainer = styled.div`
   display: grid;
-  width: 384px;
-  height: 828px;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 1rem;
   width: 100%;
@@ -53,8 +51,6 @@ const Card = styled.div`
     span {
       padding: 1rem;
     }
-  }
-  button {
   }
 `;
 const PriceHolder = styled.div`
@@ -90,6 +86,7 @@ const PriceHolder = styled.div`
     flex-direction: row;
     justify-content: space-between;
     margin-top: 1rem;
+    padding-bottom: 1rem;
     button {
       width: 86px;
       height: 50px;
@@ -144,17 +141,6 @@ const HighlightedButtons = styled.div`
 interface StyledButtonProps {
   $clicked: boolean;
 }
-// interface ProductType {
-//   id: string;
-//   name: string;
-//   description: string;
-//   price: number;
-// }
-// interface CardProps {
-//   product: ProductType;
-//   onBuy: (product: ProductType) => void;
-//   onAddToCart: (product: ProductType) => void;
-// }
 
 const StyledButton = styled.button<StyledButtonProps>`
   width: ${(props) => (props.$clicked ? "24px" : "12px")};
@@ -166,36 +152,20 @@ const StyledButton = styled.button<StyledButtonProps>`
   cursor: pointer;
   transition: width 0.3s, height 0.3s;
 `;
-interface CartItem extends Product {
-  quantity: number;
-}
 
 const SaleSection = () => {
-  // const [clickedButton, setClickedButton] = useState([
-  //   true,
-  //   false,
-  //   false,
-  //   false,
-  // ]);
   const [products, setProducts] = useState<Product[]>([]);
   const [showBuyModal, setShowBuyModal] = useState<boolean>(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
-
   const [toggleDescription, setToggleDescription] = useState<{
     [key: number]: boolean;
   }>({});
   const [selectedCategory, setSelectedCategory] =
     useState<string>("men's clothing");
-
   const [currentPage, setCurrentPage] = useState<number>(1);
 
-  // const handleClick = (index: number, category: string) => {
-  //   const newClickedButtons = clickedButton.map((_, i) => i === index);
-  //   setClickedButton(newClickedButtons);
-  //   setSelectedCategory(category);
-  //   setCurrentPage(1);
-  // };
+  const { addToCart } = useCart();
+
   const toggleHandler = (id: number) => {
     setToggleDescription((prev) => ({
       ...prev,
@@ -232,25 +202,6 @@ const SaleSection = () => {
   const handleBuy = (product: Product) => {
     setSelectedProduct(product);
     setShowBuyModal(true);
-  };
-  const { incrementCartItems } = useCart();
-
-  const handleAddToCart = (product: Product) => {
-    setCartItems((prevItems) => {
-      const exisitingItems = prevItems.findIndex(
-        (item) => item.id === product.id
-      );
-      if (exisitingItems !== -1) {
-        return prevItems.map((item, index) =>
-          index === exisitingItems
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        );
-      } else {
-        return [...prevItems, { ...product, quantity: 1 }];
-      }
-    });
-    incrementCartItems();
   };
 
   return (
@@ -302,9 +253,7 @@ const SaleSection = () => {
               </p>
               <div>
                 <button onClick={() => handleBuy(product)}>BUY</button>
-                <button onClick={() => handleAddToCart(product)}>
-                  Add To Cart
-                </button>
+                <button onClick={() => addToCart(product)}>Add To Cart</button>
               </div>
             </PriceHolder>
           </Card>

@@ -5,6 +5,7 @@ import RegisterForm from "./RegisterForm/RegisterForm";
 import LoginForm from "./LoginForm/LoginForm";
 import { Link } from "react-router-dom";
 import { useCart } from "../Context/CartContext";
+import CartModal from "./Modal/CartModal";
 
 const NavbarContainer = styled.div`
   width: 100%;
@@ -139,6 +140,7 @@ const Navbar = () => {
               </li>
               <li>
                 <a onClick={toggleCart}>Cart {cartItemsCount > 0 && <CartCount>{cartItemsCount}</CartCount>}</a>
+                {cartModal && <CartModal onClose={toggleCart}/>}
               </li>
             </ul>
           </Nav>
