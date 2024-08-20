@@ -2,33 +2,53 @@ import styled from "styled-components";
 
 const CommentsMain = styled.div`
   display: flex;
-  padding: 5rem 0;
+  padding: 5rem 1rem; /* Adjust padding for better responsiveness */
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+
+  @media (max-width: 768px) {
+    padding: 3rem 1rem; /* Reduce padding on smaller screens */
+  }
 `;
+
 const CommentsDiv = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: 50px;
+
+  @media (max-width: 768px) {
+    gap: 30px; /* Reduce gap between rows on smaller screens */
+  }
 `;
+
 const CommentRow = styled.div`
   display: flex;
   flex-direction: row;
-  padding: 0 4rem;
+  padding: 0 2rem; /* Reduce padding for smaller screens */
   padding-top: 2rem;
-  height: 252px;
+  height: auto;
   gap: 20px;
+  flex-wrap: wrap; /* Allow comments to wrap on smaller screens */
+
+  @media (max-width: 768px) {
+    flex-direction: column; /* Stack comments vertically on small screens */
+    padding: 0;
+  }
 `;
+
 const Comment = styled.div`
   display: flex;
   flex-direction: column;
   padding: 1rem;
-  width: 655px;
+  width: 100%;
+  max-width: 655px;
   border: 1px solid ${(props) => props.theme.colors.black};
-  height: 252px;
+  height: auto;
+  min-height: 252px;
   border-radius: 12px;
+
   p {
     color: #4f4f4f;
     padding-top: 1rem;
@@ -36,24 +56,37 @@ const Comment = styled.div`
     font-weight: 500;
     font-size: 20px;
     line-height: 30px;
+
+    @media (max-width: 768px) {
+      font-size: 18px; /* Adjust font size for smaller screens */
+      line-height: 28px;
+    }
   }
 `;
+
 const User = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
   width: 100%;
   padding: 1rem;
+
   div:last-child {
     margin-left: auto;
   }
+
+  @media (max-width: 768px) {
+    padding: 0.5rem 0; /* Adjust padding for smaller screens */
+  }
 `;
+
 const Name = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
   margin-left: 1rem;
   position: relative;
+
   h5 {
     position: absolute;
     top: 0;
@@ -62,14 +95,21 @@ const Name = styled.div`
     font-size: 16px;
     line-height: 24px;
   }
+
   p {
     color: ${(props) => props.theme.colors.grey};
     font-weight: 500;
     font-size: 16px;
     line-height: 24px;
     padding-top: 1.5rem;
+
+    @media (max-width: 768px) {
+      font-size: 14px; /* Adjust font size for smaller screens */
+      line-height: 22px;
+    }
   }
 `;
+
 const CommentsSection = () => {
   return (
     <CommentsMain>
@@ -92,7 +132,7 @@ const CommentsSection = () => {
             <p>
               This dress is absolutely stunning! The fit is perfect, and the
               floral print is even more beautiful in person. I received so many
-              compliments when I wore it to a wedding
+              compliments when I wore it to a wedding.
             </p>
           </Comment>
           <Comment>
@@ -111,28 +151,9 @@ const CommentsSection = () => {
             <p>
               I am in love with this midi dress! The fabric is so soft and
               comfortable, and it flows beautifully. It's now my go-to outfit
-              for any special occasion
+              for any special occasion.
             </p>
           </Comment>
-          {/* <Comment>
-            <User>
-              <img src="/Avatar.png" alt="Avatar" />
-              <Name>
-                <h5>
-                  <strong>Name</strong>
-                </h5>
-                <p>Description</p>
-              </Name>
-              <div>
-                <img src="/Vector.png" alt="Vector" />
-              </div>
-            </User>
-            <p>
-              This dress is absolutely stunning! The fit is perfect, and the
-              floral print is even more beautiful in person. I received so many
-              compliments when I wore it to a wedding
-            </p>
-          </Comment> */}
         </CommentRow>
         <CommentRow>
           <Comment>
@@ -173,25 +194,6 @@ const CommentsSection = () => {
               get compliments.
             </p>
           </Comment>
-          {/* <Comment>
-            <User>
-              <img src="/Avatar.png" alt="Avatar" />
-              <Name>
-                <h5>
-                  <strong>Name</strong>
-                </h5>
-                <p>Description</p>
-              </Name>
-              <div>
-                <img src="/Vector.png" alt="Vector" />
-              </div>
-            </User>
-            <p>
-              This dress is absolutely stunning! The fit is perfect, and the
-              floral print is even more beautiful in person. I received so many
-              compliments when I wore it to a wedding
-            </p>
-          </Comment> */}
         </CommentRow>
       </CommentsDiv>
     </CommentsMain>

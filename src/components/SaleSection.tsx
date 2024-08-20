@@ -10,12 +10,16 @@ const MainSection = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 2rem 2rem;
+  width: 100%;
+
   ul {
     display: flex;
     flex-direction: row;
     list-style: none;
+    flex-wrap: wrap; /* Allow list items to wrap */
+    justify-content: center;
     li {
-      padding: 2rem;
+      padding: 1rem; /* Adjust padding for better spacing on smaller screens */
       cursor: pointer;
       text-decoration: underline;
       &:active {
@@ -23,58 +27,78 @@ const MainSection = styled.div`
       }
     }
   }
+
+  @media (max-width: 768px) {
+    padding: 1rem; /* Reduce padding on smaller screens */
+  }
 `;
+
 const GridContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 1rem;
   width: 100%;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr); /* Change to 2 columns on medium screens */
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr; /* Change to 1 column on small screens */
+  }
 `;
+
 const Card = styled.div`
   display: flex;
   flex-direction: column;
   border: 1px solid ${(props) => props.theme.colors.black};
-  padding: 0 1rem;
+  padding: 1rem; /* Adjust padding for consistency */
   align-items: center;
   justify-content: space-around;
   background-color: white;
+
   img {
-    width: 200px;
-    height: 300px;
+    width: 100%;
+    height: auto;
+    max-width: 200px; /* Ensure image size scales properly */
+    max-height: 300px;
   }
+
   h1 {
     font-size: 1.5rem;
+    text-align: center; /* Center text for better alignment */
   }
+
   p {
-    text-align: start;
+    text-align: center;
     color: ${(props) => props.theme.colors.grey};
+
     span {
       padding: 1rem;
     }
   }
 `;
+
 const PriceHolder = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
   justify-content: space-around;
+  align-items: center;
+
   p:nth-child(1) {
     color: ${(props) => props.theme.colors.black};
     font-size: 1.5rem;
+
     img {
       width: 20px;
       height: 20px;
     }
   }
-  p:nth-child(2) {
-    align-self: flex-end;
-    img {
-      width: 15px;
-      height: 15px;
-    }
-  }
+
+  p:nth-child(2),
   p:nth-child(3) {
-    align-self: flex-end;
+    align-self: center; /* Center align these elements */
     img {
       width: 15px;
       height: 15px;
@@ -84,11 +108,13 @@ const PriceHolder = styled.div`
   div {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
+    width: 100%; /* Ensure buttons take full width */
     margin-top: 1rem;
     padding-bottom: 1rem;
+
     button {
-      width: 86px;
+      width: 100px; /* Increase button width for better tap targets */
       height: 50px;
       border-radius: 50px;
       font-weight: 600;
@@ -97,6 +123,7 @@ const PriceHolder = styled.div`
       border: 1px solid ${(props) => props.theme.colors.primary};
       cursor: pointer;
       transition: background-color 0.3s ease;
+
       &:hover {
         background-color: ${(props) => props.theme.colors.primary};
         color: ${(props) => props.theme.colors.white};
@@ -104,6 +131,7 @@ const PriceHolder = styled.div`
     }
   }
 `;
+
 const CircleDiv = styled.div`
   display: flex;
   flex-direction: row;
@@ -111,33 +139,41 @@ const CircleDiv = styled.div`
   height: 28px;
   justify-content: space-between;
 
-  div:nth-child(1) {
+  div {
     width: 28px;
     height: 28px;
     border-radius: 100%;
     background-color: #c47530;
+
+    &:nth-child(2) {
+      background-color: #fac585;
+    }
+
+    &:nth-child(3) {
+      background-color: #05697c;
+    }
   }
-  div:nth-child(2) {
-    width: 28px;
-    height: 28px;
-    border-radius: 100%;
-    background-color: #fac585;
-  }
-  div:nth-child(3) {
-    width: 28px;
-    height: 28px;
-    border-radius: 100%;
-    background-color: #05697c;
+
+  @media (max-width: 768px) {
+    width: 84px; /* Reduce size on smaller screens */
+    height: 22px;
+
+    div {
+      width: 22px;
+      height: 22px;
+    }
   }
 `;
+
 const HighlightedButtons = styled.div`
   display: flex;
   flex-direction: row;
   padding-top: 4rem;
   gap: 10px;
-  justify-content: space-between;
+  justify-content: center; /* Center align buttons */
   align-items: center;
 `;
+
 interface StyledButtonProps {
   $clicked: boolean;
 }
@@ -151,6 +187,11 @@ const StyledButton = styled.button<StyledButtonProps>`
     props.$clicked ? props.theme.colors.primary : props.theme.colors.grey};
   cursor: pointer;
   transition: width 0.3s, height 0.3s;
+
+  @media (max-width: 768px) {
+    width: ${(props) => (props.$clicked ? "20px" : "10px")}; /* Adjust size on smaller screens */
+    height: 10px;
+  }
 `;
 
 const SaleSection = () => {
@@ -172,6 +213,7 @@ const SaleSection = () => {
       [id]: !prev[id],
     }));
   };
+
   const truncateDescription = (
     description: string,
     maxLength: number,
@@ -193,12 +235,15 @@ const SaleSection = () => {
   const handlePage = (index: number) => {
     setCurrentPage(index + 1);
   };
+
   const handleCategory = (category: string) => {
     setSelectedCategory(category);
     setCurrentPage(1);
   };
+
   const startIndex = (currentPage - 1) * 3;
   const displayedProducts = products.slice(startIndex, startIndex + 3);
+
   const handleBuy = (product: Product) => {
     setSelectedProduct(product);
     setShowBuyModal(true);
@@ -238,7 +283,6 @@ const SaleSection = () => {
                 </span>
               )}
             </p>
-
             <PriceHolder>
               <p>
                 {product.price}
