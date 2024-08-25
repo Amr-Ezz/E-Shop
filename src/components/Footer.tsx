@@ -24,7 +24,7 @@ const OfferText = styled.div`
 
   @media (max-width: 768px) {
     flex-direction: column; 
-    align-items: flex-start;
+    align-items: flex-start; 
     gap: 30px;
   }
 `;
@@ -62,7 +62,7 @@ const FooterColumn = styled.div`
     cursor: pointer;
 
     &:hover {
-      color: white;
+      color: ${(props) => props.theme.colors.tertiary};;
     }
 
     @media (max-width: 768px) {

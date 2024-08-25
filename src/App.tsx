@@ -9,10 +9,18 @@ import Home from "./pages/Home";
 import ContactUs from "./pages/ContactUs";
 import AboutUs from "./pages/AboutUs";
 import { CartProvider } from "./Context/CartContext";
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+
+
+
+const stripePromise = loadStripe("pk_test_51PpeFm02wrbpBOPH5Po2Tl06mEDGBiTOtAWsnU4WpnEGSleQaZzQG0Ioi2WUBL7MvRABhp1Q5cnMV7lj85iHzoFJ001zx13v6A");
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
+      <Elements stripe={stripePromise}>
+
       <div className="Container">
         <Router>
           <CartProvider>
@@ -31,6 +39,8 @@ function App() {
 
         </Router>
       </div>
+      </Elements>
+
     </ThemeProvider>
   );
 }

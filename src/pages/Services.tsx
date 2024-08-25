@@ -52,7 +52,7 @@ const ImageHolder = styled.div`
   }
 `;
 const TagBrand = styled.div`
-  background-color: ${(props) => props.theme.colors.primary};
+  background-color: ${(props) => props.theme.colors.tertiary};
   width: 100%;
   height: 20vh;
   margin-top: 2rem;
@@ -75,6 +75,7 @@ const ArrivalSection = styled.div`
   flex-direction: column;
   justify-content: space-around;
   position: relative;
+  
 `;
 const HeadingText = styled.h3`
   font-family: poppins;

@@ -2,13 +2,22 @@ import styled from "styled-components";
 
 const CommentsMain = styled.div`
   display: flex;
-  padding: 5rem 1rem; /* Adjust padding for better responsiveness */
+  padding: 5rem 1rem;
   flex-direction: column;
   justify-content: space-around;
+  border: 1px solid ${(props) => props.theme.colors.white};
+
   align-items: center;
+  background: rgb(198, 60, 81);
+  background: linear-gradient(
+    180deg,
+    rgba(198, 60, 81, 1) 0%,
+    rgba(140, 48, 97, 1) 50%,
+    rgba(82, 34, 88, 1) 100%
+  );
 
   @media (max-width: 768px) {
-    padding: 3rem 1rem; /* Reduce padding on smaller screens */
+    padding: 3rem 1rem;
   }
 `;
 
@@ -19,21 +28,20 @@ const CommentsDiv = styled.div`
   gap: 50px;
 
   @media (max-width: 768px) {
-    gap: 30px; /* Reduce gap between rows on smaller screens */
+    gap: 30px;
   }
 `;
 
 const CommentRow = styled.div`
   display: flex;
   flex-direction: row;
-  padding: 0 2rem; /* Reduce padding for smaller screens */
+  padding: 0 2rem;
   padding-top: 2rem;
   height: auto;
   gap: 20px;
-  flex-wrap: wrap; /* Allow comments to wrap on smaller screens */
 
   @media (max-width: 768px) {
-    flex-direction: column; /* Stack comments vertically on small screens */
+    flex-direction: column;
     padding: 0;
   }
 `;
@@ -44,13 +52,13 @@ const Comment = styled.div`
   padding: 1rem;
   width: 100%;
   max-width: 655px;
-  border: 1px solid ${(props) => props.theme.colors.black};
+  border: 1px solid ${(props) => props.theme.colors.white};
   height: auto;
   min-height: 252px;
   border-radius: 12px;
 
   p {
-    color: #4f4f4f;
+    color: ${(props) => props.theme.colors.white};
     padding-top: 1rem;
     text-align: start;
     font-weight: 500;
@@ -58,7 +66,7 @@ const Comment = styled.div`
     line-height: 30px;
 
     @media (max-width: 768px) {
-      font-size: 18px; /* Adjust font size for smaller screens */
+      font-size: 18px;
       line-height: 28px;
     }
   }
@@ -76,7 +84,7 @@ const User = styled.div`
   }
 
   @media (max-width: 768px) {
-    padding: 0.5rem 0; /* Adjust padding for smaller screens */
+    padding: 0.5rem 0;
   }
 `;
 
@@ -104,7 +112,7 @@ const Name = styled.div`
     padding-top: 1.5rem;
 
     @media (max-width: 768px) {
-      font-size: 14px; /* Adjust font size for smaller screens */
+      font-size: 14px;
       line-height: 22px;
     }
   }

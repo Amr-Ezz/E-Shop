@@ -6,7 +6,7 @@ import LoginForm from "./LoginForm/LoginForm";
 import { Link } from "react-router-dom";
 import { useCart } from "../Context/CartContext";
 import CartModal from "./Modal/CartModal";
-import { FaBars, FaTimes } from "react-icons/fa"; // Import icons for the hamburger menu
+import { FaBars, FaTimes } from "react-icons/fa"; 
 
 const NavbarContainer = styled.div`
   width: 100%;
@@ -48,8 +48,9 @@ const Logo = styled.h1`
   font-size: 30px;
   font-weight: bold;
 
+
   span {
-    color: ${(props) => props.theme.colors.white};
+    color: ${(props) => props.theme.colors.tertiary}
   }
 
   @media (max-width: 768px) {
@@ -73,9 +74,10 @@ const Nav = styled.nav<NavProps>`
       font-size: 20px;
       cursor: pointer;
       transition: color 0.3s ease;
+      
 
       &:hover {
-        color: ${(props) => props.theme.colors.white};
+      color: ${(props) => props.theme.colors.tertiary}
       }
 
       a {
@@ -119,6 +121,18 @@ const ButtonDiv = styled.div`
   display: flex;
   width: 220px;
   justify-content: space-between;
+  button {
+  background-color: transparent;
+  color: ${(props) => props.theme.colors.white};
+  font-weight: bold;
+  font-size: 20px;
+  cursor: pointer;
+  border: none;
+  transition: color 0.3s ease;
+
+  &:hover {
+      color: ${(props) => props.theme.colors.tertiary}
+  }}
 
   img {
     width: 20px;

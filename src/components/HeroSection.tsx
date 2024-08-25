@@ -51,8 +51,8 @@ const FontSection = styled.div`
   }
 
   button {
-    color: ${(props) => props.theme.colors.black};
-    background-color: #e08cff;
+    color: ${(props) => props.theme.colors.white};
+    background-color: ${(props) => props.theme.colors.tertiary};
     border-radius: 50px;
     width: 200px;
     height: 60px;
@@ -124,6 +124,13 @@ const ContainerDiv = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
+  background: rgb(82, 34, 88);
+  background: linear-gradient(
+    90deg,
+    rgba(82, 34, 88, 1) 0%,
+    rgba(140, 48, 97, 1) 100%
+  );
+  
 
   @media (max-width: 768px) {
     max-width: 100%;

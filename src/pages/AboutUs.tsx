@@ -22,7 +22,7 @@ const TextHolder = styled.div`
     line-height: 64px;
     align-self: flex-start;
     span {
-      color: white;
+      color: ${(props) => props.theme.colors.tertiary};
     }
   }
   p {
@@ -37,6 +37,13 @@ const ImageHolder = styled.img`
 const RatingsDiv = styled.div`
   display: flex;
   flex-direction: row;
+  background: rgb(198, 60, 81);
+  background: linear-gradient(
+    180deg,
+    rgba(198, 60, 81, 1) 0%,
+    rgba(140, 48, 97, 1) 50%,
+    rgba(82, 34, 88, 1) 100%
+  );
   gap: 30px;
   justify-content: center;
   align-items: center;
@@ -45,7 +52,7 @@ const RatingsDiv = styled.div`
 const CardRating = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: white;
+  background-color: ${props => props.theme.colors.primary};
   padding: 1rem;
   margin: 1rem;
   align-items: center;
@@ -74,7 +81,7 @@ const CardRating = styled.div`
   }
 `;
 const CardRatingOrange = styled(CardRating)`
-  background-color: ${(props) => props.theme.colors.primary};
+  background-color: ${props => props.theme.colors.tertiary};
   color: white;
 `;
 const CastGrid = styled.div`
@@ -82,6 +89,8 @@ const CastGrid = styled.div`
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 20px;
   padding: 4rem;
+  
+  
 `;
 const CardDiv = styled.div`
   display: flex;
@@ -92,6 +101,7 @@ const CardDiv = styled.div`
   div {
     display: flex;
     justify-content: center;
+    border-radius: 50px;
     background-color: #f5f5f5;
     width: 370px;
     height: 430px;
@@ -99,7 +109,7 @@ const CardDiv = styled.div`
       object-fit: cover;
       object-position: 50% 100%;
     }
-  };
+  }
   h3 {
     font-size: 32px;
     margin-top: 20px;
@@ -119,6 +129,7 @@ const SocialMediaIcons = styled.span`
   margin-top: 10px;
   img {
     width: 24px;
+
     height: 24px;
     cursor: pointer;
   }
@@ -158,10 +169,10 @@ const AboutUs = () => {
           </h3>
           <p>
             Launched in 2015, Exclusive is South Asia’s premier online shopping
-            marketplace with an active presence in Bangladesh. Supported by a wide
-            range of tailored marketing, data, and service solutions, Exclusive
-            has 10,500 sellers and 300 brands and serves 3 million customers
-            across the region.
+            marketplace with an active presence in Bangladesh. Supported by a
+            wide range of tailored marketing, data, and service solutions,
+            Exclusive has 10,500 sellers and 300 brands and serves 3 million
+            customers across the region.
           </p>
           <br />
           <p>

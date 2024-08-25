@@ -9,17 +9,27 @@ const MainSection = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 2rem 2rem;
+  padding: 2rem;
   width: 100%;
+  background: rgb(82, 34, 88);
+  background: linear-gradient(
+    180deg,
+    rgba(82, 34, 88, 1) 0%,
+    rgba(140, 48, 97, 1) 50%,
+    rgba(198, 60, 81, 1) 100%
+  );
 
   ul {
     display: flex;
     flex-direction: row;
     list-style: none;
-    flex-wrap: wrap; /* Allow list items to wrap */
+    flex-wrap: wrap;
     justify-content: center;
+    margin: 0;
+    padding: 0;
+
     li {
-      padding: 1rem; /* Adjust padding for better spacing on smaller screens */
+      padding: 1rem;
       cursor: pointer;
       text-decoration: underline;
       &:active {
@@ -29,7 +39,7 @@ const MainSection = styled.div`
   }
 
   @media (max-width: 768px) {
-    padding: 1rem; /* Reduce padding on smaller screens */
+    padding: 1rem;
   }
 `;
 
@@ -40,38 +50,40 @@ const GridContainer = styled.div`
   width: 100%;
 
   @media (max-width: 1024px) {
-    grid-template-columns: repeat(2, 1fr); /* Change to 2 columns on medium screens */
+    grid-template-columns: repeat(2, 1fr);
   }
 
   @media (max-width: 768px) {
-    grid-template-columns: 1fr; /* Change to 1 column on small screens */
+    grid-template-columns: 1fr;
   }
 `;
 
 const Card = styled.div`
   display: flex;
   flex-direction: column;
-  border: 1px solid ${(props) => props.theme.colors.black};
-  padding: 1rem; /* Adjust padding for consistency */
+  border: 1px solid ${(props) => props.theme.colors.white};
+  padding: 1rem;
+  gap: 10px;
   align-items: center;
-  justify-content: space-around;
-  background-color: white;
+  background-color: transparent;
 
   img {
     width: 100%;
     height: auto;
-    max-width: 200px; /* Ensure image size scales properly */
+    border-radius: 50px;
+    object-fit: scale-down;
+    max-width: 200px;
     max-height: 300px;
   }
 
   h1 {
     font-size: 1.5rem;
-    text-align: center; /* Center text for better alignment */
+    text-align: center;
   }
 
   p {
-    text-align: center;
-    color: ${(props) => props.theme.colors.grey};
+    text-align: left;
+    color: ${(props) => props.theme.colors.white};
 
     span {
       padding: 1rem;
@@ -83,11 +95,10 @@ const PriceHolder = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  justify-content: space-around;
-  align-items: center;
+  align-items: flex-start;
 
   p:nth-child(1) {
-    color: ${(props) => props.theme.colors.black};
+    color: ${(props) => props.theme.colors.white};
     font-size: 1.5rem;
 
     img {
@@ -98,7 +109,8 @@ const PriceHolder = styled.div`
 
   p:nth-child(2),
   p:nth-child(3) {
-    align-self: center; /* Center align these elements */
+    align-self: flex-end;
+    
     img {
       width: 15px;
       height: 15px;
@@ -108,19 +120,19 @@ const PriceHolder = styled.div`
   div {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
-    width: 100%; /* Ensure buttons take full width */
+    justify-content: space-between;
+    width: 100%;
     margin-top: 1rem;
     padding-bottom: 1rem;
 
     button {
-      width: 100px; /* Increase button width for better tap targets */
+      width: 100px;
       height: 50px;
       border-radius: 50px;
       font-weight: 600;
-      background-color: ${(props) => props.theme.colors.white};
-      color: ${(props) => props.theme.colors.primary};
-      border: 1px solid ${(props) => props.theme.colors.primary};
+      background-color: ${(props) => props.theme.colors.quaternary};
+      color: ${(props) => props.theme.colors.white};
+      border: 1px solid ${(props) => props.theme.colors.white};
       cursor: pointer;
       transition: background-color 0.3s ease;
 
@@ -155,7 +167,7 @@ const CircleDiv = styled.div`
   }
 
   @media (max-width: 768px) {
-    width: 84px; /* Reduce size on smaller screens */
+    width: 84px;
     height: 22px;
 
     div {
@@ -170,7 +182,7 @@ const HighlightedButtons = styled.div`
   flex-direction: row;
   padding-top: 4rem;
   gap: 10px;
-  justify-content: center; /* Center align buttons */
+  justify-content: center;
   align-items: center;
 `;
 
@@ -189,7 +201,8 @@ const StyledButton = styled.button<StyledButtonProps>`
   transition: width 0.3s, height 0.3s;
 
   @media (max-width: 768px) {
-    width: ${(props) => (props.$clicked ? "20px" : "10px")}; /* Adjust size on smaller screens */
+    width: ${(props) =>
+      props.$clicked ? "20px" : "10px"};
     height: 10px;
   }
 `;
@@ -198,11 +211,8 @@ const SaleSection = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [showBuyModal, setShowBuyModal] = useState<boolean>(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const [toggleDescription, setToggleDescription] = useState<{
-    [key: number]: boolean;
-  }>({});
-  const [selectedCategory, setSelectedCategory] =
-    useState<string>("men's clothing");
+  const [toggleDescription, setToggleDescription] = useState<{ [key: number]: boolean }>({});
+  const [selectedCategory, setSelectedCategory] = useState<string>("audio");
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   const { addToCart } = useCart();
@@ -214,11 +224,7 @@ const SaleSection = () => {
     }));
   };
 
-  const truncateDescription = (
-    description: string,
-    maxLength: number,
-    id: number
-  ) => {
+  const truncateDescription = (description: string, maxLength: number, id: number) => {
     if (toggleDescription[id]) return description;
     if (description.length <= maxLength) return description;
     return `${description.substring(0, maxLength)}....`;
@@ -226,8 +232,12 @@ const SaleSection = () => {
 
   useEffect(() => {
     const getProducts = async () => {
-      const productData = await fetchProducts(selectedCategory);
-      setProducts(productData);
+      try {
+        const productData = await fetchProducts(selectedCategory);
+        setProducts(productData);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
     };
     getProducts();
   }, [selectedCategory]);
@@ -253,16 +263,16 @@ const SaleSection = () => {
     <MainSection>
       <h1>Flash Sale</h1>
       <ul>
-        <li onClick={() => handleCategory("men's clothing")}>Men</li>
-        <li onClick={() => handleCategory("women's clothing")}>Women</li>
-        <li onClick={() => handleCategory("jewelery")}>Jewelry</li>
-        <li onClick={() => handleCategory("electronics")}>Electronics</li>
+        <li onClick={() => handleCategory("audio")}>Audio</li>
+        <li onClick={() => handleCategory("gaming")}>Gaming</li>
+        <li onClick={() => handleCategory("mobile")}>Mobile</li>
+        <li onClick={() => handleCategory("tv")}>TV</li>
       </ul>
       <GridContainer>
         {displayedProducts.map((product) => (
           <Card key={product.id}>
-            <img src={product.image} alt={product.name} />
-            <h1>{product.title}</h1>
+            <img src={product.image} alt={product.title} />
+            <h1>{truncateDescription(product.title, 50, product.id)}</h1>
             <CircleDiv>
               <div></div>
               <div></div>
@@ -289,12 +299,12 @@ const SaleSection = () => {
                 <img src="/icons/dollar-symbol.png" alt="dollar" />
               </p>
               <p>
-                {product.rating.rate} <img src={"/icons/star.png"} />
+                {product.brand} <img src="/icons/star.png" alt="star" />
               </p>
               <p>
-                {product.rating.count}{" "}
-                <img src="/icons/trolley.png" alt="Items left" />
+                {product.discount} <img src="/icons/trolley.png" alt="Items left" />
               </p>
+              <p>Model: {product.model}</p>
               <div>
                 <button onClick={() => handleBuy(product)}>BUY</button>
                 <button onClick={() => addToCart(product)}>Add To Cart</button>
@@ -316,7 +326,7 @@ const SaleSection = () => {
       </HighlightedButtons>
       {showBuyModal && selectedProduct && (
         <BuyModal
-          product={selectedProduct}
+          productId={selectedProduct.id}
           onClose={() => setShowBuyModal(false)}
         />
       )}

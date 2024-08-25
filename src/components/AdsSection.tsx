@@ -2,6 +2,8 @@ import styled from "styled-components";
 const AdsMain = styled.div`
   display: flex;
   flex-direction: row;
+  background: rgb(198,60,81);
+background: linear-gradient(180deg, rgba(198,60,81,1) 0%, rgba(140,48,97,1) 50%, rgba(82,34,88,1) 100%);
   width: fit-content;
   height: 300px;
   padding-top: 1rem;
