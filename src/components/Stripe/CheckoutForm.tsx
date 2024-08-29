@@ -1,3 +1,4 @@
+// CheckoutForm.tsx
 import React, { useEffect, useState } from 'react';
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 import axios from 'axios';
@@ -81,7 +82,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ product, quantity }) => {
       payment_method: {
         card: cardElement,
         billing_details: {
-          name: 'Jenny Rosen',  // Replace with real billing details
+          name: 'Customer Name',  // Replace with real billing details
         },
       },
     });

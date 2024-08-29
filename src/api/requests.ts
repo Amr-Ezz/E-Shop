@@ -11,6 +11,7 @@ export interface Product {
   discount: number;
   brand: string;
   model: string;
+ 
 }
 export const fetchProducts = async (category: string): Promise<Product[]> => {
   try {
@@ -22,5 +23,15 @@ export const fetchProducts = async (category: string): Promise<Product[]> => {
     return [];
   }
 };
+export const fetchProductsById = async (id: number) => {
+  try {
+    const response = await axios.get(`https://fakestoreapi.in/api/products/${id}`);
+    return  response.data;
+  } catch (error) {
+    console.error(error, "error fetch single product");
+    throw new Error("Could not fetch product"); // Optionally throw error to handle it upstream
+
+  }
+}
 
 

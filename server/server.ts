@@ -1,54 +1,47 @@
-import express, { Request, Response } from 'express';
-import cors from 'cors';
-import Stripe from 'stripe';
-import dotenv from 'dotenv';
+import express from "express";
+import Stripe from "stripe";
 
-// Load environment variables
-dotenv.config();
-
-// Initialize Stripe with your secret key
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
+const app = express();
+// This is your test secret API key.
+const stripe = new Stripe('sk_test_51PpeFm02wrbpBOPH0iJFnDgeggkLGpEM8ekwZ9TYXDKOAoHvHn8IEmCbyILj6S0hSfZkdcHNYage0X5fcQ2dbObG008Xm0KnGW', {
   apiVersion: '2024-06-20',
 });
 
-const app = express();
-const port = 3001;
-
-app.use(cors());
+app.use(express.static("public"));
 app.use(express.json());
 
-app.post('/create-checkout-session', async (req: Request, res: Response) => {
-  try {
-    const { amount, currency, quantity, productName } = req.body;
+interface Item {
+  amount: number;
+}
 
-    // Create a Checkout Session with Stripe
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
-      line_items: [
-        {
-          price_data: {
-            currency: currency || 'usd',
-            product_data: {
-              name: productName,
-            },
-            unit_amount: amount,
-          },
-          quantity: quantity,
-        },
-      ],
-      mode: 'payment',
-      success_url: `${process.env.CLIENT_URL}/success`,
-      cancel_url: `${process.env.CLIENT_URL}/cancel`,
-    });
+const calculateOrderAmount = (items: Item[]): number => {
+  // Calculate the order total on the server to prevent
+  // people from directly manipulating the amount on the client
+  let total = 0;
+  items.forEach((item) => {
+    total += item.amount;
+  });
+  return total;
+};
 
-    // Send the session ID to the client
-    res.json({ url: session.url });
-  } catch (error) {
-    console.error('Error creating checkout session:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
+app.post("/create-payment-intent", async (req, res) => {
+  const { items } = req.body;
+
+  // Create a PaymentIntent with the order amount and currency
+  const paymentIntent = await stripe.paymentIntents.create({
+    amount: calculateOrderAmount(items),
+    currency: "usd",
+    // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
+    automatic_payment_methods: {
+      enabled: true,
+    },
+  });
+
+  res.send({
+    clientSecret: paymentIntent.client_secret,
+    // [DEV]: For demo purposes only, you should avoid exposing the PaymentIntent ID in the client-side code.
+    dpmCheckerLink: `https://dashboard.stripe.com/settings/payment_methods/review?transaction_id=${paymentIntent.id}`,
+  });
 });
 
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});
+app.listen(4242, () => console.log("Node server listening on port 4242!"));

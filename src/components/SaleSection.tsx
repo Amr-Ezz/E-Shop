@@ -1,7 +1,8 @@
+// SaleSection.tsx
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { fetchProducts, Product } from "../api/requests";
-import BuyModal from "./Modal/BuyModal";
+// import BuyModal from "./Modal/BuyModal";
 import { useCart } from "../Context/CartContext";
 
 const MainSection = styled.div`
@@ -110,7 +111,7 @@ const PriceHolder = styled.div`
   p:nth-child(2),
   p:nth-child(3) {
     align-self: flex-end;
-    
+
     img {
       width: 15px;
       height: 15px;
@@ -201,8 +202,7 @@ const StyledButton = styled.button<StyledButtonProps>`
   transition: width 0.3s, height 0.3s;
 
   @media (max-width: 768px) {
-    width: ${(props) =>
-      props.$clicked ? "20px" : "10px"};
+    width: ${(props) => (props.$clicked ? "20px" : "10px")};
     height: 10px;
   }
 `;
@@ -211,7 +211,9 @@ const SaleSection = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [showBuyModal, setShowBuyModal] = useState<boolean>(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const [toggleDescription, setToggleDescription] = useState<{ [key: number]: boolean }>({});
+  const [toggleDescription, setToggleDescription] = useState<{
+    [key: number]: boolean;
+  }>({});
   const [selectedCategory, setSelectedCategory] = useState<string>("audio");
   const [currentPage, setCurrentPage] = useState<number>(1);
 
@@ -223,8 +225,13 @@ const SaleSection = () => {
       [id]: !prev[id],
     }));
   };
+  
 
-  const truncateDescription = (description: string, maxLength: number, id: number) => {
+  const truncateDescription = (
+    description: string,
+    maxLength: number,
+    id: number
+  ) => {
     if (toggleDescription[id]) return description;
     if (description.length <= maxLength) return description;
     return `${description.substring(0, maxLength)}....`;
@@ -302,7 +309,8 @@ const SaleSection = () => {
                 {product.brand} <img src="/icons/star.png" alt="star" />
               </p>
               <p>
-                {product.discount} <img src="/icons/trolley.png" alt="Items left" />
+                {product.discount}{" "}
+                <img src="/icons/trolley.png" alt="Items left" />
               </p>
               <p>Model: {product.model}</p>
               <div>
@@ -324,12 +332,12 @@ const SaleSection = () => {
             />
           ))}
       </HighlightedButtons>
-      {showBuyModal && selectedProduct && (
+      {/* {showBuyModal && selectedProduct && (
         <BuyModal
-          productId={selectedProduct.id}
+          product={selectedProduct}
           onClose={() => setShowBuyModal(false)}
         />
-      )}
+      )} */}
     </MainSection>
   );
 };

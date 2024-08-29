@@ -1,3 +1,4 @@
+// App.tsx
 import { ThemeProvider } from "styled-components";
 import "./App.css";
 import Navbar from "./components/Navbar";
@@ -9,38 +10,71 @@ import Home from "./pages/Home";
 import ContactUs from "./pages/ContactUs";
 import AboutUs from "./pages/AboutUs";
 import { CartProvider } from "./Context/CartContext";
-import { Elements } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import { useEffect, useState } from "react";
+import CheckoutForm from "./pages/CheckoutForm";
+import CompletePage from "./pages/CompletePage";
 
-
-
-const stripePromise = loadStripe("pk_test_51PpeFm02wrbpBOPH5Po2Tl06mEDGBiTOtAWsnU4WpnEGSleQaZzQG0Ioi2WUBL7MvRABhp1Q5cnMV7lj85iHzoFJ001zx13v6A");
+// Load Stripe instance with your public key
+const stripePromise = loadStripe(
+  "pk_test_51PpeFm02wrbpBOPH5Po2Tl06mEDGBiTOtAWsnU4WpnEGSleQaZzQG0Ioi2WUBL7MvRABhp1Q5cnMV7lj85iHzoFJ001zx13v6A"
+);
 
 function App() {
+  const [clientSecret, setClientSecret] = useState<string>("");
+  const [dpmCheckerLink, setDpmCheckerLink] = useState<string>("");
+  useEffect(() => {
+    // Create PaymentIntent as soon as the page loads
+    fetch("/create-payment-intent", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ items: [{ id: "xl-tshirt", amount: 1000 }] }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setClientSecret(data.clientSecret);
+        setDpmCheckerLink(data.dpmCheckerLink);
+      });
+  }, []);
+
+  const appearance = {
+    theme: "stripe" as "stripe",
+  };
+  const options = {
+    clientSecret,
+    appearance,
+  };
+
   return (
     <ThemeProvider theme={theme}>
-      <Elements stripe={stripePromise}>
-
-      <div className="Container">
-        <Router>
-          <CartProvider>
+      <Router>
+        <CartProvider>
+          <div className="Container">
             <Navbar />
+            {clientSecret && (
+              <Elements options={options} stripe={stripePromise}>
+                <Routes>
+                  <Route path="/pages/Services" element={<Services />} />
+                  <Route path="/" element={<Home />} />
+                  <Route path="/pages/ContactUs" element={<ContactUs />} />
+                  <Route path="/pages/AboutUs" element={<AboutUs />} />
+                  <Route
+                    path="/pages/CheckoutForm"
+                    element={<CheckoutForm dpmCheckerLink={dpmCheckerLink} />}
+                  />
+                  <Route
+                    path="/pages/CompletePage"
+                    element={<CompletePage />}
+                  />
+                </Routes>
+              </Elements>
+            )}
 
-          <Routes>
-            <Route path="/pages/Services" element={<Services />}></Route>
-            <Route path="/" element={<Home />}>
-            </Route>
-            <Route path="/pages/ContactUs" element={<ContactUs />}></Route>
-            <Route path="/pages/AboutUs" element={<AboutUs />}></Route>
-          </Routes>
-          <div className="container"></div>
-          <Footer />
-          </CartProvider>
-
-        </Router>
-      </div>
-      </Elements>
-
+            <Footer />
+          </div>
+        </CartProvider>
+      </Router>
     </ThemeProvider>
   );
 }
