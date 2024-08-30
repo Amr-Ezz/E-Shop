@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { fetchProducts, Product } from "../api/requests";
-// import BuyModal from "./Modal/BuyModal";
+import BuyModal from "./Modal/BuyModal";
 import { useCart } from "../Context/CartContext";
 
 const MainSection = styled.div`
@@ -332,12 +332,12 @@ const SaleSection = () => {
             />
           ))}
       </HighlightedButtons>
-      {/* {showBuyModal && selectedProduct && (
+      {showBuyModal && selectedProduct && (
         <BuyModal
           product={selectedProduct}
           onClose={() => setShowBuyModal(false)}
         />
-      )} */}
+      )}
     </MainSection>
   );
 };

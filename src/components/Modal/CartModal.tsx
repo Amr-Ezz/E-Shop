@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+// import React, { useState } from "react";
 import styled from "styled-components";
 import { useCart } from "../../Context/CartContext";
 
@@ -15,9 +15,11 @@ const ModalOverlay = styled.div`
 `;
 
 const ModalContent = styled.div`
-  background-color: white;
+  background: ${(props) => props.theme.colors.tertiary};
+  box-shadow: 15px 15px 30px rgb(25, 25, 25), -15px -15px 30px rgb(60, 60, 60);
+
   padding: 20px;
-  color: black;
+  color: white;
   border-radius: 8px;
   max-width: 500px;
   width: 100%;
@@ -45,16 +47,17 @@ const ModalContent = styled.div`
 
 const CartItem = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: space-between;
-  padding: 10px 0;
-  border-bottom: 1px solid #eee;
+  padding: 15px 0;
+  gap: 10px;
+border-top: 1px solid white;
   div {
     h3 {
       text-align: left;
-      color: ${(props) => props.theme.colors.primary};
+      font-size: 12px;
+      color: ${(props) => props.theme.colors.white};
       font-weight: 600;
-      padding-top: 10px;
     }
     p {
       text-align: left;
@@ -63,30 +66,33 @@ const CartItem = styled.div`
         color: green;
       }
     }
+    button {
+      width: 56px;
+      height: 50px;
+      border-radius: 50px;
+      font-weight: 600;
+      background-color: ${(props) => props.theme.colors.white};
+      color: ${(props) => props.theme.colors.primary};
+      border: 1px solid ${(props) => props.theme.colors.primary};
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      align-self: flex-start;
+      &:hover {
+        background-color: ${(props) => props.theme.colors.primary};
+        color: ${(props) => props.theme.colors.white};
+      }
+    }
   }
   button {
-    width: 86px;
-    height: 50px;
-    border-radius: 50px;
-    font-weight: 600;
-    background-color: ${(props) => props.theme.colors.white};
-    color: ${(props) => props.theme.colors.primary};
-    border: 1px solid ${(props) => props.theme.colors.primary};
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    align-self: flex-end;
-    &:hover {
-      background-color: ${(props) => props.theme.colors.primary};
-      color: ${(props) => props.theme.colors.white};
-    }
+    padding: 0.5rem;
   }
 `;
 const CounterButton = styled.button`
   background-color: #f0f0f0;
   border: none;
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
+  border-radius: 100%;
+  width: 12px;
+  height: 12px;
   font-size: 1.2rem;
   cursor: pointer;
   display: flex;

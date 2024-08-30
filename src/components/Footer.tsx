@@ -2,14 +2,14 @@ import styled from "styled-components";
 
 const FooterMain = styled.div`
   width: 100%;
-  padding: 2rem 1rem; 
+  padding: 2rem 1rem;
   border-top: 1px solid white;
   display: flex;
   align-items: center;
   justify-content: center;
 
   @media (max-width: 768px) {
-    height: auto; 
+    height: auto;
     padding: 2rem 0.5rem;
   }
 `;
@@ -23,8 +23,8 @@ const OfferText = styled.div`
   text-align: left;
 
   @media (max-width: 768px) {
-    flex-direction: column; 
-    align-items: flex-start; 
+    flex-direction: column;
+    align-items: flex-start;
     gap: 30px;
   }
 `;
@@ -32,8 +32,6 @@ const OfferText = styled.div`
 const FooterColumn = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
   gap: 15px;
 
   h3 {
@@ -42,7 +40,7 @@ const FooterColumn = styled.div`
     font-weight: bold;
 
     @media (max-width: 768px) {
-      font-size: 20px; 
+      font-size: 20px;
     }
   }
 
@@ -52,7 +50,7 @@ const FooterColumn = styled.div`
     font-weight: medium;
 
     @media (max-width: 768px) {
-      font-size: 18px; 
+      font-size: 18px;
     }
   }
 
@@ -62,11 +60,11 @@ const FooterColumn = styled.div`
     cursor: pointer;
 
     &:hover {
-      color: ${(props) => props.theme.colors.tertiary};;
+      color: ${(props) => props.theme.colors.tertiary};
     }
 
     @media (max-width: 768px) {
-      font-size: 14px; 
+      font-size: 14px;
     }
   }
 
@@ -76,6 +74,11 @@ const FooterColumn = styled.div`
     position: relative;
 
     input {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
       border-radius: 4px;
       border: none;
       padding: 12px 5px 16px;
@@ -87,13 +90,13 @@ const FooterColumn = styled.div`
 
     img {
       position: absolute;
-      right: 10px;
-      top: 10px;
+      right: 50px;
+      top: 30px;
       bottom: 12px;
       cursor: pointer;
 
       @media (max-width: 768px) {
-        right: 5px; 
+        right: 5px;
       }
     }
   }
@@ -104,7 +107,7 @@ const MobileContainer = styled.div`
   flex-direction: row;
 
   @media (max-width: 768px) {
-    flex-direction: column; 
+    flex-direction: column;
   }
 `;
 
@@ -113,7 +116,7 @@ const ImageMobileColumn = styled.div`
 
   img {
     object-fit: cover;
-    width: 100%; 
+    width: 100%;
   }
 `;
 
@@ -137,7 +140,7 @@ const Element = styled.div`
 
   img {
     border-radius: 10px;
-    max-width: 100%; 
+    max-width: 100%;
   }
 
   @media (max-width: 768px) {
