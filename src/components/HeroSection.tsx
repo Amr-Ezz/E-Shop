@@ -7,6 +7,16 @@ const HeroDiv = styled.div`
   gap: 2rem;
   align-items: center;
   padding: 2rem;
+  div {
+    img {
+  filter: drop-shadow(0 10px 10px rgba(0, 0, 0, 0.3));
+      width: 100%;
+      height: auto;
+      max-width: 500px;
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      object-fit: cover;
+    }
+  }
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -24,7 +34,7 @@ const FontSection = styled.div`
     margin: 0;
     line-height: 1.1;
     text-align: start;
-    font-size: 96px;
+    font-size: 76px;
     font-weight: 600;
 
     @media (max-width: 768px) {
@@ -130,7 +140,6 @@ const ContainerDiv = styled.div`
     rgba(82, 34, 88, 1) 0%,
     rgba(140, 48, 97, 1) 100%
   );
-  
 
   @media (max-width: 768px) {
     max-width: 100%;
@@ -142,19 +151,22 @@ const HeroSection = () => {
     <ContainerDiv>
       <HeroDiv>
         <FontSection>
-          <h1>New Summer Collection</h1>
-          <p>Shop the best clothes in the world</p>
+          <h1>Explore the Ultimate Tech Collection</h1>
+          <p>
+            Level up with the latest in gaming, sound, and screen experiences
+          </p>
           <button>SHOP NOW</button>
         </FontSection>
         <div>
-          <img src="/Rectangle 3.png" alt="Model Image" style={{ width: "100%", maxWidth: "500px", height: "auto" }} />
+          <img src="/Rectangle 3.png" alt="Model Image" />
         </div>
       </HeroDiv>
       <FooterHeroSection>
         <TextBox>
-          .Customer Support. .Customer Support. .Customer Support. .Customer Support. .Customer Support.
-          .Customer Support. .Customer Support. .Customer Support. .Customer Support. .Customer Support.
-          .Customer Support. .Customer Support.
+          .Customer Support. .Customer Support. .Customer Support. .Customer
+          Support. .Customer Support. .Customer Support. .Customer Support.
+          .Customer Support. .Customer Support. .Customer Support. .Customer
+          Support. .Customer Support.
         </TextBox>
       </FooterHeroSection>
     </ContainerDiv>

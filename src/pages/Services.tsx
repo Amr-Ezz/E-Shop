@@ -25,6 +25,7 @@ const TextSection = styled.div`
   flex-direction: column;
   width: 100%;
   justify-content: center;
+  padding: 5rem;
   h1 {
     font-size: ${(props) => props.theme.font.fontSize};
     font-weight: ${(props) => props.theme.font.fontWeight};
@@ -47,7 +48,7 @@ const ImageHolder = styled.div`
     object-position: 100% 50%;
     width: 100%;
     height: 100vh;
-    clip-path: inset(0px 10px 20px 0 round 100px);
+    clip-path: inset(10px 10px 20px 0 round 100px);
     z-index: 0;
   }
 `;
@@ -254,14 +255,15 @@ const CommunitySection = styled.div`
 const FormContainer = styled.form`
   display: flex;
   flex-direction: column;
-  width: 300px;
-  margin: 0 auto;
+  justify-content: center;
+  align-content: center;
+  width: 100%;
   padding: 1rem;
 `;
 const InputField = styled.input`
   padding: 10px;
   margin-bottom: 20px;
-  text-align: right;
+  text-align: center;
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -270,13 +272,13 @@ const InputField = styled.input`
 
 const SubmitButton = styled.button`
   padding: 10px;
+  width: 10%;
   background-color: black;
   color: white;
   font-size: 16px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  position: absolute;
   &:hover {
     opacity: 0.9;
   }

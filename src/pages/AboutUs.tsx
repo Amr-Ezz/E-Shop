@@ -13,7 +13,7 @@ const TextHolder = styled.div`
   align-items: center;
   gap: 10px;
   text-align: left;
-  padding: 1rem;
+  padding: 5rem;
   h3 {
     display: flex;
     gap: 10px;
@@ -30,8 +30,10 @@ const TextHolder = styled.div`
   }
 `;
 const ImageHolder = styled.img`
+width: 100%;
+height: 100vh;
   object-fit: cover;
-  object-position: 50% 100%;
+  object-position: 100% 50%;
   border-radius: 20px;
 `;
 const RatingsDiv = styled.div`

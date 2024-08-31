@@ -2,8 +2,13 @@ import styled from "styled-components";
 const AdsMain = styled.div`
   display: flex;
   flex-direction: row;
-  background: rgb(198,60,81);
-background: linear-gradient(180deg, rgba(198,60,81,1) 0%, rgba(140,48,97,1) 50%, rgba(82,34,88,1) 100%);
+  background: rgb(198, 60, 81);
+  background: linear-gradient(
+    180deg,
+    rgba(198, 60, 81, 1) 0%,
+    rgba(140, 48, 97, 1) 50%,
+    rgba(82, 34, 88, 1) 100%
+  );
   width: fit-content;
   height: 300px;
   padding-top: 1rem;
@@ -12,16 +17,26 @@ background: linear-gradient(180deg, rgba(198,60,81,1) 0%, rgba(140,48,97,1) 50%,
 const ImageDiv = styled.div`
   position: relative;
   z-index: 0;
+  perspective: 1000px;
+  cursor: pointer;
   img {
     width: 450px;
     height: 300px;
+    object-fit: cover;
+    object-position: 100% 70%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transform-style: preserve-3d;
+    &:hover {
+      transform: rotateY(15deg) rotateX(10deg) scale(1.05);
+      box-shadow: 0 20px 30px rgba(0, 0, 0, 0.3); 
+    }
   }
   h1 {
     position: absolute;
     width: 151px;
     height: 96px;
-    line-height: 48px;
-    font-size: 40px;
+    line-height: 38px;
+    font-size: 30px;
     font-weight: 600;
     text-align: center;
     color: white;
@@ -31,20 +46,23 @@ const ImageDiv = styled.div`
 `;
 
 const AdsSection = () => {
-  
   return (
     <AdsMain>
       <ImageDiv>
         <img src="Rectangle 4.png" alt="Model Image" />
-        <h1>Casual Wear </h1>
+        <h1>Ultimate Gaming Gear</h1>
       </ImageDiv>
       <ImageDiv>
         <img src="Rectangle 6.png" alt="Model Image" />
-        <h1>50% Summer Collection</h1>
+        <h1>50% Off Premium Sound</h1>
       </ImageDiv>
       <ImageDiv>
-        <img src="Rectangle 5.png" alt="Model Image" />
-        <h1>Sports Ready</h1>
+        <img
+          src="Rectangle 5.png"
+          alt="Model Image"
+          style={{ objectPosition: "100% 30%" }}
+        />
+        <h1>Newest Smartphones</h1>
       </ImageDiv>
     </AdsMain>
   );

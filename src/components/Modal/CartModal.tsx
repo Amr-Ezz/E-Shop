@@ -51,7 +51,7 @@ const CartItem = styled.div`
   justify-content: space-between;
   padding: 15px 0;
   gap: 10px;
-border-top: 1px solid white;
+  border-top: 1px solid white;
   div {
     h3 {
       text-align: left;
