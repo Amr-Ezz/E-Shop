@@ -11,6 +11,7 @@ import ContactUs from "./pages/ContactUs";
 import AboutUs from "./pages/AboutUs";
 import { CartProvider } from "./Context/CartContext";
 import CheckoutPage from "./pages/CheckoutPage";
+import SearchResults from "./pages/SearchResults";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
               <Route path="/pages/ContactUs" element={<ContactUs />} />
               <Route path="/pages/AboutUs" element={<AboutUs />} />
               <Route path="/pages/CheckoutPage" element={<CheckoutPage />} />
+              <Route path="/search" element={<SearchResults/>} />
             </Routes>
 
             <Footer />
