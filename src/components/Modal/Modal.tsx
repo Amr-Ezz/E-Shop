@@ -12,7 +12,7 @@ const ModalBackground = styled.div`
   align-items: center;
 `;
 const ModalWrapper = styled.div`
-  width: 400px;
+  width: fit-content;
   background: white;
   padding: 2rem;
   border-radius: 12px;

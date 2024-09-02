@@ -45,7 +45,7 @@ const TextSection = styled.div`
 const ImageHolder = styled.div`
   img {
     object-fit: cover;
-    object-position: 100% 50%;
+    object-position: 20% 100%;
     width: 100%;
     height: 100vh;
     clip-path: inset(10px 10px 20px 0 round 100px);
@@ -53,7 +53,7 @@ const ImageHolder = styled.div`
   }
 `;
 const TagBrand = styled.div`
-  background-color: ${(props) => props.theme.colors.tertiary};
+  background-color: ${(props) => props.theme.colors.secondary};
   width: 100%;
   height: 20vh;
   margin-top: 2rem;
@@ -76,7 +76,6 @@ const ArrivalSection = styled.div`
   flex-direction: column;
   justify-content: space-around;
   position: relative;
-  
 `;
 const HeadingText = styled.h3`
   font-family: poppins;
@@ -112,6 +111,7 @@ const Card = styled.div`
   flex-direction: column;
   justify-content: space-around;
   box-sizing: border-box;
+
   div {
     display: flex;
     flex-direction: column;
@@ -128,20 +128,28 @@ const Card = styled.div`
     }
   }
 `;
+const ImageCard = styled.img`
+  width: 100%;
+  height: 90vh;
+  border-radius: 50px;
+  object-fit: cover;
+  object-position: 20% 100%;
+`;
 const SaleBanner = styled.div`
   width: 100%;
   max-width: 100vw;
-  height: 101vh;
+  display: flex;
+  align-content: flex-end;
+  justify-content: flex-end;
+  height: 100vh;
   min-height: 553px;
   background-image: url("/purple_background.jpg");
   background-size: cover; /* This makes the image cover the entire div */
-
   background-repeat: no-repeat; /* Prevents the image from repeating */
   background-position: center;
   div {
     display: flex;
-    flex-direction: row-reverse;
-    justify-content: space-around;
+    flex-direction: row;
     align-items: center;
     position: relative;
 
@@ -157,10 +165,10 @@ const SaleOffer = styled.div`
   div {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
     align-items: flex-start;
     h2 {
-      background-color: white;
+      background-color: black;
+      color: white;
       border-radius: 20px;
       font-size: 78px;
       font-weight: 800;
@@ -215,25 +223,32 @@ const YoungSelection = styled.div`
   position: relative;
 `;
 const YoungFavourite = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;  
   gap: 1rem;
   width: 100%;
 `;
 const CardTrending = styled.div`
-  width: fit-content;
+  width: 100%;
   height: 100vh;
   min-height: auto;
   padding: 1rem;
   img {
     width: 100%;
+    height: 70vh;
+    border-radius: 50px;
+    object-fit: cover;
   }
   h4 {
     text-align: left;
+    padding-left: 1rem;
   }
   p {
     color: #7f7f7f;
     text-align: left;
+    padding-left: 1rem;
   }
 `;
 const CommunitySection = styled.div`
@@ -292,9 +307,7 @@ const Services: React.FC = () => {
           <h1>
             Your choice is our first and foremost <span>Priority</span>
           </h1>
-          <p>
-          Live for Influential and Innovative fashion!
-          </p>
+          <p>Live for Influential and Innovative fashion!</p>
         </TextSection>
         <ImageHolder>
           <img src="/pexels-olly-974911.jpg" />
@@ -314,25 +327,25 @@ const Services: React.FC = () => {
         <HeadingText>New Arrivals</HeadingText>
         <CardsContainer>
           <Card>
-            <img src="/Rectangle 20.png" />
+            <ImageCard src="/Rectangle 20.png" />
             <div>
-              <h4> Hoodies & Sweetshirts</h4>
+              <h4> Gaming Sets</h4>
               <p> Explore Now!</p>
               <img src="/Arrow 1.png" />
             </div>
           </Card>
           <Card>
-            <img src="/Rectangle 21.png" />
+            <ImageCard src="/Rectangle 21.png" />
             <div>
-              <h4> Coats & Parkas</h4>
+              <h4> Phones</h4>
               <p> Explore Now!</p>
               <img src="/Arrow 1.png" />
             </div>
           </Card>
           <Card>
-            <img src="/Rectangle 22.png" />
+            <ImageCard src="/Rectangle 22.png" />
             <div>
-              <h4> Tees & T-Shirts</h4>
+              <h4>Earphones</h4>
               <p> Explore Now!</p>
               <img src="/Arrow 1.png" />
             </div>
@@ -359,7 +372,7 @@ const Services: React.FC = () => {
               </ParagraphSection>
             </div>
           </SaleOffer>
-          <img src="/Purple.PNG" alt="model" />
+          {/* <img src="/Purple.PNG" alt="model" /> */}
         </div>
       </SaleBanner>
       <YoungSelection>

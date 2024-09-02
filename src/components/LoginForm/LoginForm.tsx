@@ -6,6 +6,8 @@ import { useState } from "react";
 const Form = styled.form`
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-content: center;
   z-index: 1;
 `;
 const Button = styled.button`
