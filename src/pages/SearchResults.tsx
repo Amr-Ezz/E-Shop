@@ -2,6 +2,15 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Product } from "../api/requests";
 import axios from "axios";
+import styled from "styled-components";
+import { Card } from "../components/SaleSection";
+
+const ResultsDiv = styled.div`
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-gap: 10px;
+  border: 1px solid red;
+`;
 
 const SearchResults = () => {
   const location = useLocation();
@@ -17,24 +26,32 @@ const SearchResults = () => {
     }
   }, [query]);
 
-  return (  <div>
-    <h1>Search Results for "{query}"</h1>
-    {products.length > 0 ? (
-      <ul>
-        {products.map((product) => (
-          <li key={product.id}>
-            <h2>{product.title}</h2>
-            <p>{product.description}</p>
-            <img src={product.image} alt={product.title} width="100" />
-            <p>Price: ${product.price}</p>
-          </li>
-        ))}
-      </ul>
-    ) : (
-      <p>No results found.</p>
-    )}
-  </div>
-);
+  return (
+    <>
+      <h1>Search Results for "{query}"</h1>
+
+      <ResultsDiv>
+        {products.length > 0 ? (
+          <ul>
+            {products.map((product) => (
+              <Card key={product.id}>
+                <img src={product.image} alt={product.title} width="100" style={{alignSelf: "flex-start"}} />
+
+                <h1>{product.title}</h1>
+                <p>{product.description}</p>
+                <p>
+                  Price: <span>$</span>
+                  {product.price}
+                </p>
+              </Card>
+            ))}
+          </ul>
+        ) : (
+          <p>No results found.</p>
+        )}
+      </ResultsDiv>
+    </>
+  );
 };
 
 export default SearchResults;

@@ -59,7 +59,7 @@ const GridContainer = styled.div`
   }
 `;
 
-const Card = styled.div`
+export const Card = styled.div`
   display: flex;
   flex-direction: column;
   border: 1px solid ${(props) => props.theme.colors.white};
@@ -87,7 +87,7 @@ const Card = styled.div`
     color: ${(props) => props.theme.colors.white};
 
     span {
-      padding: 1rem;
+      color: green;
     }
   }
 `;

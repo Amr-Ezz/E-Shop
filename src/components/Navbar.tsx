@@ -194,7 +194,8 @@ const WrapperButtons = styled.div`
   justify-content: space-between;
   align-content: center;
   form {
-  width: fit-content;
+  height: 10vh;
+  border: 1px solid red;
   }
 `;
 
