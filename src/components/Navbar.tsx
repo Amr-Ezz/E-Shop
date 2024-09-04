@@ -178,11 +178,11 @@ const CartCount = styled.div`
 `;
 const SearchInput = styled.input<{ isVisible: boolean }>`
   width: 200px;
-  margin-top: 10px;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
   display: ${({ isVisible }) => (isVisible ? "block" : "none")};
+
 
   @media (max-width: 768px) {
     width: 150px;
@@ -191,11 +191,14 @@ const SearchInput = styled.input<{ isVisible: boolean }>`
 const WrapperButtons = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  align-content: center;
+  align-items: flex-end;
+  gap: 10px;
   form {
-  height: 10vh;
-  border: 1px solid red;
+    width: fit-content;
+    display: flex;
+    justify-content: flex-end;
+    margin: 0;
+    padding: 0;
   }
 `;
 

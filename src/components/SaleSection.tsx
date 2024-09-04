@@ -207,6 +207,7 @@ const StyledButton = styled.button<StyledButtonProps>`
   }
 `;
 
+
 const SaleSection = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [showBuyModal, setShowBuyModal] = useState<boolean>(false);
@@ -227,7 +228,7 @@ const SaleSection = () => {
   };
   
 
-  const truncateDescription = (
+   const truncateDescription = (
     description: string,
     maxLength: number,
     id: number
