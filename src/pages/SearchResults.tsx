@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
-import { Card } from "../components/SaleSection"; 
+import { Card } from "../components/SaleSection";
 import { Product } from "../api/requests";
-import { useCart } from "../Context/CartContext"; 
+import { useCart } from "../Context/CartContext";
 
 const ResultsDiv = styled.div`
   display: grid;
@@ -29,15 +29,14 @@ const PriceHolder = styled.div`
       height: 20px;
     }
   }
-    p:nth-child(2), p:nth-child(3) {
+  p:nth-child(2),
+  p:nth-child(3) {
     align-self: flex-end;
     font-weight: 300;
-    }
-    p:nth-child(4) {
-        font-size: 16px;
-
-    }
-   
+  }
+  p:nth-child(4) {
+    font-size: 16px;
+  }
 
   div {
     display: flex;
@@ -66,26 +65,38 @@ const PriceHolder = styled.div`
   }
 `;
 const Main = styled.div`
-h1 {
-padding: 1rem;}
-`
+  h1 {
+    padding: 1rem;
+  }
+`;
 
 const SearchResults = () => {
   const location = useLocation();
   const [products, setProducts] = useState<Product[]>([]);
-  const [toggleDescription, setToggleDescription] = useState<{ [key: number]: boolean }>({});
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [toggleDescription, setToggleDescription] = useState<{
+    [key: number]: boolean;
+  }>({});
   const searchParams = new URLSearchParams(location.search);
   const query = searchParams.get("q");
-  const { addToCart } = useCart(); 
+  const { addToCart } = useCart();
 
   useEffect(() => {
+    axios
+      .get(`https://fakestoreapi.in/api/products`)
+      .then((response) => setProducts(response.data.products))
+      .catch((error) => console.error(error, "error fetch search"));
+  }, []);
+  useEffect(() => {
     if (query) {
-      axios
-        .get(`https://fakestoreapi.in/api/products?search=${query}`)
-        .then((response) => setProducts(response.data.products))
-        .catch((error) => console.error(error, "error fetch search"));
+      const filtered = products.filter((product) =>
+        product.title.toLowerCase().includes(query)
+      );
+      setFilteredProducts(filtered);
+    } else {
+      setFilteredProducts(products);
     }
-  }, [query]);
+  }, [query, products]);
 
   const toggleHandler = (id: number) => {
     setToggleDescription((prev) => ({
@@ -109,11 +120,18 @@ const SearchResults = () => {
       <h1>Search Results for "{query}"</h1>
 
       <ResultsDiv>
-        {products.length > 0 ? (
-          products.map((product) => (
+        {filteredProducts.length > 0 ? (
+          filteredProducts.map((product) => (
             <Card key={product.id}>
-              <img src={product.image} alt={product.title} width="100" style={{ alignSelf: "center", objectFit: "cover" }} />
-              <h1 style={{width: "100%"}}>{product.title.substring(0, 50)}</h1>
+              <img  
+                src={product.image}
+                alt={product.title}
+                width="100"
+                style={{ alignSelf: "center", objectFit: "cover" }}
+              />
+              <h1 style={{ width: "100%" }}>
+                {product.title.substring(0, 50)}
+              </h1>
               <p>
                 {truncateDescription(product.description, 100, product.id)}
                 {product.description.length > 100 && (
@@ -143,7 +161,9 @@ const SearchResults = () => {
                 </p>
                 <p>Model: {product.model}</p>
                 <div>
-                  <button onClick={() => addToCart(product)}>Add To Cart</button>
+                  <button onClick={() => addToCart(product)}>
+                    Add To Cart
+                  </button>
                 </div>
               </PriceHolder>
             </Card>
