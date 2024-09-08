@@ -5,15 +5,16 @@ const CommentsMain = styled.div`
   padding: 5rem 1rem;
   flex-direction: column;
   justify-content: space-around;
-  border: 1px solid ${(props) => props.theme.colors.white};
+  color: ${(props) => props.theme.colors.text};
+  border: 1px solid ${(props) => props.theme.colors.text};
 
   align-items: center;
-  background: rgb(198, 60, 81);
+  background: ${(props) => props.theme.colors.quaternary};
   background: linear-gradient(
     180deg,
-    rgba(198, 60, 81, 1) 0%,
-    rgba(140, 48, 97, 1) 50%,
-    rgba(82, 34, 88, 1) 100%
+    ${(props) => props.theme.colors.tertiary} 0%,
+    ${(props) => props.theme.colors.secondary} 50%,
+    ${(props) => props.theme.colors.primary} 100%
   );
 
   @media (max-width: 768px) {
@@ -52,13 +53,13 @@ const Comment = styled.div`
   padding: 1rem;
   width: 100%;
   max-width: 655px;
-  border: 1px solid ${(props) => props.theme.colors.white};
+  border: 1px solid ${(props) => props.theme.colors.text};
   height: auto;
   min-height: 252px;
   border-radius: 12px;
 
   p {
-    color: ${(props) => props.theme.colors.white};
+    color: ${(props) => props.theme.colors.text};
     padding-top: 1rem;
     text-align: start;
     font-weight: 500;

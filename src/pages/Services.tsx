@@ -6,6 +6,13 @@ const PageContainer = styled.div`
   height: fit-content;
   overflow-x: hidden;
   overflow-y: hidden;
+  color: ${(props) => props.theme.colors.text};
+   background: ${(props) => props.theme.colors.primary};
+  background: linear-gradient(
+    90deg,
+    ${(props) => props.theme.colors.primary} 0%,
+    ${(props) => props.theme.colors.secondary} 100%
+  );
 `;
 const Main = styled.div`
   display: flex;
@@ -20,6 +27,7 @@ const Main = styled.div`
   padding: 2rem;
   border-radius: 100px;
   background: url("/Rectangle 126.png");
+  background-color: ${(props) => props.theme.colors.primary};
 `;
 const TextSection = styled.div`
   flex-direction: column;
@@ -31,8 +39,8 @@ const TextSection = styled.div`
     font-weight: ${(props) => props.theme.font.fontWeight};
     text-align: left;
     span {
-      color: ${(props) => props.theme.colors.primary};
-      background-color: white;
+      color: ${(props) => props.theme.colors.text};
+      background-color: ${props => props.theme.colors.secondary};
       border-radius: 20px;
     }
   }
@@ -119,7 +127,7 @@ const Card = styled.div`
     position: relative;
     margin-bottom: 30px;
     p {
-      color: #7f7f7f;
+      color: ${props => props.theme.colors.text};
     }
 
     img {
@@ -162,6 +170,7 @@ const SaleBanner = styled.div`
 const SaleOffer = styled.div`
   width: 100%;
   opacity: 90%;
+  color: white;
   div {
     display: flex;
     flex-direction: column;
@@ -226,7 +235,7 @@ const YoungFavourite = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-content: center;  
+  align-content: center;
   gap: 1rem;
   width: 100%;
 `;

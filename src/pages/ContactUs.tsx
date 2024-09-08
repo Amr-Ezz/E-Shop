@@ -5,6 +5,13 @@ const ContactContainer = styled.div`
   justify-content: space-around;
   padding: 2rem;
   z-index: 0;
+  color: ${props => props.theme.colors.text};
+   background: ${(props) => props.theme.colors.primary};
+  background: linear-gradient(
+    90deg,
+    ${(props) => props.theme.colors.primary} 0%,
+    ${(props) => props.theme.colors.secondary} 100%
+  );
 
   // background: rgb(255,205,241);
   // background: radial-gradient(circle, rgba(255,205,241,0.3337710084033614) 0%, rgba(224,140,255,1) 100%);
@@ -16,7 +23,7 @@ const ContactForm = styled.form`
   h3 {
     font-size: 56px;
     font-weight: 900;
-    color: white;
+    color: ${props => props.theme.colors.text};
     text-align: left;
   }
   p {

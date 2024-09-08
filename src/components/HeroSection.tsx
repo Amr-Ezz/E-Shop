@@ -9,7 +9,7 @@ const HeroDiv = styled.div`
   padding: 2rem;
   div {
     img {
-  filter: drop-shadow(0 10px 10px rgba(0, 0, 0, 0.3));
+      filter: drop-shadow(0 10px 10px rgba(0, 0, 0, 0.3));
       width: 100%;
       height: auto;
       max-width: 500px;
@@ -29,8 +29,8 @@ const FontSection = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-
-  h1 {
+  color: ${(props) => props.theme.colors.text};
+   h1 {
     margin: 0;
     line-height: 1.1;
     text-align: start;
@@ -49,7 +49,7 @@ const FontSection = styled.div`
   p {
     font-size: 24px;
     margin: 8px 0;
-    color: ${(props) => props.theme.colors.grey};
+    color: ${(props) => props.theme.colors.text};
 
     @media (max-width: 768px) {
       font-size: 18px;
@@ -61,7 +61,7 @@ const FontSection = styled.div`
   }
 
   button {
-    color: ${(props) => props.theme.colors.white};
+    color: ${(props) => props.theme.colors.text};
     background-color: ${(props) => props.theme.colors.tertiary};
     border-radius: 50px;
     width: 200px;
@@ -111,6 +111,7 @@ const TextBox = styled.div`
   padding: 10px;
   white-space: nowrap;
   animation: scroll 10s linear infinite;
+  color: ${props => props.theme.colors.text};
 
   @keyframes scroll {
     0% {
@@ -134,11 +135,11 @@ const ContainerDiv = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
-  background: rgb(82, 34, 88);
+  background: ${(props) => props.theme.colors.primary};
   background: linear-gradient(
     90deg,
-    rgba(82, 34, 88, 1) 0%,
-    rgba(140, 48, 97, 1) 100%
+    ${(props) => props.theme.colors.primary} 0%,
+    ${(props) => props.theme.colors.secondary} 100%
   );
 
   @media (max-width: 768px) {

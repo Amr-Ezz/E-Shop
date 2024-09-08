@@ -12,13 +12,13 @@ const Button = styled.button`
   padding: 0.5rem;
   border: none;
   background-color: ${(props) => props.theme.colors.primary};
-  color: white;
+  color: black;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
   font-weight: 600;
   &:hover {
-    background-color: ${(props) => props.theme.colors.white};
+    background-color: ${(props) => props.theme.colors.secondary};
     border: 1px solid ${(props) => props.theme.colors.primary};
     color: ${(props) => props.theme.colors.grey};
   }

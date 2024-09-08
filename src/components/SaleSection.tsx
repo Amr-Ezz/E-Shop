@@ -11,13 +11,14 @@ const MainSection = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 2rem;
+  color: ${props => props.theme.colors.text};
   width: 100%;
-  background: rgb(82, 34, 88);
+  background: ${(props) => props.theme.colors.secondary};
   background: linear-gradient(
     180deg,
-    rgba(82, 34, 88, 1) 0%,
-    rgba(140, 48, 97, 1) 50%,
-    rgba(198, 60, 81, 1) 100%
+    ${(props) => props.theme.colors.primary} 0%,
+    ${(props) => props.theme.colors.secondary} 50%,
+    ${(props) => props.theme.colors.tertiary} 100%
   );
 
   ul {
@@ -84,7 +85,7 @@ export const Card = styled.div`
 
   p {
     text-align: left;
-    color: ${(props) => props.theme.colors.white};
+    color: ${(props) => props.theme.colors.text};
 
     span {
       color: green;
@@ -99,7 +100,7 @@ const PriceHolder = styled.div`
   align-items: flex-start;
 
   p:nth-child(1) {
-    color: ${(props) => props.theme.colors.white};
+    color: ${(props) => props.theme.colors.text};
     font-size: 1.5rem;
 
     img {
@@ -132,14 +133,14 @@ const PriceHolder = styled.div`
       border-radius: 50px;
       font-weight: 600;
       background-color: ${(props) => props.theme.colors.quaternary};
-      color: ${(props) => props.theme.colors.white};
+      color: ${(props) => props.theme.colors.text};
       border: 1px solid ${(props) => props.theme.colors.white};
       cursor: pointer;
       transition: background-color 0.3s ease;
 
       &:hover {
         background-color: ${(props) => props.theme.colors.primary};
-        color: ${(props) => props.theme.colors.white};
+        color: ${(props) => props.theme.colors.text};
       }
     }
   }
@@ -207,7 +208,6 @@ const StyledButton = styled.button<StyledButtonProps>`
   }
 `;
 
-
 const SaleSection = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [showBuyModal, setShowBuyModal] = useState<boolean>(false);
@@ -226,9 +226,8 @@ const SaleSection = () => {
       [id]: !prev[id],
     }));
   };
-  
 
-   const truncateDescription = (
+  const truncateDescription = (
     description: string,
     maxLength: number,
     id: number

@@ -9,13 +9,14 @@ const Form = styled.form`
   justify-content: center;
   align-content: center;
   z-index: 1;
+  
 `;
 const Button = styled.button`
   margin-top: 1rem;
   padding: 0.5rem;
   border: none;
   background-color: ${(props) => props.theme.colors.primary};
-  color: white;
+  color: black;
   border-radius: 5px;
   cursor: pointer;
   transition: 0.3s ease;
@@ -23,7 +24,6 @@ const Button = styled.button`
 
   &:hover {
     background-color: ${(props) => props.theme.colors.white};
-    border: 1px solid ${(props) => props.theme.colors.primary};
     color: ${(props) => props.theme.colors.grey};
   }
 `;

@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../Context/CartContext";
 import CartModal from "./Modal/CartModal";
 import { FaBars, FaTimes } from "react-icons/fa";
+import { useTheme } from "../Context/ThemeContext";
 
 const NavbarContainer = styled.div`
   width: 100%;
@@ -18,8 +19,7 @@ const NavbarContainer = styled.div`
   z-index: 10;
   background-color: ${(props) => props.theme.colors.primary};
   border-bottom: 1px solid #eee;
-
-  @media (max-width: 768px) {
+  color: ${(props) => props.theme.colors.text} @media (max-width: 768px) {
     padding: 8px;
   }
 `;
@@ -47,7 +47,7 @@ const Header = styled.header`
 const Logo = styled.h1`
   font-size: 30px;
   font-weight: bold;
-
+  color: ${(props) => props.theme.colors.text};
   span {
     color: ${(props) => props.theme.colors.tertiary};
   }
@@ -80,7 +80,7 @@ const Nav = styled.nav<NavProps>`
 
       a {
         text-decoration: none;
-        color: inherit;
+        color: ${(props) => props.theme.colors.text};
         position: relative;
       }
     }
@@ -111,20 +111,20 @@ const Hamburger = styled.div`
 
   svg {
     font-size: 24px;
-    color: ${(props) => props.theme.colors.white};
+    color: ${(props) => props.theme.colors.text};
   }
 `;
 
 const ButtonDiv = styled.div`
   display: flex;
   flex-direction: row;
-  width: 220px;
+  width: 280px;
   justify-content: space-between;
   align-content: center;
   position: relative;
   button {
     background-color: transparent;
-    color: ${(props) => props.theme.colors.white};
+    color: ${(props) => props.theme.colors.text};
     font-weight: bold;
     font-size: 20px;
     cursor: pointer;
@@ -159,7 +159,7 @@ const CartCount = styled.div`
   top: -10px;
   right: -20px;
   background-color: purple;
-  color: white;
+  color: ${(props) => props.theme.colors.text};
   border-radius: 50%;
   padding: 2px 6px;
   font-size: 12px;
@@ -183,7 +183,6 @@ const SearchInput = styled.input<{ isVisible: boolean }>`
   border-radius: 4px;
   display: ${({ isVisible }) => (isVisible ? "block" : "none")};
 
-
   @media (max-width: 768px) {
     width: 150px;
   }
@@ -199,6 +198,60 @@ const WrapperButtons = styled.div`
     justify-content: flex-end;
     margin: 0;
     padding: 0;
+  }
+`;
+const LabelSwitch = styled.label`
+  position: relative;
+  display: inline-block;
+  margin-top: 5px;
+  width: 60px;
+  height: 34px;
+`;
+const CheckBox = styled.input.attrs({ type: "checkbox" })`
+  opacity: 0;
+  width: 0;
+  height: 0;
+`;
+const Slider = styled.span`
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: transparent;
+  transition: 0.4s;
+  box-shadow: 1px 1px 5px 0 #d84f68 inset;
+
+  &::before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: #d84f68;
+    transition: 0.4s;
+    box-shadow: inset 1px 1px 2px 0px #ff7ca7;
+  }
+
+  &.round {
+    border-radius: 34px;
+
+    &::before {
+      border-radius: 50%;
+    }
+  }
+`;
+const StyledCheckbox = styled(CheckBox)`
+  &:checked + ${Slider} {
+    box-shadow: 1px 1px 5px 0 #2a9d8f inset;
+  }
+
+  &:checked + ${Slider}::before {
+    transform: translateX(26px);
+    background-color: #2a9d8f;
+    box-shadow: inset -1px 1px 2px 0px #a3fff4;
   }
 `;
 
@@ -232,6 +285,7 @@ const Navbar = () => {
   const toggleSearch = () => setSearchVisible(!searchVisible);
 
   const { cartItemsCount } = useCart();
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <>
@@ -275,6 +329,13 @@ const Navbar = () => {
                 </a>
                 {cartModal && <CartModal onClose={toggleCart} />}
               </li>
+              <LabelSwitch>
+                <StyledCheckbox
+                  checked={theme === "light"}
+                  onChange={toggleTheme}
+                />
+                <Slider className="round"></Slider>
+              </LabelSwitch>
             </ul>
           </Nav>
           <WrapperButtons>

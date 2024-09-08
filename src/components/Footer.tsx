@@ -4,9 +4,17 @@ const FooterMain = styled.div`
   width: 100%;
   padding: 2rem 1rem;
   border-top: 1px solid white;
+  background: ${(props) => props.theme.colors.quaternary};
+  background: linear-gradient(
+    180deg,
+    ${(props) => props.theme.colors.tertiary} 0%,
+    ${(props) => props.theme.colors.secondary} 50%,
+    ${(props) => props.theme.colors.primary} 100%
+  );
   display: flex;
   align-items: center;
   justify-content: center;
+  color: ${(props) => props.theme.colors.text};
 
   @media (max-width: 768px) {
     height: auto;
@@ -35,7 +43,7 @@ const FooterColumn = styled.div`
   gap: 15px;
 
   h3 {
-    color: white;
+    color: ${props => props.theme.colors.text};
     font-size: 24px;
     font-weight: bold;
 
@@ -45,7 +53,7 @@ const FooterColumn = styled.div`
   }
 
   h4 {
-    color: white;
+    color: ${(props) => props.theme.colors.text};
     font-size: 20px;
     font-weight: medium;
 

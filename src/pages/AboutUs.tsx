@@ -6,6 +6,13 @@ const Main = styled.div`
   justify-content: space-around;
   align-items: center;
   width: 100%;
+  color: ${(props) => props.theme.colors.text};
+  background: ${(props) => props.theme.colors.primary};
+  background: linear-gradient(
+    90deg,
+    ${(props) => props.theme.colors.primary} 0%,
+    ${(props) => props.theme.colors.secondary} 100%
+  );
 `;
 const TextHolder = styled.div`
   display: flex;
@@ -30,8 +37,8 @@ const TextHolder = styled.div`
   }
 `;
 const ImageHolder = styled.img`
-width: 100%;
-height: 100vh;
+  width: 100%;
+  height: 100vh;
   object-fit: cover;
   object-position: 100% 50%;
   border-radius: 20px;
@@ -39,12 +46,12 @@ height: 100vh;
 const RatingsDiv = styled.div`
   display: flex;
   flex-direction: row;
-  background: rgb(198, 60, 81);
+  background: ${(props) => props.theme.colors.secondary};
   background: linear-gradient(
     180deg,
-    rgba(198, 60, 81, 1) 0%,
-    rgba(140, 48, 97, 1) 50%,
-    rgba(82, 34, 88, 1) 100%
+    ${(props) => props.theme.colors.primary} 0%,
+    ${(props) => props.theme.colors.secondary} 50%,
+    ${(props) => props.theme.colors.tertiary} 100%
   );
   gap: 30px;
   justify-content: center;
@@ -54,7 +61,7 @@ const RatingsDiv = styled.div`
 const CardRating = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: ${props => props.theme.colors.primary};
+  background-color: ${(props) => props.theme.colors.primary};
   padding: 1rem;
   margin: 1rem;
   align-items: center;
@@ -83,16 +90,16 @@ const CardRating = styled.div`
   }
 `;
 const CardRatingOrange = styled(CardRating)`
-  background-color: ${props => props.theme.colors.tertiary};
-  color: white;
+  background-color: ${(props) => props.theme.colors.tertiary};
+  color: ${(props) => props.theme.colors.text};
 `;
 const CastGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 20px;
   padding: 4rem;
-  
-  
+  background-color: ${(props) => props.theme.colors.primary};
+  color: ${props => props.theme.colors.text};
 `;
 const CardDiv = styled.div`
   display: flex;
@@ -160,10 +167,14 @@ const ServiceCard = styled.div`
     line-height: 21px;
   }
 `;
+const HighDiv = styled.div`
+  background-color: ${(props) => props.theme.colors.primary};
+  color: ${props => props.theme.colors.text};
+`
 
 const AboutUs = () => {
   return (
-    <>
+    <HighDiv>
       <Main>
         <TextHolder>
           <h3>
@@ -276,7 +287,7 @@ const AboutUs = () => {
           <p>We return money within 30 days</p>
         </ServiceCard>
       </FullServiceDiv>
-    </>
+    </HighDiv>
   );
 };
 
