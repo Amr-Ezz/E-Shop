@@ -1,4 +1,9 @@
 import styled from "styled-components";
+import Swiper from "swiper";
+import { Navigation } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import { useEffect } from "react";
 
 const CommentsMain = styled.div`
   display: flex;
@@ -36,10 +41,10 @@ const CommentsDiv = styled.div`
 const CommentRow = styled.div`
   display: flex;
   flex-direction: row;
-  padding: 0 2rem;
-  padding-top: 2rem;
+  padding: 1rem;
   height: auto;
   gap: 20px;
+  transition: transform 0.5s ease-in-out;
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -53,10 +58,15 @@ const Comment = styled.div`
   padding: 1rem;
   width: 100%;
   max-width: 655px;
-  border: 1px solid ${(props) => props.theme.colors.text};
+  border: 1px solid ${(props) => props.theme.colors.black};
   height: auto;
   min-height: 252px;
   border-radius: 12px;
+  background: linear-gradient(#fff2, transparent);
+  box-shadow: 10px 40px 40px rgba(0.25, 0.25, 0.25, 0.25);
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 
   p {
     color: ${(props) => props.theme.colors.text};
@@ -120,10 +130,52 @@ const Name = styled.div`
 `;
 
 const CommentsSection = () => {
+  useEffect(() => {
+    const swiper = new Swiper(".swiper", {
+      modules: [Navigation],
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+      loop: true,
+      autoplay: {
+        delay: 5000,
+      },
+    });
+    return () => {
+      swiper.destroy();
+    };
+  }, []);
   return (
     <CommentsMain>
       <h1>What Are People Saying</h1>
       <CommentsDiv>
+        <CommentRow>
+          <div className="swiper">
+            <div className="swiper-wrapper"></div>
+          </div>
+          <Comment>
+            <User>
+              <img src="/Avatar.png" alt="Avatar" />
+              <Name>
+                <h5>
+                  <strong>Name</strong>
+                </h5>
+                <p>Description</p>
+              </Name>
+              <div>
+                <img src="/Vector.png" alt="Vector" />
+              </div>
+            </User>
+            <p>
+              This dress is absolutely stunning! The fit is perfect, and the
+              floral print is even more beautiful in person. I received so many
+              compliments when I wore it to a wedding.
+            </p>
+          </Comment>
+        </CommentRow>
+      </CommentsDiv>
+      {/* <CommentsDiv>
         <CommentRow>
           <Comment>
             <User>
@@ -204,7 +256,7 @@ const CommentsSection = () => {
             </p>
           </Comment>
         </CommentRow>
-      </CommentsDiv>
+      </CommentsDiv> */}
     </CommentsMain>
   );
 };

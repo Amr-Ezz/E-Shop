@@ -20,7 +20,7 @@ const PriceHolder = styled.div`
   gap: 5px;
 
   p {
-    color: ${(props) => props.theme.colors.white};
+    color: ${(props) => props.theme.colors.text};
     font-size: 1.5rem;
     align-self: flex-start;
 
@@ -52,19 +52,20 @@ const PriceHolder = styled.div`
       border-radius: 50px;
       font-weight: 600;
       background-color: ${(props) => props.theme.colors.quaternary};
-      color: ${(props) => props.theme.colors.white};
-      border: 1px solid ${(props) => props.theme.colors.white};
+      color: ${(props) => props.theme.colors.text};
+      border: 1px solid ${(props) => props.theme.colors.text};
       cursor: pointer;
       transition: background-color 0.3s ease;
 
       &:hover {
         background-color: ${(props) => props.theme.colors.primary};
-        color: ${(props) => props.theme.colors.white};
+        color: ${(props) => props.theme.colors.text};
       }
     }
   }
 `;
 const Main = styled.div`
+background-color: ${props => props.theme.colors.primary};
   h1 {
     padding: 1rem;
   }

@@ -15,6 +15,9 @@ const HeroDiv = styled.div`
       max-width: 500px;
       clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
       object-fit: cover;
+      animation-name: breath-animation;
+      animation-duration: 8s;
+      animation-iteration-count: infinite;
     }
   }
 
@@ -23,6 +26,27 @@ const HeroDiv = styled.div`
     gap: 1rem;
     padding: 1rem;
   }
+  @keyframes breath-animation {
+    0% {
+      height: 100px;
+      width: 100px;
+    }
+    30% {
+      height: 400px;
+      width: 400px;
+      opacity: 1;
+    }
+    40% {
+      height: 405px;
+      width: 405px;
+      opacity: 0.3;
+    }
+    100% {
+      height: 100px;
+      width: 100px;
+      opacity: 0.6;
+    }
+  }
 `;
 
 const FontSection = styled.div`
@@ -30,7 +54,7 @@ const FontSection = styled.div`
   flex-direction: column;
   align-items: flex-start;
   color: ${(props) => props.theme.colors.text};
-   h1 {
+  h1 {
     margin: 0;
     line-height: 1.1;
     text-align: start;
@@ -111,7 +135,7 @@ const TextBox = styled.div`
   padding: 10px;
   white-space: nowrap;
   animation: scroll 10s linear infinite;
-  color: ${props => props.theme.colors.text};
+  color: ${(props) => props.theme.colors.text};
 
   @keyframes scroll {
     0% {
