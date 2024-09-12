@@ -1,5 +1,16 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
+const puffInCenter = keyframes`
+ 0% {
+    -webkit-transform: translateZ(-80px);
+            transform: translateZ(-80px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+    opacity: 1;
+  }`;
 const HeroDiv = styled.div`
   display: flex;
   flex-direction: row;
@@ -15,9 +26,9 @@ const HeroDiv = styled.div`
       max-width: 500px;
       clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
       object-fit: cover;
-      animation-name: breath-animation;
-      animation-duration: 8s;
-      animation-iteration-count: infinite;
+      -webkit-animation: ${puffInCenter} 0.7s
+        cubic-bezier(0.47, 0, 0.745, 0.715) both;
+      animation: ${puffInCenter} 0.7s cubic-bezier(0.47, 0, 0.745, 0.715) both;
     }
   }
 
