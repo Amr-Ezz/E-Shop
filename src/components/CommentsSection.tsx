@@ -1,15 +1,14 @@
 import styled from "styled-components";
-import Swiper from "swiper";
-import { Navigation } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
-import { useEffect } from "react";
+import "../App.css";
 
 const CommentsMain = styled.div`
   display: flex;
   padding: 5rem 1rem;
   flex-direction: column;
-  justify-content: space-around;
   color: ${(props) => props.theme.colors.text};
   border: 1px solid ${(props) => props.theme.colors.text};
 
@@ -30,8 +29,8 @@ const CommentsMain = styled.div`
 const CommentsDiv = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 50px;
+  justify-content: center;
+  align-items: center;
 
   @media (max-width: 768px) {
     gap: 30px;
@@ -40,10 +39,9 @@ const CommentsDiv = styled.div`
 
 const CommentRow = styled.div`
   display: flex;
-  flex-direction: row;
-  padding: 1rem;
+  justify-content: center;
+  padding: 2.5rem;
   height: auto;
-  gap: 20px;
   transition: transform 0.5s ease-in-out;
 
   @media (max-width: 768px) {
@@ -54,6 +52,8 @@ const CommentRow = styled.div`
 
 const Comment = styled.div`
   display: flex;
+  border: 1px solid black;
+
   flex-direction: column;
   padding: 1rem;
   width: 100%;
@@ -128,135 +128,102 @@ const Name = styled.div`
     }
   }
 `;
+// const CustomNavButton = styled.div`
+//   .swiper-button-next,
+//   .swiper-button-prev {
+//     color: ${(props) => props.theme.colors.primary};
+//     background: rgba(0, 0, 0, 0.5);
+//     width: 40px;
+//     height: 40px;
+//     border-radius: 50%;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     z-index: 10; /* Ensure they are above other elements */
+//   }
+
+//   .swiper-button-next {
+//     right: 10px;
+//     background-image: url('/path/to/next-icon.svg'); /* Optional: custom icon */
+//   }
+
+//   .swiper-button-prev {
+//     left: 10px;
+//     background-image: url('/path/to/prev-icon.svg'); /* Optional: custom icon */
+//   }
+// `;
+
 
 const CommentsSection = () => {
-  useEffect(() => {
-    const swiper = new Swiper(".swiper", {
-      modules: [Navigation],
-      navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
-      },
-      loop: true,
-      autoplay: {
-        delay: 5000,
-      },
-    });
-    return () => {
-      swiper.destroy();
-    };
-  }, []);
+  const commentsArray = [
+    {
+      id: 1,
+      avatar: "/Avatar.png",
+      name: "John Doe",
+      description: "john_doe",
+      comment:
+        "This dress is absolutely stunning! The fit is perfect, and the floral print is even more beautiful in person. I received so many compliments when I wore it to a wedding.",
+    },
+    {
+      id: 2,
+      avatar: "/Ellipse 22.png",
+      name: "Sophie",
+      description: "sophie_luv",
+      comment:
+        "I am in love with this midi dress! The fabric is so soft and comfortable, and it flows beautifully. It's now my go-to outfit for any special occasion.",
+    },
+    {
+      id: 3,
+      avatar: "/Ellipse 23.png",
+      name: "Sophie",
+      description: "sophie_luv",
+      comment:
+        "I couldn't be happier with this purchase. The quality is top-notch, and the dress looks exactly like it does in the pictures.",
+    },
+    {
+      id: 4,
+      avatar: "/Ellipse 24.png",
+      name: "Sophia",
+      description: "sophie_luv",
+      comment:
+        "This dress exceeded my expectations. It’s elegant, stylish, and the perfect length. I’ve worn it multiple times already and always get compliments.",
+    },
+  ];
   return (
     <CommentsMain>
       <h1>What Are People Saying</h1>
-      <CommentsDiv>
-        <CommentRow>
-          <div className="swiper">
-            <div className="swiper-wrapper"></div>
-          </div>
-          <Comment>
-            <User>
-              <img src="/Avatar.png" alt="Avatar" />
-              <Name>
-                <h5>
-                  <strong>Name</strong>
-                </h5>
-                <p>Description</p>
-              </Name>
-              <div>
-                <img src="/Vector.png" alt="Vector" />
-              </div>
-            </User>
-            <p>
-              This dress is absolutely stunning! The fit is perfect, and the
-              floral print is even more beautiful in person. I received so many
-              compliments when I wore it to a wedding.
-            </p>
-          </Comment>
-        </CommentRow>
-      </CommentsDiv>
-      {/* <CommentsDiv>
-        <CommentRow>
-          <Comment>
-            <User>
-              <img src="/Avatar.png" alt="Avatar" />
-              <Name>
-                <h5>
-                  <strong>Name</strong>
-                </h5>
-                <p>Description</p>
-              </Name>
-              <div>
-                <img src="/Vector.png" alt="Vector" />
-              </div>
-            </User>
-            <p>
-              This dress is absolutely stunning! The fit is perfect, and the
-              floral print is even more beautiful in person. I received so many
-              compliments when I wore it to a wedding.
-            </p>
-          </Comment>
-          <Comment>
-            <User>
-              <img src="/Ellipse 22.png" alt="Avatar" />
-              <Name>
-                <h5>
-                  <strong>Sophie</strong>
-                </h5>
-                <p>sophie_luv</p>
-              </Name>
-              <div>
-                <img src="/Vector.png" alt="Vector" />
-              </div>
-            </User>
-            <p>
-              I am in love with this midi dress! The fabric is so soft and
-              comfortable, and it flows beautifully. It's now my go-to outfit
-              for any special occasion.
-            </p>
-          </Comment>
-        </CommentRow>
-        <CommentRow>
-          <Comment>
-            <User>
-              <img src="/Ellipse 23.png" alt="Avatar" />
-              <Name>
-                <h5>
-                  <strong>Sophie</strong>
-                </h5>
-                <p>sophie_luv</p>
-              </Name>
-              <div>
-                <img src="/Vector.png" alt="Vector" />
-              </div>
-            </User>
-            <p>
-              I couldn't be happier with this purchase. The quality is
-              top-notch, and the dress looks exactly like it does in the
-              pictures.
-            </p>
-          </Comment>
-          <Comment>
-            <User>
-              <img src="/Ellipse 24.png" alt="Avatar" />
-              <Name>
-                <h5>
-                  <strong>Sophie</strong>
-                </h5>
-                <p>Sophie_Luv</p>
-              </Name>
-              <div>
-                <img src="/Vector.png" alt="Vector" />
-              </div>
-            </User>
-            <p>
-              This dress exceeded my expectations. It’s elegant, stylish, and
-              the perfect length. I’ve worn it multiple times already and always
-              get compliments.
-            </p>
-          </Comment>
-        </CommentRow>
-      </CommentsDiv> */}
+      <Swiper
+        modules={[Navigation, Autoplay]}
+        slidesPerView={2}
+        navigation
+        loop={true}
+        autoplay={{ delay: 5000 }}
+        style={{ width: "100%" }}
+      >
+        <CommentsDiv>
+          {commentsArray.map((comment) => (
+            <SwiperSlide key={comment.id}>
+              <CommentRow>
+                <Comment>
+                  <User>
+                    <img src={comment.avatar} alt={`${comment.name} Avatar`} />
+                    <Name>
+                      <h5>
+                        <strong>{comment.name}</strong>
+                      </h5>
+                      <p>{comment.description}</p>
+                    </Name>
+                    <div>
+                      <img src="/Vector.png" alt="Vector" />
+                    </div>
+                  </User>
+                  <p>{comment.comment}</p>
+                </Comment>
+              </CommentRow>
+            </SwiperSlide>
+          ))}
+        </CommentsDiv>
+      </Swiper>
     </CommentsMain>
   );
 };

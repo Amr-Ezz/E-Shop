@@ -252,3 +252,29 @@ td {
     min-width: initial;
   }
 }
+.swiper-button-next,
+.swiper-button-prev {
+  color: #fff !important;
+  width: 40px;
+  height: 40px;
+  padding: 0 0.1rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10; /* Ensure buttons are above other elements */
+  background-size: 16px 16px;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* Add any additional styles if needed */
+}
+
+.swiper-button-next {
+  right: 10px;
+  background-image: url('/path/to/next-icon.svg'); /* Optional: add custom icon */
+}
+
+.swiper-button-prev {
+  left: 10px;
+  background-image: url('/path/to/prev-icon.svg'); /* Optional: add custom icon */
+}
