@@ -58,7 +58,7 @@ const Logo = styled.h1`
 `;
 
 interface NavProps {
-  isOpen: boolean;
+  isopen: boolean;
 }
 
 const Nav = styled.nav<NavProps>`
@@ -90,7 +90,7 @@ const Nav = styled.nav<NavProps>`
     ul {
       flex-direction: column;
       align-items: center;
-      display: ${(props) => (props.isOpen ? "flex" : "none")};
+      display: ${(props) => (props.isopen ? "flex" : "none")};
       background-color: ${(props) => props.theme.colors.primary};
       position: absolute;
       top: 50px;
@@ -298,7 +298,7 @@ const Navbar = () => {
           <Hamburger onClick={toggleMenu}>
             {menuOpen ? <FaTimes /> : <FaBars />}
           </Hamburger>
-          <Nav isOpen={menuOpen}>
+          <Nav isopen={menuOpen}>
             <ul>
               <li>
                 <Link to="/" onClick={toggleMenu}>

@@ -4,6 +4,7 @@ import styled, { keyframes } from "styled-components";
 import { fetchProducts, Product } from "../api/requests";
 import BuyModal from "./Modal/BuyModal";
 import { useCart } from "../Context/CartContext";
+import { Link } from "react-router-dom";
 
 const MainSection = styled.div`
   display: flex;
@@ -70,7 +71,7 @@ const scaleInCenter = keyframes`
     opacity: 1;
   }
 `;
-export const Card = styled.div`
+export const Card = styled(Link)`
   display: flex;
   flex-direction: column;
   border: 1px solid ${(props) => props.theme.colors.white};
@@ -291,7 +292,7 @@ const SaleSection = () => {
       </ul>
       <GridContainer>
         {displayedProducts.map((product) => (
-          <Card key={product.id}>
+          <Card key={product.id} to={`/products/${product.id}`}>
             <img src={product.image} alt={product.title} />
             <h1>{truncateDescription(product.title, 50, product.id)}</h1>
             <CircleDiv>
@@ -328,8 +329,8 @@ const SaleSection = () => {
               </p>
               <p>Model: {product.model}</p>
               <div>
-                <button onClick={() => handleBuy(product)}>BUY</button>
-                <button onClick={() => addToCart(product)}>Add To Cart</button>
+              <button onClick={(e) => { e.stopPropagation(); handleBuy(product); }}>BUY</button>
+              <button onClick={(e) => { e.stopPropagation(); addToCart(product); }}>Add To Cart</button>
               </div>
             </PriceHolder>
           </Card>

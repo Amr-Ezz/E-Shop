@@ -10,6 +10,7 @@ import AboutUs from "./pages/AboutUs";
 import { CartProvider } from "./Context/CartContext";
 import CheckoutPage from "./pages/CheckoutPage";
 import SearchResults from "./pages/SearchResults";
+import ProductDetail from "./components/ProductDetail";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path="/pages/AboutUs" element={<AboutUs />} />
             <Route path="/pages/CheckoutPage" element={<CheckoutPage />} />
             <Route path="/search" element={<SearchResults />} />
+            <Route path="/products/:id" element={<ProductDetail />} />
           </Routes>
 
           <Footer />
