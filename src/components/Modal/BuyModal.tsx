@@ -108,7 +108,7 @@ export const PriceText = styled.p`
   }
 `;
 
-const Counter = styled.div`
+export const Counter = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 24px;
@@ -118,7 +118,7 @@ const Counter = styled.div`
   }
 `;
 
-const CounterButton = styled.button`
+export const CounterButton = styled.button`
   background-color: #f0f0f0;
   border: none;
   border-radius: 50%;
@@ -142,7 +142,7 @@ const CounterButton = styled.button`
   }
 `;
 
-const CounterText = styled.p`
+export const CounterText = styled.p`
   margin: 0 16px;
   font-size: 1.2rem;
 

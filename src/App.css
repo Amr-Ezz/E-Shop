@@ -4,10 +4,8 @@
   margin: 0;
   overflow-x: hidden;
   text-align: center;
-  background-color: white;
   color: white;
   padding: 0;
-  background: rgb(82, 34, 88);
 }
 .App {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;

@@ -11,6 +11,7 @@ export interface Product {
   discount: number;
   brand: string;
   model: string;
+  color: string;
  
 }
 export const fetchProducts = async (category: string): Promise<Product[]> => {
