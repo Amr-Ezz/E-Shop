@@ -1,10 +1,10 @@
 // SaleSection.tsx
 import { useEffect, useState } from "react";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import { fetchProducts, Product } from "../api/requests";
 import BuyModal from "./Modal/BuyModal";
 import { useCart } from "../Context/CartContext";
-import { Link } from "react-router-dom";
+import { Card } from "../shared/Card";
 
 const MainSection = styled.div`
   display: flex;
@@ -58,52 +58,6 @@ const GridContainer = styled.div`
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
-  }
-`;
-
-const scaleInCenter = keyframes`
-  0% {
-    transform: scale(0.5);
-    opacity: 0;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-`;
-export const Card = styled(Link)`
-  display: flex;
-  flex-direction: column;
-  border: 1px solid ${(props) => props.theme.colors.white};
-  padding: 1rem;
-  animation: ${scaleInCenter} 0.5s ease-in-out;
-  gap: 10px;
-  align-items: center;
-  background-color: transparent;
-
-
-  img {
-    width: 100%;
-    height: auto;
-    border-radius: 50px;
-    object-fit: scale-down;
-    max-width: 200px;
-    max-height: 300px;
-  }
-
-  h1 {
-    font-size: 1.5rem;
-    text-align: center;
-    color: ${(props) => props.theme.colors.text};
-  }
-
-  p {
-    text-align: left;
-    color: ${(props) => props.theme.colors.text};
-
-    span {
-      color: green;
-    }
   }
 `;
 
@@ -222,7 +176,6 @@ const StyledButton = styled.button<StyledButtonProps>`
   }
 `;
 
-
 const SaleSection = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [showBuyModal, setShowBuyModal] = useState<boolean>(false);
@@ -234,6 +187,7 @@ const SaleSection = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   const { addToCart } = useCart();
+  
 
   const toggleHandler = (id: number) => {
     setToggleDescription((prev) => ({
@@ -329,8 +283,22 @@ const SaleSection = () => {
               </p>
               <p>Model: {product.model}</p>
               <div>
-              <button onClick={(e) => { e.stopPropagation(); handleBuy(product); }}>BUY</button>
-              <button onClick={(e) => { e.stopPropagation(); addToCart(product); }}>Add To Cart</button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleBuy(product);
+                  }}
+                >
+                  BUY
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    addToCart(product);
+                  }}
+                >
+                  Add To Cart
+                </button>
               </div>
             </PriceHolder>
           </Card>

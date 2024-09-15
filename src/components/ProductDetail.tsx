@@ -23,7 +23,7 @@ const ProductDiv = styled.div`
 `;
 const ProductRow = styled.div`
   display: flex;
-    padding: 4rem;
+  padding: 4rem;
 
   flex-direction: row;
   justify-content: space-between;
@@ -37,11 +37,10 @@ const ProductRow = styled.div`
     transition: transform 0.3s ease-in-out;
     object-fit: cover;
     cursor: pointer;
-
   }
-        &:hover img {
-      transform: scale(1.1);
-    }
+  &:hover img {
+    transform: scale(1.2);
+  }
 `;
 const Content = styled.div`
   display: flex;
@@ -108,7 +107,7 @@ const ProductDetail = () => {
             <br />
             <p>Model: {product.model}</p>
             <PriceTag>
-              Price: {product.price * quantity}
+              {product.price * quantity}
               <span>$</span>
             </PriceTag>
             <p>Color: {product.color}</p>

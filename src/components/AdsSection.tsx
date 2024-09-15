@@ -1,15 +1,17 @@
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import { useProduct } from "../Context/ProductContext";
 const AdsMain = styled.div`
   display: flex;
   flex-direction: row;
-  color: ${props => props.theme.colors.text};
- background: ${(props) => props.theme.colors.tertiary};
-background: linear-gradient(
-  180deg,
-  ${(props) => props.theme.colors.tertiary} 0%,
-  ${(props) => props.theme.colors.secondary} 50%,
-  ${(props) => props.theme.colors.primary} 100%
-);
+  color: ${(props) => props.theme.colors.text};
+  background: ${(props) => props.theme.colors.tertiary};
+  background: linear-gradient(
+    180deg,
+    ${(props) => props.theme.colors.tertiary} 0%,
+    ${(props) => props.theme.colors.secondary} 50%,
+    ${(props) => props.theme.colors.primary} 100%
+  );
   width: fit-content;
   height: 300px;
   padding-top: 1rem;
@@ -29,7 +31,7 @@ const ImageDiv = styled.div`
     transform-style: preserve-3d;
     &:hover {
       transform: rotateY(15deg) rotateX(10deg) scale(1.05);
-      box-shadow: 0 20px 30px rgba(0, 0, 0, 0.3); 
+      box-shadow: 0 20px 30px rgba(0, 0, 0, 0.3);
     }
   }
   h1 {
@@ -47,17 +49,29 @@ const ImageDiv = styled.div`
 `;
 
 const AdsSection = () => {
+  const navigate = useNavigate();
+  const { setCategory } = useProduct();
+
+  const handleNavigate = async (category: string) => {
+    try {
+      setCategory(category);
+      navigate(`/products/category/${category}`);
+    } catch (error) {
+      console.log("Error fetching Product Category", error);
+    }
+  };
+
   return (
     <AdsMain>
-      <ImageDiv>
+      <ImageDiv onClick={() => handleNavigate("gaming")}>
         <img src="Rectangle 4.png" alt="Model Image" />
         <h1>Ultimate Gaming Gear</h1>
       </ImageDiv>
-      <ImageDiv>
+      <ImageDiv onClick={() => handleNavigate("audio")}>
         <img src="Rectangle 6.png" alt="Model Image" />
         <h1>50% Off Premium Sound</h1>
       </ImageDiv>
-      <ImageDiv>
+      <ImageDiv onClick={() => handleNavigate("mobile")}>
         <img
           src="Rectangle 5.png"
           alt="Model Image"

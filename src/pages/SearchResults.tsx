@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
-import { Card } from "../components/SaleSection";
 import { Product } from "../api/requests";
 import { useCart } from "../Context/CartContext";
+import { Card } from "../shared/Card";
 
 const ResultsDiv = styled.div`
   display: grid;
@@ -123,7 +123,7 @@ const SearchResults = () => {
       <ResultsDiv>
         {filteredProducts.length > 0 ? (
           filteredProducts.map((product) => (
-            <Card key={product.id}>
+            <Card key={product.id} to={`/products/${product.id}`}>
               <img  
                 src={product.image}
                 alt={product.title}
