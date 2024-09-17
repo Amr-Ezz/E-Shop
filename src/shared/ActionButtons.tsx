@@ -38,6 +38,7 @@ const ActionButtons: React.FC<ButtonProps> = ({ product, onBuy, showBuyButton })
   const handleBuy = (e: React.MouseEvent) => {
     e.stopPropagation();
     onBuy?.(product);
+  
   };
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation();

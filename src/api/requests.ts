@@ -28,7 +28,7 @@ export const fetchProducts = async (category: string): Promise<Product[]> => {
 export const fetchProductsByCategory = async (category: string): Promise<Product[]> => {
   try {
     const response = await axios.get(`https://fakestoreapi.in/api/products/category?type=${category}`);
-    return response.data || [];
+    return response.data.products || [];
   } catch (error) {
     console.error("Error fetching products by category:", error);
     return [];

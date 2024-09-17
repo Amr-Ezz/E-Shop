@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect, ReactNode } from "react";
-import { fetchProductsByCategory, Product } from "../api/requests"; // Import the new function
+import { fetchProductsByCategory, Product } from "../api/requests"; 
 
 interface ProductContextProps {
   products: Product[];
@@ -20,7 +20,7 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({ children })
           const data = await fetchProductsByCategory(selectedCategory);
           setProducts(data);
         } catch (error) {
-          console.error("Failed to fetch products by category:", error);
+          console.error("Failed to fetch products by category", error);
         }
       };
       getProductsByCategory();
@@ -37,7 +37,7 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({ children })
 export const useProduct = () => {
   const context = React.useContext(ProductContext);
   if (!context) {
-    throw new Error("useProduct must be used within a ProductProvider");
+    throw new Error("useProduct Error");
   }
   return context;
 };

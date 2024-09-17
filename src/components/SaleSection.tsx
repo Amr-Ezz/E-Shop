@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { fetchProducts, Product } from "../api/requests";
 import BuyModal from "./Modal/BuyModal";
-import { useCart } from "../Context/CartContext";
-import { Card } from "../shared/Card";
+import { CardContainer } from "../shared/Card";
+import { useNavigate } from "react-router-dom";
 
 const MainSection = styled.div`
   display: flex;
@@ -61,92 +61,6 @@ const GridContainer = styled.div`
   }
 `;
 
-const PriceHolder = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  align-items: flex-start;
-
-  p:nth-child(1) {
-    color: ${(props) => props.theme.colors.text};
-    font-size: 1.5rem;
-
-    img {
-      width: 20px;
-      height: 20px;
-    }
-  }
-
-  p:nth-child(2),
-  p:nth-child(3) {
-    align-self: flex-end;
-
-    img {
-      width: 15px;
-      height: 15px;
-    }
-  }
-
-  div {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
-    margin-top: 1rem;
-    padding-bottom: 1rem;
-
-    button {
-      width: 100px;
-      height: 50px;
-      border-radius: 50px;
-      font-weight: 600;
-      background-color: ${(props) => props.theme.colors.quaternary};
-      color: ${(props) => props.theme.colors.text};
-      border: 1px solid ${(props) => props.theme.colors.white};
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-
-      &:hover {
-        background-color: ${(props) => props.theme.colors.primary};
-        color: ${(props) => props.theme.colors.text};
-      }
-    }
-  }
-`;
-
-const CircleDiv = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 108px;
-  height: 28px;
-  justify-content: space-between;
-
-  div {
-    width: 28px;
-    height: 28px;
-    border-radius: 100%;
-    background-color: #c47530;
-
-    &:nth-child(2) {
-      background-color: #fac585;
-    }
-
-    &:nth-child(3) {
-      background-color: #05697c;
-    }
-  }
-
-  @media (max-width: 768px) {
-    width: 84px;
-    height: 22px;
-
-    div {
-      width: 22px;
-      height: 22px;
-    }
-  }
-`;
-
 const HighlightedButtons = styled.div`
   display: flex;
   flex-direction: row;
@@ -180,31 +94,11 @@ const SaleSection = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [showBuyModal, setShowBuyModal] = useState<boolean>(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const [toggleDescription, setToggleDescription] = useState<{
-    [key: number]: boolean;
-  }>({});
+
   const [selectedCategory, setSelectedCategory] = useState<string>("audio");
   const [currentPage, setCurrentPage] = useState<number>(1);
 
-  const { addToCart } = useCart();
-  
-
-  const toggleHandler = (id: number) => {
-    setToggleDescription((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
-  };
-
-  const truncateDescription = (
-    description: string,
-    maxLength: number,
-    id: number
-  ) => {
-    if (toggleDescription[id]) return description;
-    if (description.length <= maxLength) return description;
-    return `${description.substring(0, maxLength)}....`;
-  };
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getProducts = async () => {
@@ -232,7 +126,8 @@ const SaleSection = () => {
 
   const handleBuy = (product: Product) => {
     setSelectedProduct(product);
-    setShowBuyModal(true);
+    const totalPrice = product.price;
+    navigate("/pages/CheckoutPage", { state: { product, totalPrice } });
   };
 
   return (
@@ -246,62 +141,7 @@ const SaleSection = () => {
       </ul>
       <GridContainer>
         {displayedProducts.map((product) => (
-          <Card key={product.id} to={`/products/${product.id}`}>
-            <img src={product.image} alt={product.title} />
-            <h1>{truncateDescription(product.title, 50, product.id)}</h1>
-            <CircleDiv>
-              <div></div>
-              <div></div>
-              <div></div>
-            </CircleDiv>
-            <p>
-              {truncateDescription(product.description, 100, product.id)}
-              {product.description.length > 100 && (
-                <span
-                  onClick={() => toggleHandler(product.id)}
-                  style={{
-                    color: "#007bff",
-                    cursor: "pointer",
-                    textAlign: "left",
-                  }}
-                >
-                  {toggleDescription[product.id] ? "See less" : "See more"}
-                </span>
-              )}
-            </p>
-            <PriceHolder>
-              <p>
-                {product.price}
-                <img src="/icons/dollar-symbol.png" alt="dollar" />
-              </p>
-              <p>
-                {product.brand} <img src="/icons/star.png" alt="star" />
-              </p>
-              <p>
-                {product.discount}{" "}
-                <img src="/icons/trolley.png" alt="Items left" />
-              </p>
-              <p>Model: {product.model}</p>
-              <div>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleBuy(product);
-                  }}
-                >
-                  BUY
-                </button>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    addToCart(product);
-                  }}
-                >
-                  Add To Cart
-                </button>
-              </div>
-            </PriceHolder>
-          </Card>
+          <CardContainer product={product} onBuy={handleBuy} key={product.id} />
         ))}
       </GridContainer>
       <HighlightedButtons>

@@ -1,14 +1,17 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import { Card } from "../shared/Card";
+import { CardContainer } from "../shared/Card";
 import { useProduct } from "../Context/ProductContext";
+import { useCart } from "../Context/CartContext";
 
 const ProductsContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(3, minmax(200px, 1fr));
   gap: 1rem;
   padding: 2rem;
+  background-color: ${(props) => props.theme.colors.primary};
+  color: ${(props) => props.theme.colors.text};
 `;
 
 const LoadingMessage = styled.div`
@@ -23,10 +26,12 @@ const LoadingMessage = styled.div`
 const ProductPage = () => {
   const { category } = useParams<{ category: string }>();
   const { products, setCategory } = useProduct();
+ 
 
   useEffect(() => {
     if (category) {
-      setCategory(category); // Set category to fetch products
+      setCategory(category);
+      console.log(products, "Products");
     }
   }, [category, setCategory]);
 
@@ -41,11 +46,7 @@ const ProductPage = () => {
   return (
     <ProductsContainer>
       {products.map((product) => (
-        <Card key={product.id} to={`/products/${product.id}`}>
-          <img src={product.image} alt={product.title} />
-          <h2>{product.title}</h2>
-          <p>{product.description}</p>
-        </Card>
+        <CardContainer product={product} onBuy={useCart} />
       ))}
     </ProductsContainer>
   );
