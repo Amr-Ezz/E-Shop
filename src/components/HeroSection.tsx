@@ -1,5 +1,6 @@
 import styled, { keyframes } from "styled-components";
 import Image3D from "./Image3D";
+import SplitText from "./SplitText";
 
 const puffInCenter = keyframes`
  0% {
@@ -65,6 +66,7 @@ const FontSection = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  padding: 0.2rem;
   color: ${(props) => props.theme.colors.text};
   h1 {
     margin: 0;
@@ -188,15 +190,25 @@ const HeroSection = () => {
     <ContainerDiv>
       <HeroDiv>
         <FontSection>
-          <h1>Explore the Ultimate Tech Collection</h1>
+          <SplitText
+            text="Explore the Ultimate Tech Collection"
+            animationDuration={500}
+            style={{
+              margin: 0,
+              padding: "5px",
+              lineHeight: 1.1,
+              textAlign: "start",
+              fontSize: "76px",
+              fontWeight: 600,
+            }}
+          />
           <p>
             Level up with the latest in gaming, sound, and screen experiences
           </p>
           <button>SHOP NOW</button>
         </FontSection>
         <div>
-          {/* <img src="/Rectangle 3.png" alt="Model Image" /> */}
-          <Image3D url={"/Rectangle 3.png"} />
+          <Image3D url={"/Rectangle 3.png"} width={300} height={300} />
         </div>
       </HeroDiv>
       <FooterHeroSection>
