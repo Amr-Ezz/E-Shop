@@ -23,7 +23,7 @@ const StyledButton = styled.button`
   border-radius: 50px;
   font-weight: 600;
   background-color: ${(props) => props.theme.colors.quaternary};
-  color: ${(props) => props.theme.colors.text};
+  color: ${(props) => props.theme.colors.white};
   border: 1px solid ${(props) => props.theme.colors.white};
   cursor: pointer;
   transition: background-color 0.3s ease;

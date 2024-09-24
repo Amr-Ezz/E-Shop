@@ -21,7 +21,7 @@ export const lightTheme = {
     primary: "#D1E9F6",
     secondary: "#F6EACB",
     tertiary: "#F1D3CE",
-    quadernary: "#EECAD5",
+    quaternary: "#D95F59",
     text: "#000000",
 
     black: "#000000",

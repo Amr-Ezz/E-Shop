@@ -1,4 +1,3 @@
-// SaleSection.tsx
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { fetchProducts, Product } from "../api/requests";

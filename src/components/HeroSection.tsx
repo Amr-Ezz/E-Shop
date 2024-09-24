@@ -1,4 +1,5 @@
 import styled, { keyframes } from "styled-components";
+import Image3D from "./Image3D";
 
 const puffInCenter = keyframes`
  0% {
@@ -194,7 +195,8 @@ const HeroSection = () => {
           <button>SHOP NOW</button>
         </FontSection>
         <div>
-          <img src="/Rectangle 3.png" alt="Model Image" />
+          {/* <img src="/Rectangle 3.png" alt="Model Image" /> */}
+          <Image3D url={"/Rectangle 3.png"} />
         </div>
       </HeroDiv>
       <FooterHeroSection>
