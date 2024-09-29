@@ -6,6 +6,7 @@ import useQuantity from "../Hooks/useQuantity";
 import { Counter, CounterButton, CounterText } from "../shared/Counter";
 import { useCart } from "../Context/CartContext";
 import ActionButtons from "../shared/ActionButtons";
+import SplitText from "./SplitText";
 
 const Main = styled.div`
   width: 100%;
@@ -23,11 +24,10 @@ const ProductDiv = styled.div`
 `;
 const ProductRow = styled.div`
   display: flex;
-  padding: 4rem;
-
   flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+  padding: 1rem;
+  justify-content: space-evenly;
+  align-items: flex-start;
   gap: 50px;
   color: ${(props) => props.theme.colors.text};
   img {
@@ -37,6 +37,7 @@ const ProductRow = styled.div`
     transition: transform 0.3s ease-in-out;
     object-fit: cover;
     cursor: pointer;
+    align-self: flex-start;
   }
   &:hover img {
     transform: scale(1.2);
@@ -53,6 +54,7 @@ const Content = styled.div`
   h1 {
     color: ${(props) => props.theme.colors.text};
   }
+
   p:nth-child(3) {
     font-weight: 600;
     align-self: flex-end;
@@ -73,6 +75,34 @@ const PriceTag = styled.p`
   gap: 5px;
   span {
     color: green;
+    font-size: 0.6em;
+    vertical-align: super;
+  }
+`;
+const ContentDesc = styled.div`
+  border: 1px solid white;
+  padding: 1rem;
+`;
+const ColumnCart = styled.div`
+  display: flex;
+  padding: 1rem;
+  gap: 10px;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  border: 1px solid white;
+  p:nth-child(2) {
+    border-bottom: 1px solid white;
+  }
+  p:nth-child(3) {
+    font-weight: 600;
+    font-size: 18px;
+    color: green;
+  }
+  p:nth-child(4) {
+    span {
+      color: ${(props) => props.theme.colors.quaternary};
+    }
   }
 `;
 const ProductDetail = () => {
@@ -103,7 +133,18 @@ const ProductDetail = () => {
         <ProductRow>
           <img src={product.image} alt={product.title} />
           <Content>
-            <h1>{product.title.substring(0, 50)}</h1>
+            <SplitText
+              text={product.title}
+              animationDuration={500}
+              style={{
+                margin: 0,
+                padding: "2px",
+                lineHeight: 1.1,
+                fontSize: "16px",
+                fontWeight: 600,
+
+              }}
+            />
             <br />
             <p>Model: {product.model}</p>
             <PriceTag>
@@ -111,11 +152,23 @@ const ProductDetail = () => {
               <span>$</span>
             </PriceTag>
             <p>Color: {product.color}</p>
+
+            <ContentDesc>
+              <p>{product.description}</p>
+            </ContentDesc>
+          </Content>
+          <ColumnCart>
+            <PriceTag>
+              {product.price}
+              <span>USD</span>
+            </PriceTag>
+            <p>Free Returns</p>
+            <p>In Stock</p>
             <p>
               Discount: <span>{product.discount}%</span>
             </p>
-
             <p>Quantity</p>
+
             <Counter>
               <CounterButton onClick={decrement}>-</CounterButton>
               <CounterText>{quantity}</CounterText>
@@ -124,9 +177,9 @@ const ProductDetail = () => {
             <ActionButtons
               product={product}
               onBuy={useCart}
-              showBuyButton={false}
+              showBuyButton={true}
             />
-          </Content>
+          </ColumnCart>
         </ProductRow>
       </ProductDiv>
     </Main>
