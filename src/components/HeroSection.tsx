@@ -190,17 +190,14 @@ const HeroSection = () => {
     <ContainerDiv>
       <HeroDiv>
         <FontSection>
+          <h1>
           <SplitText
             text="Explore the Ultimate Tech Collection"
-            animationDuration={500}
-            style={{
-              margin: 0,
-              padding: "5px",
-              lineHeight: 1.1,
-              fontSize: "54px",
-              fontWeight: 600,
-            }}
+            animationDuration={1000}
+          
           />
+          </h1>
+          
           <p>
             Level up with the latest in gaming, sound, and screen experiences
           </p>

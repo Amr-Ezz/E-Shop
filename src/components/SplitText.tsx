@@ -36,6 +36,7 @@ const SplitText: React.FC<SplitTextProps> = ({ text, animationDuration, style, c
             display: "inline-block",
             opacity: 0,
             transform: "translateY(20px)",
+            marginRight: "0.5rem"
           }}
         >
           {char}
