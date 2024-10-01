@@ -4,8 +4,9 @@ import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "../App.css";
+import useInView from "../Hooks/useInView";
 
-const CommentsMain = styled.div`
+const CommentsMain = styled.div<{isVisible: boolean}>`
   display: flex;
   padding: 5rem 1rem;
   flex-direction: column;
@@ -20,6 +21,10 @@ const CommentsMain = styled.div`
     ${(props) => props.theme.colors.secondary} 50%,
     ${(props) => props.theme.colors.primary} 100%
   );
+    opacity: ${(props) => (props.isVisible ? 1 : 0)};
+  transform: ${(props) =>
+    props.isVisible ? "translateY(0)" : "translateY(20px)"};
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 
   @media (max-width: 768px) {
     padding: 3rem 1rem;
@@ -64,6 +69,7 @@ const Comment = styled.div`
   border-radius: 12px;
   background: linear-gradient(#fff2, transparent);
   box-shadow: 10px 40px 40px rgba(0.25, 0.25, 0.25, 0.25);
+  
 
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -128,30 +134,6 @@ const Name = styled.div`
     }
   }
 `;
-// const CustomNavButton = styled.div`
-//   .swiper-button-next,
-//   .swiper-button-prev {
-//     color: ${(props) => props.theme.colors.primary};
-//     background: rgba(0, 0, 0, 0.5);
-//     width: 40px;
-//     height: 40px;
-//     border-radius: 50%;
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     z-index: 10; /* Ensure they are above other elements */
-//   }
-
-//   .swiper-button-next {
-//     right: 10px;
-//     background-image: url('/path/to/next-icon.svg'); /* Optional: custom icon */
-//   }
-
-//   .swiper-button-prev {
-//     left: 10px;
-//     background-image: url('/path/to/prev-icon.svg'); /* Optional: custom icon */
-//   }
-// `;
 
 
 const CommentsSection = () => {
@@ -189,8 +171,9 @@ const CommentsSection = () => {
         "This dress exceeded my expectations. It’s elegant, stylish, and the perfect length. I’ve worn it multiple times already and always get compliments.",
     },
   ];
+  const {ref, isInView} = useInView({threshold: 0.1})
   return (
-    <CommentsMain>
+    <CommentsMain ref={ref} isVisible={isInView}>
       <h1>What Are People Saying</h1>
       <Swiper
         modules={[Navigation, Autoplay]}

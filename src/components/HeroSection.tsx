@@ -197,7 +197,7 @@ const HeroSection = () => {
               margin: 0,
               padding: "5px",
               lineHeight: 1.1,
-              fontSize: "56px",
+              fontSize: "54px",
               fontWeight: 600,
             }}
           />

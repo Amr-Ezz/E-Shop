@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useProduct } from "../Context/ProductContext";
-const AdsMain = styled.div`
+import useInView from "../Hooks/useInView";
+const AdsMain = styled.div<{ isVisible: boolean }>`
   display: flex;
   flex-direction: row;
   color: ${(props) => props.theme.colors.text};
@@ -12,6 +13,10 @@ const AdsMain = styled.div`
     ${(props) => props.theme.colors.secondary} 50%,
     ${(props) => props.theme.colors.primary} 100%
   );
+  opacity: ${(props) => (props.isVisible ? 1 : 0)};
+  transform: ${(props) =>
+    props.isVisible ? "translateY(0)" : "translateY(10px)"};
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
   width: fit-content;
   height: 300px;
   padding-top: 1rem;
@@ -51,6 +56,7 @@ const ImageDiv = styled.div`
 const AdsSection = () => {
   const navigate = useNavigate();
   const { setCategory } = useProduct();
+  const { ref, isInView } = useInView({ threshold: 0.1 });
 
   const handleNavigate = async (category: string) => {
     try {
@@ -62,7 +68,7 @@ const AdsSection = () => {
   };
 
   return (
-    <AdsMain>
+    <AdsMain isVisible={isInView} ref={ref}>
       <ImageDiv onClick={() => handleNavigate("gaming")}>
         <img src="Rectangle 4.png" alt="Model Image" />
         <h1>Ultimate Gaming Gear</h1>

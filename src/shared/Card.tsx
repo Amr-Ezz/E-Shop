@@ -3,9 +3,11 @@ import { Link } from "react-router-dom";
 import { Product } from "../api/requests";
 import { useTruncate } from "../Hooks/useTruncate";
 import ActionButtons from "./ActionButtons";
+import useInView from "../Hooks/useInView";
 
 interface CardProps {
   to: string;
+  isVisible: boolean;
 }
 const scaleInCenter = keyframes`
   0% {
@@ -22,7 +24,8 @@ const Card = styled(Link)<CardProps>`
   flex-direction: column;
   border: 1px solid ${(props) => props.theme.colors.white};
   padding: 1rem;
-  animation: ${scaleInCenter} 0.5s ease-in-out;
+  animation: ${(props) => (props.isVisible ? scaleInCenter : "none")} 0.5s
+    ease-in-out;
   gap: 10px;
   align-items: center;
   background-color: transparent;
@@ -143,42 +146,49 @@ interface productProps {
 export const CardContainer: React.FC<productProps> = ({ product, onBuy }) => {
   const { truncateDescription, toggleDescription, toggleHandler } =
     useTruncate();
+  const { ref, isInView } = useInView({ threshold: 0.1 });
 
   return (
-    <Card key={product.id} to={`/products/${product.id}`}>
-      <img src={product.image} alt={product.title} />
-      <h1>{product.title.substring(0, 50)}</h1>
-      <CircleDiv>
-        <div></div>
-        <div></div>
-        <div></div>
-      </CircleDiv>
-      <p style={{ lineHeight: "20px" }}>
-        {truncateDescription(product.description, 100, product.id)}
-        {product.description.length > 100 && (
-          <span
-            onClick={() => toggleHandler(product.id)}
-            style={{ color: "grey" }}
-          >
-            {toggleDescription[product.id] ? "See Less" : "See More"}
-          </span>
-        )}
-      </p>
+    <div ref={ref}>
+      <Card
+        key={product.id}
+        to={`/products/${product.id}`}
+        isVisible={isInView}
+      >
+        <img src={product.image} alt={product.title} />
+        <h1>{product.title.substring(0, 50)}</h1>
+        <CircleDiv>
+          <div></div>
+          <div></div>
+          <div></div>
+        </CircleDiv>
+        <p style={{ lineHeight: "20px" }}>
+          {truncateDescription(product.description, 100, product.id)}
+          {product.description.length > 100 && (
+            <span
+              onClick={() => toggleHandler(product.id)}
+              style={{ color: "grey" }}
+            >
+              {toggleDescription[product.id] ? "See Less" : "See More"}
+            </span>
+          )}
+        </p>
 
-      <PriceHolder>
-        <p>
-          {product.price}
-          <img src="/icons/dollar-symbol.png" alt="dollar" />
-        </p>
-        <p>
-          {product.brand} <img src="/icons/star.png" alt="star" />
-        </p>
-        <p>
-          {product.discount} <img src="/icons/trolley.png" alt="Items left" />
-        </p>
-        <p>Model: {product.model}</p>
-      </PriceHolder>
-      <ActionButtons product={product} onBuy={onBuy} showBuyButton={true} />
-    </Card>
+        <PriceHolder>
+          <p>
+            {product.price}
+            <img src="/icons/dollar-symbol.png" alt="dollar" />
+          </p>
+          <p>
+            {product.brand} <img src="/icons/star.png" alt="star" />
+          </p>
+          <p>
+            {product.discount} <img src="/icons/trolley.png" alt="Items left" />
+          </p>
+          <p>Model: {product.model}</p>
+        </PriceHolder>
+        <ActionButtons product={product} onBuy={onBuy} showBuyButton={true} />
+      </Card>
+    </div>
   );
 };

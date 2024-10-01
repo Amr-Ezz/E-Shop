@@ -3,11 +3,12 @@ import { useEffect } from "react";
 interface SplitTextProps {
   text: string;
   animationDuration?: number;
-  style?: React.CSSProperties; 
+  style?: React.CSSProperties;
+  className?: string; 
 
 }
 
-const SplitText: React.FC<SplitTextProps> = ({ text, animationDuration, style }) => {
+const SplitText: React.FC<SplitTextProps> = ({ text, animationDuration, style, className }) => {
   useEffect(() => {
     const letters = document.querySelectorAll(".letter");
     letters.forEach((letter, index) => {
@@ -25,7 +26,7 @@ const SplitText: React.FC<SplitTextProps> = ({ text, animationDuration, style })
     });
   }, [text, animationDuration]);
   return (
-    <span style={{ display: "inline-block", overflow: "hidden", ...style, textAlign: "start", }}>
+    <span className={className} style={{ display: "inline-block", overflow: "hidden", ...style, textAlign: "start", }}>
       {text.split("").map((char, index) => (
         <span
           key={index}

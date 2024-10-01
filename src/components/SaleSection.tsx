@@ -4,8 +4,9 @@ import { fetchProducts, Product } from "../api/requests";
 import BuyModal from "./Modal/BuyModal";
 import { CardContainer } from "../shared/Card";
 import { useNavigate } from "react-router-dom";
+import useInView from "../Hooks/useInView";
 
-const MainSection = styled.div`
+const MainSection = styled.div<{ isVisible: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -20,6 +21,10 @@ const MainSection = styled.div`
     ${(props) => props.theme.colors.secondary} 50%,
     ${(props) => props.theme.colors.tertiary} 100%
   );
+  opacity: ${(props) => (props.isVisible ? 1 : 0)};
+  transform: ${(props) =>
+    props.isVisible ? "translateY(0)" : "translateY(20px)"};
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 
   ul {
     display: flex;
@@ -96,6 +101,7 @@ const SaleSection = () => {
 
   const [selectedCategory, setSelectedCategory] = useState<string>("audio");
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const { ref, isInView } = useInView({ threshold: 0.1 });
 
   const navigate = useNavigate();
 
@@ -130,7 +136,7 @@ const SaleSection = () => {
   };
 
   return (
-    <MainSection>
+    <MainSection ref={ref} isVisible={isInView}>
       <h1>Flash Sale</h1>
       <ul>
         <li onClick={() => handleCategory("audio")}>Audio</li>

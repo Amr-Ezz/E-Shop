@@ -13,10 +13,12 @@ import SearchResults from "./pages/SearchResults";
 import ProductDetail from "./components/ProductDetail";
 import ProductPage from "./pages/ProductPage";
 import { ProductProvider } from "./Context/ProductContext";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <CartProvider>
         <div className="Container">
           <Navbar />

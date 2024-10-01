@@ -1,6 +1,8 @@
 import styled from "styled-components";
+import SplitText from "../components/SplitText";
+import useInView from "../Hooks/useInView";
 
-const Main = styled.div`
+const Main = styled.div<{ isVisible: boolean }>`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -13,6 +15,10 @@ const Main = styled.div`
     ${(props) => props.theme.colors.primary} 0%,
     ${(props) => props.theme.colors.secondary} 100%
   );
+  opacity: ${(props) => (props.isVisible ? 1 : 0)};
+  transform: ${(props) =>
+    props.isVisible ? "translateY(0)" : "translateY(20px)"};
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 `;
 const TextHolder = styled.div`
   display: flex;
@@ -99,7 +105,8 @@ const CastGrid = styled.div`
   grid-gap: 20px;
   padding: 4rem;
   background-color: ${(props) => props.theme.colors.primary};
-  color: ${props => props.theme.colors.text};
+  color: ${(props) => props.theme.colors.text};
+
 `;
 const CardDiv = styled.div`
   display: flex;
@@ -169,16 +176,18 @@ const ServiceCard = styled.div`
 `;
 const HighDiv = styled.div`
   background-color: ${(props) => props.theme.colors.primary};
-  color: ${props => props.theme.colors.text};
-`
+  color: ${(props) => props.theme.colors.text};
+`;
 
 const AboutUs = () => {
+  const { ref, isInView } = useInView({ threshold: 0.1 });
   return (
     <HighDiv>
-      <Main>
+      <Main ref={ref} isVisible={isInView}>
         <TextHolder>
           <h3>
-            <span>Our</span>Story
+            <SplitText text="Our" animationDuration={1500} />
+            Story
           </h3>
           <p>
             Launched in 2015, Exclusive is South Asia’s premier online shopping
