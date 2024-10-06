@@ -1,35 +1,38 @@
-import React from "react";
 import styled from "styled-components";
 
-const PageContainer = styled.div`
+export const PageContainer = styled.div`
   max-width: 100vw;
   height: fit-content;
   overflow-x: hidden;
   overflow-y: hidden;
   color: ${(props) => props.theme.colors.text};
-   background: ${(props) => props.theme.colors.primary};
+  background: ${(props) => props.theme.colors.primary};
   background: linear-gradient(
     90deg,
     ${(props) => props.theme.colors.primary} 0%,
     ${(props) => props.theme.colors.secondary} 100%
   );
 `;
-const Main = styled.div`
+export const Main = styled.div<{ isVisible: boolean }>`
   display: flex;
   height: fit-content;
   width: 100%;
   max-width: 100vw;
   box-sizing: border-box;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-evenly;
   gap: 5rem;
   align-items: center;
   padding: 2rem;
   border-radius: 100px;
   background: url("/Rectangle 126.png");
   background-color: ${(props) => props.theme.colors.primary};
+  opacity: ${(props) => (props.isVisible ? 1 : 0)};
+  transform: ${(props) =>
+    props.isVisible ? "translateY(0)" : "translateY(20px)"};
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 `;
-const TextSection = styled.div`
+export const TextSection = styled.div`
   flex-direction: column;
   width: 100%;
   justify-content: center;
@@ -38,10 +41,13 @@ const TextSection = styled.div`
     font-size: ${(props) => props.theme.font.fontSize};
     font-weight: ${(props) => props.theme.font.fontWeight};
     text-align: left;
-    span {
+    background-color: transparent;
+    width: fit-content;
+    h4 {
       color: ${(props) => props.theme.colors.text};
-      background-color: ${props => props.theme.colors.secondary};
+      background-color: ${(props) => props.theme.colors.secondary};
       border-radius: 20px;
+      width: fit-content;
     }
   }
   p {
@@ -50,7 +56,7 @@ const TextSection = styled.div`
     font-size: 28px;
   }
 `;
-const ImageHolder = styled.div`
+export const ImageHolder = styled.div`
   img {
     object-fit: cover;
     object-position: 20% 100%;
@@ -60,7 +66,7 @@ const ImageHolder = styled.div`
     z-index: 0;
   }
 `;
-const TagBrand = styled.div`
+export const TagBrand = styled.div`
   background-color: ${(props) => props.theme.colors.secondary};
   width: 100%;
   height: 20vh;
@@ -78,14 +84,18 @@ const TagBrand = styled.div`
     }
   }
 `;
-const ArrivalSection = styled.div`
+export const ArrivalSection = styled.div<{ isVisible: boolean }>`
   margin-top: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   position: relative;
+  opacity: ${(props) => (props.isVisible ? 1 : 0)};
+  transform: ${(props) =>
+    props.isVisible ? "translateY(0)" : "translateY(20px)"};
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 `;
-const HeadingText = styled.h3`
+export const HeadingText = styled.h3`
   font-family: poppins;
   text-align: left;
   font-size: 48px;
@@ -93,7 +103,7 @@ const HeadingText = styled.h3`
   position: relative;
   z-index: 2;
 `;
-const BackgroundVector = styled.img`
+export const BackgroundVector = styled.img`
   position: absolute;
   top: 25px;
   left: 260px;
@@ -101,13 +111,13 @@ const BackgroundVector = styled.img`
   object-fit: cover;
   z-index: 1;
 `;
-const CardsContainer = styled.div`
+export const CardsContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
   width: 100%;
 `;
-const Card = styled.div`
+export const Card = styled.div`
   display: flex;
   max-width: 384vw;
   height: auto;
@@ -127,7 +137,7 @@ const Card = styled.div`
     position: relative;
     margin-bottom: 30px;
     p {
-      color: ${props => props.theme.colors.text};
+      color: ${(props) => props.theme.colors.text};
     }
 
     img {
@@ -136,14 +146,14 @@ const Card = styled.div`
     }
   }
 `;
-const ImageCard = styled.img`
+export const ImageCard = styled.img`
   width: 100%;
   height: 90vh;
   border-radius: 50px;
   object-fit: cover;
   object-position: 20% 100%;
 `;
-const SaleBanner = styled.div`
+export const SaleBanner = styled.div`
   width: 100%;
   max-width: 100vw;
   display: flex;
@@ -167,7 +177,7 @@ const SaleBanner = styled.div`
     }
   }
 `;
-const SaleOffer = styled.div`
+export const SaleOffer = styled.div`
   width: 100%;
   opacity: 90%;
   color: white;
@@ -193,7 +203,7 @@ const SaleOffer = styled.div`
     }
   }
 `;
-const ParagraphSection = styled.div`
+export const ParagraphSection = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -224,14 +234,18 @@ const ParagraphSection = styled.div`
     }
   }
 `;
-const YoungSelection = styled.div`
+export const YoungSelection = styled.div<{ isVisible: boolean }>`
   margin-top: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   position: relative;
+  opacity: ${(props) => (props.isVisible ? 1 : 0)};
+  transform: ${(props) =>
+    props.isVisible ? "translateY(0)" : "translateY(20px)"};
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 `;
-const YoungFavourite = styled.div`
+export const YoungFavourite = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -239,7 +253,7 @@ const YoungFavourite = styled.div`
   gap: 1rem;
   width: 100%;
 `;
-const CardTrending = styled.div`
+export const CardTrending = styled.div`
   width: 100%;
   height: 100vh;
   min-height: auto;
@@ -260,7 +274,7 @@ const CardTrending = styled.div`
     padding-left: 1rem;
   }
 `;
-const CommunitySection = styled.div`
+export const CommunitySection = styled.div`
   background-color: ${(props) => props.theme.colors.primary};
   width: 100%;
   height: 50vh;
@@ -276,7 +290,7 @@ const CommunitySection = styled.div`
     color: white;
   }
 `;
-const FormContainer = styled.form`
+export const FormContainer = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -284,7 +298,7 @@ const FormContainer = styled.form`
   width: 100%;
   padding: 1rem;
 `;
-const InputField = styled.input`
+export const InputField = styled.input`
   padding: 10px;
   margin-bottom: 20px;
   text-align: center;
@@ -294,7 +308,7 @@ const InputField = styled.input`
   position: relative;
 `;
 
-const SubmitButton = styled.button`
+export const SubmitButton = styled.button`
   padding: 10px;
   width: 10%;
   background-color: black;
@@ -307,109 +321,3 @@ const SubmitButton = styled.button`
     opacity: 0.9;
   }
 `;
-
-const Services: React.FC = () => {
-  return (
-    <PageContainer>
-      <Main>
-        <TextSection>
-          <h1>
-            Your choice is our first and foremost <span>Priority</span>
-          </h1>
-          <p>Live for Influential and Innovative fashion!</p>
-        </TextSection>
-        <ImageHolder>
-          <img src="/pexels-olly-974911.jpg" />
-        </ImageHolder>
-      </Main>
-      <TagBrand>
-        <div>
-          <img src="/H&M.png" alt="brand" />{" "}
-          <img src="/Lacoste.png" alt="brand" />{" "}
-          <img src="/Levis.png" alt="brand" />
-          <img src="/Obey.png" alt="brand" />
-          <img src="/Amazon.png" alt="brand" />
-        </div>
-      </TagBrand>
-      <ArrivalSection>
-        <BackgroundVector src="/Vector 8.png" />
-        <HeadingText>New Arrivals</HeadingText>
-        <CardsContainer>
-          <Card>
-            <ImageCard src="/Rectangle 20.png" />
-            <div>
-              <h4> Gaming Sets</h4>
-              <p> Explore Now!</p>
-              <img src="/Arrow 1.png" />
-            </div>
-          </Card>
-          <Card>
-            <ImageCard src="/Rectangle 21.png" />
-            <div>
-              <h4> Phones</h4>
-              <p> Explore Now!</p>
-              <img src="/Arrow 1.png" />
-            </div>
-          </Card>
-          <Card>
-            <ImageCard src="/Rectangle 22.png" />
-            <div>
-              <h4>Earphones</h4>
-              <p> Explore Now!</p>
-              <img src="/Arrow 1.png" />
-            </div>
-          </Card>
-        </CardsContainer>
-      </ArrivalSection>
-      <SaleBanner>
-        <div>
-          <SaleOffer>
-            <div>
-              <h2>PayDay</h2>
-              <h3>Sale Now</h3>
-              <ParagraphSection>
-                <p>
-                  Spend minimal $100 get 30% off
-                  <br />
-                  voucher coder for your next purchase
-                </p>
-                <p>
-                  <span>1 June - 10 June 2021</span> <br />
-                  *Terms & Conditions apply
-                </p>
-                <button>SHOP NOW</button>
-              </ParagraphSection>
-            </div>
-          </SaleOffer>
-          {/* <img src="/Purple.PNG" alt="model" /> */}
-        </div>
-      </SaleBanner>
-      <YoungSelection>
-        <BackgroundVector src="/Vector 8.png" />
-        <HeadingText>Young's Favourite</HeadingText>
-        <YoungFavourite>
-          <CardTrending>
-            <img src="/Rectangle 50.png" alt="models" />
-            <h4>Trending on instagram</h4>
-            <p>Explore Now!</p>
-          </CardTrending>
-          <CardTrending>
-            <img src="/Group 80.png" alt="models" />
-            <h4>All Under $40</h4>
-            <p>Explore Now!</p>
-          </CardTrending>
-        </YoungFavourite>
-      </YoungSelection>
-      <CommunitySection>
-        <h3>JOIN SHOPPING COMMUNITY TO GET MONTHLY PROMO</h3>
-        <p>Type your email down below and be young wild generation</p>
-        <FormContainer>
-          <InputField type="text" placeholder="Enter your email here" />
-          <SubmitButton type="submit">Send</SubmitButton>
-        </FormContainer>
-      </CommunitySection>
-    </PageContainer>
-  );
-};
-
-export default Services;

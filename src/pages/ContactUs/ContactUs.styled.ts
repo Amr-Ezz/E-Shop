@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const ContactContainer = styled.div`
+export const ContactContainer = styled.div`
   display: flex;
   justify-content: space-around;
   padding: 2rem;
@@ -13,11 +13,9 @@ const ContactContainer = styled.div`
     ${(props) => props.theme.colors.secondary} 100%
   );
 
-  // background: rgb(255,205,241);
-  // background: radial-gradient(circle, rgba(255,205,241,0.3337710084033614) 0%, rgba(224,140,255,1) 100%);
 `;
 
-const ContactForm = styled.form`
+export const ContactForm = styled.form`
   display: flex;
   flex-direction: column;
   h3 {
@@ -31,14 +29,14 @@ const ContactForm = styled.form`
     text-align: left;
   }
 `;
-const ContactInput = styled.input`
+export const ContactInput = styled.input`
   margin: 0.5rem 0;
   padding: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 5px;
   opacity: 60%;
 `;
-const MessageInput = styled.textarea`
+export const MessageInput = styled.textarea`
   margin: 0.5rem 0;
   padding: 1rem;
   height: 150px;
@@ -47,7 +45,7 @@ const MessageInput = styled.textarea`
   resize: vertical;
   opacity: 60%;
 `;
-const ImageHolder = styled.div`
+export const ImageHolder = styled.div`
   display: flex;
   align-items: center;
   img {
@@ -58,12 +56,12 @@ const ImageHolder = styled.div`
     height: 494px;
   }
 `;
-const CheckBox = styled.div`
+export const CheckBox = styled.div`
   display: flex;
   gap: 10px;
   font-weight: 500;
 `;
-const GlassContainer = styled.div`
+export const GlassContainer = styled.div`
   width: fit-content;
   padding: 2rem;
   background: rgba(255, 255, 255, 0.1); /* Semi-transparent white */
@@ -79,7 +77,7 @@ const GlassContainer = styled.div`
       0 6px 40px rgba(128, 0, 255, 0.3);
   }
 `;
-const SubmitButton = styled.button`
+export const SubmitButton = styled.button`
   width: 106px;
   height: 23px;
   margin-top: 10px;
@@ -105,31 +103,3 @@ background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%,
 // background: rgb(45,253,121);
 // background: linear-gradient(0deg, rgba(45,253,121,1) 0%, rgba(34,193,195,1) 100%);  }
 `;
-
-const ContactUs = () => {
-  return (
-    <ContactContainer>
-      <GlassContainer>
-        <ContactForm>
-          <h3>Contact Us</h3>
-          <p>if you need some help or any other questions, feel free to ask.</p>
-
-          <ContactInput placeholder="First Name" />
-          <ContactInput placeholder="Phone Number" />
-          <MessageInput placeholder="Message" />
-          <CheckBox>
-            <input type="checkbox" />
-            <label>I Agree With The Primary Policy</label>
-          </CheckBox>
-          <SubmitButton>Submit</SubmitButton>
-        </ContactForm>
-      </GlassContainer>
-
-      <ImageHolder>
-        <img src="/FashionBackground.jpg" alt="models" />
-      </ImageHolder>
-    </ContactContainer>
-  );
-};
-
-export default ContactUs;

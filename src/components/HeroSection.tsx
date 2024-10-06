@@ -185,6 +185,8 @@ const ContainerDiv = styled.div`
   }
 `;
 
+const words = ['Explore', 'the', 'Ultimate', 'Tech', 'Collection']
+
 const HeroSection = () => {
   return (
     <ContainerDiv>
@@ -192,7 +194,8 @@ const HeroSection = () => {
         <FontSection>
           <h1>
           <SplitText
-            text="Explore the Ultimate Tech Collection"
+            words={words}
+            
             animationDuration={1000}
           
           />

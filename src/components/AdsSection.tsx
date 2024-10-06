@@ -14,24 +14,32 @@ const AdsMain = styled.div<{ isVisible: boolean }>`
     ${(props) => props.theme.colors.primary} 100%
   );
   opacity: ${(props) => (props.isVisible ? 1 : 0)};
-  transform: ${(props) =>
-    props.isVisible ? "translateY(0)" : "translateY(10px)"};
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+
+  transition: opacity 0.6s ease-out;
   width: fit-content;
   height: 300px;
   padding-top: 1rem;
   z-index: 0;
 `;
-const ImageDiv = styled.div`
+const ImageDiv = styled.div<{ isVisible: boolean }>`
   position: relative;
   z-index: 0;
   perspective: 1000px;
   cursor: pointer;
+  @keyframes slideInleft {
+    0% {
+      transform: translateX(-100px);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
   img {
     width: 450px;
     height: 300px;
     object-fit: cover;
     object-position: 100% 70%;
+    transform: ${(props) => props.isVisible ? "slideInLeft" : "all"};
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     transform-style: preserve-3d;
     &:hover {
@@ -56,7 +64,7 @@ const ImageDiv = styled.div`
 const AdsSection = () => {
   const navigate = useNavigate();
   const { setCategory } = useProduct();
-  const { ref, isInView } = useInView({ threshold: 0.1 });
+  const { ref, isInView } = useInView({ threshold: 0.5 });
 
   const handleNavigate = async (category: string) => {
     try {
@@ -69,15 +77,15 @@ const AdsSection = () => {
 
   return (
     <AdsMain isVisible={isInView} ref={ref}>
-      <ImageDiv onClick={() => handleNavigate("gaming")}>
+      <ImageDiv ref={ref} isVisible={isInView} onClick={() => handleNavigate("gaming")}>
         <img src="Rectangle 4.png" alt="Model Image" />
         <h1>Ultimate Gaming Gear</h1>
       </ImageDiv>
-      <ImageDiv onClick={() => handleNavigate("audio")}>
+      <ImageDiv ref={ref} isVisible={isInView} onClick={() => handleNavigate("audio")}>
         <img src="Rectangle 6.png" alt="Model Image" />
         <h1>50% Off Premium Sound</h1>
       </ImageDiv>
-      <ImageDiv onClick={() => handleNavigate("mobile")}>
+      <ImageDiv ref={ref} isVisible={isInView} onClick={() => handleNavigate("mobile")}>
         <img
           src="Rectangle 5.png"
           alt="Model Image"

@@ -1,14 +1,16 @@
 import { useEffect } from "react";
 
 interface SplitTextProps {
-  text: string;
+  words?: string[];
   animationDuration?: number;
-  style?: React.CSSProperties;
-  className?: string; 
-
+  className?: string;
 }
 
-const SplitText: React.FC<SplitTextProps> = ({ text, animationDuration, style, className }) => {
+const SplitText: React.FC<SplitTextProps> = ({
+  words,
+  animationDuration = 1000,
+  className,
+}) => {
   useEffect(() => {
     const letters = document.querySelectorAll(".letter");
     letters.forEach((letter, index) => {
@@ -24,22 +26,32 @@ const SplitText: React.FC<SplitTextProps> = ({ text, animationDuration, style, c
         }
       );
     });
-  }, [text, animationDuration]);
+  }, [animationDuration]);
+
   return (
-    <span className={className} style={{ display: "inline-block", overflow: "hidden", ...style, textAlign: "start", }}>
-      {text.split("").map((char, index) => (
+    <span className={className}>
+      {words?.map((word, wordIndex) => (
         <span
-          key={index}
-          className="letter"
+          key={wordIndex}
           style={{
-            ...style,
             display: "inline-block",
-            opacity: 0,
-            transform: "translateY(20px)",
-            marginRight: "0.5rem"
+            marginRight: "0.5rem",
           }}
         >
-          {char}
+          {word.split("").map((char, charIndex) => (
+            <span
+              key={`${wordIndex}-${charIndex}`}
+              className="letter"
+              style={{
+                display: "inline-block",
+                opacity: 0,
+                transform: "translateY(20px)",
+              }}
+            >
+              {char}
+            </span>
+          ))}
+          <span>&nbsp;</span>
         </span>
       ))}
     </span>
