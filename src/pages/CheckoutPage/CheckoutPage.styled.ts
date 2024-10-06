@@ -1,28 +1,26 @@
 import styled from "styled-components";
+import { FlexColumn, FlexRow, Padding, FullHeightImage } from '../../Utilities/StyledUtilities.styled';
+
 export const cardStyle = {
-    style: {
-      base: {
-        color: "#fff",
-        fontFamily: "'Helvetica Neue', Helvetica, sans-serif",
-        fontSize: "16px",
-        "::placeholder": {
-          color: "#aab7c4",
-        },
-      },
-      invalid: {
-        color: "#fa755a",
-        iconColor: "#fa755a",
+  style: {
+    base: {
+      color: "#fff",
+      fontFamily: "'Helvetica Neue', Helvetica, sans-serif",
+      fontSize: "16px",
+      "::placeholder": {
+        color: "#aab7c4",
       },
     },
-  };
+    invalid: {
+      color: "#fa755a",
+      iconColor: "#fa755a",
+    },
+  },
+};
 
-export const PaymentDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
+// Refined PaymentDiv with FlexColumn and TypeScript types
+export const PaymentDiv = styled(FlexColumn)`
   padding-top: 0.5rem;
-  gap: 10px;
   background-color: ${(props) => props.theme.colors.white};
   form {
     align-self: flex-start;
@@ -32,25 +30,23 @@ export const PaymentDiv = styled.div`
     }
   }
 `;
-export const ProductInfo = styled.div`
-  display: flex;
-  flex-direction: row;
+
+// Refined ProductInfo with FlexRow and TypeScript types
+export const ProductInfo = styled(FlexRow)`
   justify-content: space-between;
-  gap: 10px;
-  img {
-    width: 50%;
-    height: 100vh;
-  }
 `;
-export const ProductDetail = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+
+// Refined ProductDetail with FlexColumn and Padding utility
+export const ProductDetail = styled(FlexColumn)`
   align-items: flex-start;
-  gap: 10px;
-  padding: 1rem;
-  background-color: ${props => props.theme.colors.secondary};
+  ${Padding}
+  background-color: ${(props) => props.theme.colors.secondary};
   hr {
     width: 100%;
   }
+`;
+
+// Refined StyledImage with FullHeightImage utility and TypeScript types
+export const StyledImage = styled(FullHeightImage)`
+  // Additional styles can be added here if needed.
 `;
