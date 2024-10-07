@@ -1,6 +1,7 @@
 import styled, { keyframes } from "styled-components";
 import Image3D from "./Image3D";
 import SplitText from "./SplitText";
+import { FlexColumn, FlexRow } from "../Utilities/StyledUtilities.styled";
 
 const puffInCenter = keyframes`
  0% {
@@ -13,12 +14,9 @@ const puffInCenter = keyframes`
             transform: translateZ(0);
     opacity: 1;
   }`;
-const HeroDiv = styled.div`
-  display: flex;
-  flex-direction: row;
+const HeroDiv = styled(FlexRow)`
   justify-content: space-between;
   gap: 2rem;
-  align-items: center;
   padding: 2rem;
   div {
     img {
@@ -62,9 +60,7 @@ const HeroDiv = styled.div`
   }
 `;
 
-const FontSection = styled.div`
-  display: flex;
-  flex-direction: column;
+const FontSection = styled(FlexColumn)`
   align-items: flex-start;
   padding: 0.2rem;
   color: ${(props) => props.theme.colors.text};
@@ -132,7 +128,7 @@ const FontSection = styled.div`
 
 const FooterHeroSection = styled.div`
   width: 100%;
-  max-width: 1669px;
+  max-width: 100%;
   align-self: flex-end;
   overflow: hidden;
   white-space: nowrap;
@@ -147,9 +143,9 @@ const FooterHeroSection = styled.div`
 const TextBox = styled.div`
   display: inline-block;
   padding: 10px;
-  white-space: nowrap;
   animation: scroll 10s linear infinite;
   color: ${(props) => props.theme.colors.text};
+  max-width: 100%;
 
   @keyframes scroll {
     0% {
@@ -166,11 +162,9 @@ const TextBox = styled.div`
   }
 `;
 
-const ContainerDiv = styled.div`
+const ContainerDiv = styled(FlexColumn)`
   width: 100%;
-  max-width: 1350px;
-  display: flex;
-  flex-direction: column;
+  max-width: 100%;
   align-items: flex-start;
   justify-content: space-between;
   background: ${(props) => props.theme.colors.primary};
@@ -179,13 +173,14 @@ const ContainerDiv = styled.div`
     ${(props) => props.theme.colors.primary} 0%,
     ${(props) => props.theme.colors.secondary} 100%
   );
+  box-sizing: border-box;
 
   @media (max-width: 768px) {
     max-width: 100%;
   }
 `;
 
-const words = ['Explore', 'the', 'Ultimate', 'Tech', 'Collection']
+const words = ["Explore", "the", "Ultimate", "Tech", "Collection"];
 
 const HeroSection = () => {
   return (
@@ -193,14 +188,9 @@ const HeroSection = () => {
       <HeroDiv>
         <FontSection>
           <h1>
-          <SplitText
-            words={words}
-            
-            animationDuration={1000}
-          
-          />
+            <SplitText words={words} animationDuration={1000} />
           </h1>
-          
+
           <p>
             Level up with the latest in gaming, sound, and screen experiences
           </p>

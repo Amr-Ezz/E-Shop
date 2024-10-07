@@ -5,6 +5,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "../App.css";
 import useInView from "../Hooks/useInView";
+import { FlexColumn, FlexRow } from "../Utilities/StyledUtilities.styled";
 
 const CommentsMain = styled.div<{isVisible: boolean}>`
   display: flex;
@@ -42,9 +43,7 @@ const CommentsDiv = styled.div`
   }
 `;
 
-const CommentRow = styled.div`
-  display: flex;
-  justify-content: center;
+const CommentRow = styled(FlexRow)`
   padding: 2.5rem;
   height: auto;
   transition: transform 0.5s ease-in-out;
@@ -55,11 +54,9 @@ const CommentRow = styled.div`
   }
 `;
 
-const Comment = styled.div`
-  display: flex;
+const Comment = styled(FlexColumn)`
   border: 1px solid black;
 
-  flex-direction: column;
   padding: 1rem;
   width: 100%;
   max-width: 655px;
@@ -89,10 +86,7 @@ const Comment = styled.div`
   }
 `;
 
-const User = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+const User = styled(FlexRow)`
   width: 100%;
   padding: 1rem;
 
@@ -105,9 +99,7 @@ const User = styled.div`
   }
 `;
 
-const Name = styled.div`
-  display: flex;
-  flex-direction: column;
+const Name = styled(FlexColumn)`
   gap: 10px;
   margin-left: 1rem;
   position: relative;

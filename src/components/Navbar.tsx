@@ -8,6 +8,7 @@ import { useCart } from "../Context/CartContext";
 import CartModal from "./Modal/CartModal";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { useTheme } from "../Context/ThemeContext";
+import { FlexColumn, FlexRow } from "../Utilities/StyledUtilities.styled";
 
 const NavbarContainer = styled.div`
   width: 100%;
@@ -115,9 +116,7 @@ const Hamburger = styled.div`
   }
 `;
 
-const ButtonDiv = styled.div`
-  display: flex;
-  flex-direction: row;
+const ButtonDiv = styled(FlexRow)`
   width: 280px;
   justify-content: space-between;
   align-content: center;
@@ -187,9 +186,7 @@ const SearchInput = styled.input<{ isVisible: boolean }>`
     width: 150px;
   }
 `;
-const WrapperButtons = styled.div`
-  display: flex;
-  flex-direction: column;
+const WrapperButtons = styled(FlexColumn)`
   align-items: flex-end;
   gap: 10px;
   form {

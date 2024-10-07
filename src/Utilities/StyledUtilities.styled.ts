@@ -68,7 +68,7 @@ export const Padding = styled.div<PaddingProps>`
 
 // Image Utility
 export const FullHeightImage = styled.img<ImageProps>`
-  width: ${({ width }) => width || "50%"};
+  width: ${({ width }) => width || "100%"};
   height: ${({ height }) => height || "100vh"};
   object-fit: cover;
 `;

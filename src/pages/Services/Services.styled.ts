@@ -1,4 +1,11 @@
 import styled from "styled-components";
+import {
+  Button,
+  FlexColumn,
+  FlexContainer,
+  FlexRow,
+  FullHeightImage,
+} from "../../Utilities/StyledUtilities.styled";
 
 export const PageContainer = styled.div`
   max-width: 100vw;
@@ -13,16 +20,12 @@ export const PageContainer = styled.div`
     ${(props) => props.theme.colors.secondary} 100%
   );
 `;
-export const Main = styled.div<{ isVisible: boolean }>`
-  display: flex;
+export const Main = styled(FlexContainer)<{ isVisible: boolean }>`
   height: fit-content;
   width: 100%;
   max-width: 100vw;
   box-sizing: border-box;
-  flex-direction: row;
-  justify-content: space-evenly;
   gap: 5rem;
-  align-items: center;
   padding: 2rem;
   border-radius: 100px;
   background: url("/Rectangle 126.png");
@@ -32,8 +35,7 @@ export const Main = styled.div<{ isVisible: boolean }>`
     props.isVisible ? "translateY(0)" : "translateY(20px)"};
   transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 `;
-export const TextSection = styled.div`
-  flex-direction: column;
+export const TextSection = styled(FlexColumn)`
   width: 100%;
   justify-content: center;
   padding: 5rem;
@@ -84,11 +86,10 @@ export const TagBrand = styled.div`
     }
   }
 `;
-export const ArrivalSection = styled.div<{ isVisible: boolean }>`
+export const ArrivalSection = styled(FlexColumn)<{ isVisible: boolean }>`
   margin-top: 2rem;
-  display: flex;
-  flex-direction: column;
   justify-content: space-around;
+  align-items: flex-start;
   position: relative;
   opacity: ${(props) => (props.isVisible ? 1 : 0)};
   transform: ${(props) =>
@@ -146,12 +147,9 @@ export const Card = styled.div`
     }
   }
 `;
-export const ImageCard = styled.img`
-  width: 100%;
-  height: 90vh;
+export const ImageCard = styled(FullHeightImage)`
   border-radius: 50px;
   object-fit: cover;
-  object-position: 20% 100%;
 `;
 export const SaleBanner = styled.div`
   width: 100%;
@@ -203,9 +201,7 @@ export const SaleOffer = styled.div`
     }
   }
 `;
-export const ParagraphSection = styled.div`
-  display: flex;
-  flex-direction: column;
+export const ParagraphSection = styled(FlexColumn)`
   align-items: flex-start;
   p {
     font-size: 18px;
@@ -234,22 +230,17 @@ export const ParagraphSection = styled.div`
     }
   }
 `;
-export const YoungSelection = styled.div<{ isVisible: boolean }>`
+export const YoungSelection = styled(FlexColumn)<{ isVisible: boolean }>`
   margin-top: 2rem;
-  display: flex;
-  flex-direction: column;
   justify-content: space-around;
+  align-items: flex-start;
   position: relative;
   opacity: ${(props) => (props.isVisible ? 1 : 0)};
   transform: ${(props) =>
     props.isVisible ? "translateY(0)" : "translateY(20px)"};
   transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 `;
-export const YoungFavourite = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-content: center;
+export const YoungFavourite = styled(FlexRow)`
   gap: 1rem;
   width: 100%;
 `;
@@ -274,13 +265,10 @@ export const CardTrending = styled.div`
     padding-left: 1rem;
   }
 `;
-export const CommunitySection = styled.div`
+export const CommunitySection = styled(FlexColumn)`
   background-color: ${(props) => props.theme.colors.primary};
   width: 100%;
   height: 50vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   h3 {
     font-size: 38px;
     font-weight: 800;
@@ -308,16 +296,6 @@ export const InputField = styled.input`
   position: relative;
 `;
 
-export const SubmitButton = styled.button`
-  padding: 10px;
+export const SubmitButton = styled(Button)`
   width: 10%;
-  background-color: black;
-  color: white;
-  font-size: 16px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  &:hover {
-    opacity: 0.9;
-  }
 `;

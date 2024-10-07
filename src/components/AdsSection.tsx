@@ -2,9 +2,8 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useProduct } from "../Context/ProductContext";
 import useInView from "../Hooks/useInView";
-const AdsMain = styled.div<{ isVisible: boolean }>`
-  display: flex;
-  flex-direction: row;
+import { FlexRow } from "../Utilities/StyledUtilities.styled";
+const AdsMain = styled(FlexRow)<{ isVisible: boolean }>`
   color: ${(props) => props.theme.colors.text};
   background: ${(props) => props.theme.colors.tertiary};
   background: linear-gradient(
@@ -64,7 +63,7 @@ const ImageDiv = styled.div<{ isVisible: boolean }>`
 const AdsSection = () => {
   const navigate = useNavigate();
   const { setCategory } = useProduct();
-  const { ref, isInView } = useInView({ threshold: 0.5 });
+  const { ref, isInView } = useInView({ threshold: 0.3 });
 
   const handleNavigate = async (category: string) => {
     try {

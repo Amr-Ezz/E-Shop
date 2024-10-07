@@ -1,6 +1,7 @@
 import styled from "styled-components";
+import { FlexColumn, FlexRow } from "../Utilities/StyledUtilities.styled";
 
-const FooterMain = styled.div`
+const FooterMain = styled(FlexRow)`
   width: 100%;
   padding: 2rem 1rem;
   border-top: 1px solid white;
@@ -11,9 +12,6 @@ const FooterMain = styled.div`
     ${(props) => props.theme.colors.secondary} 50%,
     ${(props) => props.theme.colors.primary} 100%
   );
-  display: flex;
-  align-items: center;
-  justify-content: center;
   color: ${(props) => props.theme.colors.text};
 
   @media (max-width: 768px) {
@@ -22,9 +20,7 @@ const FooterMain = styled.div`
   }
 `;
 
-const OfferText = styled.div`
-  display: flex;
-  flex-direction: row;
+const OfferText = styled(FlexRow)`
   align-items: flex-start;
   justify-content: space-between;
   gap: 52px;
@@ -37,10 +33,10 @@ const OfferText = styled.div`
   }
 `;
 
-const FooterColumn = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+const FooterColumn = styled(FlexColumn)`
+justify-content: flex-start;
+align-items: flex-start;
+gap: 15px;
 
   h3 {
     color: ${props => props.theme.colors.text};
@@ -110,9 +106,7 @@ const FooterColumn = styled.div`
   }
 `;
 
-const MobileContainer = styled.div`
-  display: flex;
-  flex-direction: row;
+const MobileContainer = styled(FlexRow)`
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -128,10 +122,8 @@ const ImageMobileColumn = styled.div`
   }
 `;
 
-const ContentColumn = styled.div`
+const ContentColumn = styled(FlexColumn)`
   flex: 1;
-  display: flex;
-  flex-direction: column;
   justify-content: space-between;
 
   @media (max-width: 768px) {
@@ -139,10 +131,7 @@ const ContentColumn = styled.div`
   }
 `;
 
-const Element = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+const Element = styled(FlexRow)`
   padding: 5px;
   cursor: pointer;
 
