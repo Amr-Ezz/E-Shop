@@ -22,13 +22,26 @@ const scaleInCenter = keyframes`
 const Card = styled(Link)<CardProps>`
   display: flex;
   flex-direction: column;
-  border: 1px solid ${(props) => props.theme.colors.white};
   padding: 1rem;
   animation: ${(props) => (props.isVisible ? scaleInCenter : "none")} 0.5s
     ease-in-out;
   gap: 10px;
   align-items: center;
   background-color: transparent;
+   background-color: hsla(240, 15%, 9%, 1);
+  background-image: radial-gradient(
+      at 88% 40%,
+      hsla(240, 15%, 9%, 1) 0px,
+      transparent 85%
+    ),
+    radial-gradient(at 49% 30%, hsla(240, 15%, 9%, 1) 0px, transparent 85%),
+    radial-gradient(at 14% 26%, hsla(240, 15%, 9%, 1) 0px, transparent 85%),
+    radial-gradient(at 0% 64%, hsla(263, 93%, 56%, 1) 0px, transparent 85%),
+    radial-gradient(at 41% 94%, hsla(284, 100%, 84%, 1) 0px, transparent 85%),
+    radial-gradient(at 100% 99%, hsla(306, 100%, 57%, 1) 0px, transparent 85%);
+
+  border-radius: 1rem;
+  box-shadow: 0px -16px 24px 0px rgba(255, 255, 255, 0.25) inset;
 
   img {
     width: 100%;
@@ -42,12 +55,12 @@ const Card = styled(Link)<CardProps>`
   h1 {
     font-size: 1.5rem;
     text-align: center;
-    color: ${(props) => props.theme.colors.text};
+    color: ${(props) => props.theme.colors.white};
   }
 
   p {
     text-align: left;
-    color: ${(props) => props.theme.colors.text};
+    color: ${(props) => props.theme.colors.white};
 
     span {
       color: green;
