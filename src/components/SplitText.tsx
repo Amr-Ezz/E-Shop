@@ -4,6 +4,8 @@ interface SplitTextProps {
   words?: string[];
   animationDuration?: number;
   className?: string;
+  style?: React.CSSProperties;
+
 }
 
 const SplitText: React.FC<SplitTextProps> = ({

@@ -25,7 +25,6 @@ const ProductDiv = styled.div`
 const ProductRow = styled.div`
   display: flex;
   flex-direction: row;
-  padding: 1rem;
   justify-content: space-evenly;
   align-items: flex-start;
   gap: 50px;
@@ -37,12 +36,37 @@ const ProductRow = styled.div`
     transition: transform 0.3s ease-in-out;
     object-fit: cover;
     cursor: pointer;
-    align-self: flex-start;
+    position: sticky;
   }
   &:hover img {
     transform: scale(1.2);
   }
 `;
+/* const ProductRowWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  padding: 1rem;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  gap: 50px;
+  color: ${(props) => props.theme.colors.text};
+`;
+
+
+
+const ProductImage = styled.img`
+  width: 600px;
+  height: 400px;
+  border-radius: 20px;
+  transition: transform 0.3s ease-in-out;
+  object-fit: cover;
+  cursor: pointer;
+
+  ${StickyImageWrapper}:hover & {
+    transform: scale(1.2);
+  }
+`;*/
+
 const Content = styled.div`
   display: flex;
   flex-direction: column;
@@ -80,26 +104,34 @@ const PriceTag = styled.p`
   }
 `;
 const ContentDesc = styled.div`
-  border: 1px solid white;
   padding: 1rem;
+  border: 1px solid grey;
+  border-radius: 20px;
+  box-shadow: 10px 40px 40px rgba(0.95, 0.95, 0.25, 0.25);
 `;
 const ColumnCart = styled.div`
   display: flex;
   padding: 1rem;
+  width: 100%;
   gap: 10px;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: flex-start;
-  border: 1px solid white;
+  border-radius: 20px;
+  box-shadow: 0px -16px 24px 0px rgba(255, 255, 255, 0.25) inset;
+
   p:nth-child(2) {
     border-bottom: 1px solid white;
   }
   p:nth-child(3) {
     font-weight: 600;
     font-size: 18px;
-    color: green;
+    align-self: flex-start;
   }
   p:nth-child(4) {
+    color: green;
+    font-weight: 800;
+    font-size: 1.6rem;
     span {
       color: ${(props) => props.theme.colors.quaternary};
     }
@@ -133,53 +165,55 @@ const ProductDetail = () => {
         <ProductRow>
           <img src={product.image} alt={product.title} />
           <Content>
-            <SplitText
-              text={product.title}
-              animationDuration={500}
-              style={{
-                margin: 0,
-                padding: "2px",
-                lineHeight: 1.1,
-                fontSize: "16px",
-                fontWeight: 600,
-
-              }}
-            />
             <br />
-            <p>Model: {product.model}</p>
-            <PriceTag>
+
+            <ColumnCart>
+              <SplitText
+                words={product.title.split(" ")}
+                animationDuration={500}
+                style={{
+                  margin: 0,
+                  padding: "2px",
+                  lineHeight: 1.1,
+                  fontSize: "16px",
+                  fontWeight: 600,
+                }}
+              />
+              <PriceTag>
+                {product.price}
+                <span>USD</span>
+              </PriceTag>
+              <p>Free Returns</p>
+              <p>In Stock</p>
+              <p>Color: {product.color}</p>
+
+              <p>Model: {product.model}</p>
+
+              <p>
+                Discount: <span>{product.discount}%</span>
+              </p>
+
+              <ContentDesc>
+                <p>{product.description}</p>
+              </ContentDesc>
+              <p>Quantity</p>
+
+              <Counter>
+                <CounterButton onClick={decrement}>-</CounterButton>
+                <CounterText>{quantity}</CounterText>
+                <CounterButton onClick={increment}>+</CounterButton>
+              </Counter>
+              <ActionButtons
+                product={product}
+                onBuy={useCart}
+                showBuyButton={true}
+              />
+            </ColumnCart>
+            {/* <PriceTag>
               {product.price * quantity}
               <span>$</span>
-            </PriceTag>
-            <p>Color: {product.color}</p>
-
-            <ContentDesc>
-              <p>{product.description}</p>
-            </ContentDesc>
+            </PriceTag> */}
           </Content>
-          <ColumnCart>
-            <PriceTag>
-              {product.price}
-              <span>USD</span>
-            </PriceTag>
-            <p>Free Returns</p>
-            <p>In Stock</p>
-            <p>
-              Discount: <span>{product.discount}%</span>
-            </p>
-            <p>Quantity</p>
-
-            <Counter>
-              <CounterButton onClick={decrement}>-</CounterButton>
-              <CounterText>{quantity}</CounterText>
-              <CounterButton onClick={increment}>+</CounterButton>
-            </Counter>
-            <ActionButtons
-              product={product}
-              onBuy={useCart}
-              showBuyButton={true}
-            />
-          </ColumnCart>
         </ProductRow>
       </ProductDiv>
     </Main>

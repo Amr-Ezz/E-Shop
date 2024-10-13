@@ -28,17 +28,7 @@ const Card = styled(Link)<CardProps>`
   gap: 10px;
   align-items: center;
   background-color: transparent;
-   background-color: hsla(240, 15%, 9%, 1);
-  background-image: radial-gradient(
-      at 88% 40%,
-      hsla(240, 15%, 9%, 1) 0px,
-      transparent 85%
-    ),
-    radial-gradient(at 49% 30%, hsla(240, 15%, 9%, 1) 0px, transparent 85%),
-    radial-gradient(at 14% 26%, hsla(240, 15%, 9%, 1) 0px, transparent 85%),
-    radial-gradient(at 0% 64%, hsla(263, 93%, 56%, 1) 0px, transparent 85%),
-    radial-gradient(at 41% 94%, hsla(284, 100%, 84%, 1) 0px, transparent 85%),
-    radial-gradient(at 100% 99%, hsla(306, 100%, 57%, 1) 0px, transparent 85%);
+  background: ${({ theme }) => theme.background};
 
   border-radius: 1rem;
   box-shadow: 0px -16px 24px 0px rgba(255, 255, 255, 0.25) inset;
@@ -60,7 +50,7 @@ const Card = styled(Link)<CardProps>`
 
   p {
     text-align: left;
-    color: ${(props) => props.theme.colors.white};
+    color: ${(props) => props.theme.colors.text};
 
     span {
       color: green;
@@ -76,6 +66,10 @@ const PriceHolder = styled.div`
   p:nth-child(1) {
     color: ${(props) => props.theme.colors.text};
     font-size: 1.5rem;
+    font-weight: 800;
+    padding: 1rem;
+    border-radius: 100%;
+    box-shadow: 0px -16px 24px 0px rgba(255, 255, 255, 0.25) inset;
 
     img {
       width: 20px;
