@@ -22,51 +22,47 @@ const ProductDiv = styled.div`
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 `;
+const Specifications = styled.div`
+  border: 1px solid white;
+  width: 100%;
+  display: flex;
+  padding: 1rem;
+  flex-direction: column;
+  color: ${props => props.theme.colors.text};
+  h4 {
+    border-bottom: 1px solid white;
+    width: 100%;
+    text-align: left;
+    padding: 1rem;
+    font-size: 20px;
+  }
+`;
 const ProductRow = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
   align-items: flex-start;
-  gap: 50px;
-  color: ${(props) => props.theme.colors.text};
-  img {
-    width: 600px;
-    height: 400px;
-    border-radius: 20px;
-    transition: transform 0.3s ease-in-out;
-    object-fit: cover;
-    cursor: pointer;
-    position: sticky;
-  }
-  &:hover img {
-    transform: scale(1.2);
-  }
-`;
-/* const ProductRowWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  padding: 1rem;
-  justify-content: space-evenly;
-  align-items: flex-start;
-  gap: 50px;
+  gap: 10px;
   color: ${(props) => props.theme.colors.text};
 `;
-
-
+const StickyImageContainer = styled.div`
+  position: sticky;
+  top: 120px;
+  height: fit-content;
+`;
 
 const ProductImage = styled.img`
-  width: 600px;
+  width: fit-content;
   height: 400px;
   border-radius: 20px;
   transition: transform 0.3s ease-in-out;
-  object-fit: cover;
+  object-fit: contain;
   cursor: pointer;
 
-  ${StickyImageWrapper}:hover & {
+  ${StickyImageContainer}:hover & {
     transform: scale(1.2);
   }
-`;*/
-
+`;
 const Content = styled.div`
   display: flex;
   flex-direction: column;
@@ -93,21 +89,37 @@ const Content = styled.div`
 `;
 const PriceTag = styled.p`
   color: ${(props) => props.theme.colors.grey};
-  font-size: 36px;
-  font-weight: 600;
   display: flex;
   gap: 5px;
+  font-weight: 500;
+  border-radius: 100px;
+  padding: 1rem;
+  font-size: 48px;
+  align-self: flex-start;
+  box-shadow: 0px -16px 24px 0px rgba(255, 255, 255, 0.25) inset;
+  color: green;
   span {
-    color: green;
+    color: grey;
+
     font-size: 0.6em;
     vertical-align: super;
   }
 `;
 const ContentDesc = styled.div`
   padding: 1rem;
-  border: 1px solid grey;
   border-radius: 20px;
-  box-shadow: 10px 40px 40px rgba(0.95, 0.95, 0.25, 0.25);
+  box-shadow: 10px 40px 40px rgba(0.95, 0.95, 0.25, 0.15);
+  p:nth-child(1) {
+    color: ${(props) => props.theme.colors.text};
+    font-weight: 800;
+    border-bottom: 1px solid white;
+    padding-bottom: 10px;
+  }
+  p:nth-child(2) {
+    font-weight: 300;
+    font-size: 14px;
+    padding-top: 10px;
+  }
 `;
 const ColumnCart = styled.div`
   display: flex;
@@ -120,20 +132,34 @@ const ColumnCart = styled.div`
   border-radius: 20px;
   box-shadow: 0px -16px 24px 0px rgba(255, 255, 255, 0.25) inset;
 
-  p:nth-child(2) {
-    border-bottom: 1px solid white;
-  }
   p:nth-child(3) {
     font-weight: 600;
-    font-size: 18px;
     align-self: flex-start;
+    font-size: 35px;
+    color: ${(props) => props.theme.colors.text};
   }
   p:nth-child(4) {
-    color: green;
     font-weight: 800;
     font-size: 1.6rem;
+    border: 1px solid blue;
     span {
       color: ${(props) => props.theme.colors.quaternary};
+    }
+  }
+`;
+const ListedSpecifications = styled.ul`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  list-style-type: none;
+  padding: 0;
+  li {
+    margin: 8px 15px;
+    font-size: 16px;
+    text-align: left;
+    list-style-type: disc;
+    span {
+    font-weight: 600;
     }
   }
 `;
@@ -163,11 +189,14 @@ const ProductDetail = () => {
     <Main>
       <ProductDiv>
         <ProductRow>
-          <img src={product.image} alt={product.title} />
+          <StickyImageContainer>
+            <ProductImage src={product.image} alt={product.title} />
+          </StickyImageContainer>{" "}
           <Content>
             <br />
 
-            <ColumnCart>
+            <ColumnCart
+            >
               <SplitText
                 words={product.title.split(" ")}
                 animationDuration={500}
@@ -175,27 +204,15 @@ const ProductDetail = () => {
                   margin: 0,
                   padding: "2px",
                   lineHeight: 1.1,
-                  fontSize: "16px",
-                  fontWeight: 600,
+                  fontSize: "26px",
+                  fontWeight: 800,
                 }}
               />
               <PriceTag>
-                {product.price}
+                {product.price * quantity}.99
                 <span>USD</span>
               </PriceTag>
-              <p>Free Returns</p>
-              <p>In Stock</p>
-              <p>Color: {product.color}</p>
 
-              <p>Model: {product.model}</p>
-
-              <p>
-                Discount: <span>{product.discount}%</span>
-              </p>
-
-              <ContentDesc>
-                <p>{product.description}</p>
-              </ContentDesc>
               <p>Quantity</p>
 
               <Counter>
@@ -206,15 +223,30 @@ const ProductDetail = () => {
               <ActionButtons
                 product={product}
                 onBuy={useCart}
-                showBuyButton={true}
+                showBuyButton={false}
               />
+              <ContentDesc>
+                <p>Description</p>
+                <p>{product.description}</p>
+              </ContentDesc>
             </ColumnCart>
-            {/* <PriceTag>
-              {product.price * quantity}
-              <span>$</span>
-            </PriceTag> */}
           </Content>
         </ProductRow>
+        <Specifications>
+          <h4>Specifications</h4>
+          <ListedSpecifications>
+            <li><span>Free Returns</span></li>
+            <li><span>In Stock</span></li>
+            <li>Color: <span>{product.color}</span></li>
+
+            <li>Model: <span>{product.model}</span></li>
+
+            <li>
+              Discount: <span>{product.discount}%</span>
+            </li>
+            <li>Brand: <span>{product.brand}</span></li>
+          </ListedSpecifications>
+        </Specifications>
       </ProductDiv>
     </Main>
   );
