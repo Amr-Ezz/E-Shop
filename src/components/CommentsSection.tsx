@@ -12,7 +12,6 @@ const CommentsMain = styled.div<{isVisible: boolean}>`
   padding: 5rem 1rem;
   flex-direction: column;
   color: ${(props) => props.theme.colors.text};
-  border: 1px solid ${(props) => props.theme.colors.text};
 
   align-items: center;
   background: ${(props) => props.theme.colors.quaternary};

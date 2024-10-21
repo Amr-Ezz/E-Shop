@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { Product } from "../api/requests";
 import { useCart } from "../Context/CartContext";
 import styled from "styled-components";
@@ -36,10 +37,12 @@ const StyledButton = styled.button`
 `;
 const ActionButtons: React.FC<ButtonProps> = ({ product, onBuy, showBuyButton }) => {
   const { addToCart } = useCart();
+  const navigate = useNavigate();
   const handleBuy = (e: React.MouseEvent) => {
     e.stopPropagation();
     onBuy?.(product);
-  
+    navigate("/pages/CheckoutPage", {state: {product, totalPrice: product.price}})
+    
   };
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation();

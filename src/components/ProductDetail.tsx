@@ -28,7 +28,7 @@ const Specifications = styled.div`
   display: flex;
   padding: 1rem;
   flex-direction: column;
-  color: ${props => props.theme.colors.text};
+  color: ${(props) => props.theme.colors.text};
   h4 {
     border-bottom: 1px solid white;
     width: 100%;
@@ -131,11 +131,14 @@ const ColumnCart = styled.div`
   align-items: flex-start;
   border-radius: 20px;
   box-shadow: 0px -16px 24px 0px rgba(255, 255, 255, 0.25) inset;
+  h1 {
+  font-size: 26px;
+  }
 
   p:nth-child(3) {
     font-weight: 600;
     align-self: flex-start;
-    font-size: 35px;
+    font-size: 25px;
     color: ${(props) => props.theme.colors.text};
   }
   p:nth-child(4) {
@@ -159,7 +162,7 @@ const ListedSpecifications = styled.ul`
     text-align: left;
     list-style-type: disc;
     span {
-    font-weight: 600;
+      font-weight: 600;
     }
   }
 `;
@@ -195,9 +198,9 @@ const ProductDetail = () => {
           <Content>
             <br />
 
-            <ColumnCart
-            >
-              <SplitText
+            <ColumnCart>
+            <h1>
+            <SplitText
                 words={product.title.split(" ")}
                 animationDuration={500}
                 style={{
@@ -208,6 +211,8 @@ const ProductDetail = () => {
                   fontWeight: 800,
                 }}
               />
+            </h1>
+              
               <PriceTag>
                 {product.price * quantity}.99
                 <span>USD</span>
@@ -223,7 +228,7 @@ const ProductDetail = () => {
               <ActionButtons
                 product={product}
                 onBuy={useCart}
-                showBuyButton={false}
+                showBuyButton={true}
               />
               <ContentDesc>
                 <p>Description</p>
@@ -235,16 +240,26 @@ const ProductDetail = () => {
         <Specifications>
           <h4>Specifications</h4>
           <ListedSpecifications>
-            <li><span>Free Returns</span></li>
-            <li><span>In Stock</span></li>
-            <li>Color: <span>{product.color}</span></li>
+            <li>
+              <span>Free Returns</span>
+            </li>
+            <li>
+              <span>In Stock</span>
+            </li>
+            <li>
+              Color: <span>{product.color}</span>
+            </li>
 
-            <li>Model: <span>{product.model}</span></li>
+            <li>
+              Model: <span>{product.model}</span>
+            </li>
 
             <li>
               Discount: <span>{product.discount}%</span>
             </li>
-            <li>Brand: <span>{product.brand}</span></li>
+            <li>
+              Brand: <span>{product.brand}</span>
+            </li>
           </ListedSpecifications>
         </Specifications>
       </ProductDiv>
