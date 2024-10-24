@@ -4,6 +4,7 @@ import { Product } from "../api/requests";
 import { useTruncate } from "../Hooks/useTruncate";
 import ActionButtons from "./ActionButtons";
 import useInView from "../Hooks/useInView";
+import { useState } from "react";
 
 interface CardProps {
   to: string;
@@ -19,6 +20,13 @@ const scaleInCenter = keyframes`
     opacity: 1;
   }
 `;
+const CardGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(autofill, minmax(250px, 1fr));
+  gap: 20px;
+  width: 100%;
+  justify-items: center;
+`;
 const Card = styled(Link)<CardProps>`
   display: flex;
   flex-direction: column;
@@ -26,6 +34,8 @@ const Card = styled(Link)<CardProps>`
   animation: ${(props) => (props.isVisible ? scaleInCenter : "none")} 0.5s
     ease-in-out;
   gap: 10px;
+  max-height: 600px;
+  overflow: hidden;
   align-items: center;
   background-color: transparent;
   background: ${({ theme }) => theme.background};
@@ -35,7 +45,8 @@ const Card = styled(Link)<CardProps>`
 
   img {
     width: 100%;
-    height: auto;
+    height: 200px;
+    max-height: 350px;
     border-radius: 50px;
     object-fit: scale-down;
     max-width: 200px;
@@ -46,11 +57,14 @@ const Card = styled(Link)<CardProps>`
     font-size: 1.5rem;
     text-align: center;
     color: ${(props) => props.theme.colors.white};
+    max-height: 4rem;
+    overflow: hidden;
   }
 
   p {
     text-align: left;
     color: ${(props) => props.theme.colors.text};
+    max-height: 60px;
 
     span {
       color: green;
@@ -150,13 +164,17 @@ interface productProps {
   onBuy: (product: Product) => void;
 }
 
-export const CardContainer: React.FC<productProps> = ({ product, onBuy }) => {
+export const CardContainer: React.FC<productProps> = ({ product }) => {
   const { truncateDescription, toggleDescription, toggleHandler } =
     useTruncate();
   const { ref, isInView } = useInView({ threshold: 0.1 });
+  const [showPayment, setShowPayment] = useState(false);
+  const handlePayment = () => {
+    setShowPayment(!showPayment);
+  };
 
   return (
-    <div ref={ref}>
+    <CardGrid ref={ref}>
       <Card
         key={product.id}
         to={`/products/${product.id}`}
@@ -194,8 +212,19 @@ export const CardContainer: React.FC<productProps> = ({ product, onBuy }) => {
           </p>
           <p>Model: {product.model}</p>
         </PriceHolder>
-        <ActionButtons product={product} onBuy={onBuy} showBuyButton={true} />
+        {showPayment && (
+          <div>
+            <form>
+              <button>Pay</button>
+            </form>
+          </div>
+        )}
+        <ActionButtons
+          product={product}
+          showBuyButton={true}
+          showPayment={setShowPayment}
+        />
       </Card>
-    </div>
+    </CardGrid>
   );
 };

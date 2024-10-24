@@ -1,13 +1,11 @@
-import { useNavigate } from "react-router-dom";
 import { Product } from "../api/requests";
 import { useCart } from "../Context/CartContext";
 import styled from "styled-components";
 
 interface ButtonProps {
   product: Product;
-  onBuy: (product: Product) => void;
   showBuyButton?: boolean;
-
+  showPayment: (show: boolean) => void;
 }
 const ButtonsContainer = styled.div`
   display: flex;
@@ -35,14 +33,16 @@ const StyledButton = styled.button`
     color: ${(props) => props.theme.colors.text};
   }
 `;
-const ActionButtons: React.FC<ButtonProps> = ({ product, onBuy, showBuyButton }) => {
+const ActionButtons: React.FC<ButtonProps> = ({
+  product,
+  showBuyButton,
+  showPayment,
+}) => {
   const { addToCart } = useCart();
-  const navigate = useNavigate();
   const handleBuy = (e: React.MouseEvent) => {
+    e.preventDefault();
     e.stopPropagation();
-    onBuy?.(product);
-    navigate("/pages/CheckoutPage", {state: {product, totalPrice: product.price}})
-    
+    showPayment(true);
   };
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation();

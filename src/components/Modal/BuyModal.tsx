@@ -80,7 +80,7 @@ export const ProductTitle = styled.h3`
 
 export const ProductDescription = styled.p`
   font-size: 0.85rem;
-  color: white;
+  color: ${props => props.theme.colors.text};
   font-weight: 100;
   margin-bottom: 12px;
   text-align: left;

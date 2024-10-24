@@ -51,7 +51,7 @@ const CheckoutPage = () => {
   return (
     <PaymentDiv>
       <ProductInfo>
-        <ProductImage src={product.image} alt={product.title}></ProductImage>
+        <img src={product.image} alt={product.title}></img>
         <ProductDetail>
           <h3>Product Info</h3>
           <hr />

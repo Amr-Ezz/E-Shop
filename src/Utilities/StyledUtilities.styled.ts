@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 interface FlexProps {
   justify?: string;
@@ -25,6 +25,7 @@ interface ContainerProps {
   gap?: string;
 }
 
+
 // Flexbox Utilities
 export const FlexColumn = styled.div<FlexProps>`
   display: flex;
@@ -32,6 +33,15 @@ export const FlexColumn = styled.div<FlexProps>`
   justify-content: ${({ justify }) => justify || "center"};
   align-items: ${({ align }) => align || "center"};
   gap: ${({ gap }) => gap || "10px"};
+`;
+export const LinearBackground = css`
+  color: ${(props) => props.theme.colors.text};
+  background: ${(props) => props.theme.colors.primary};
+  background: linear-gradient(
+    90deg,
+    ${(props) => props.theme.colors.primary} 0%,
+    ${(props) => props.theme.colors.secondary} 100%
+  );
 `;
 
 export const FlexRow = styled.div<FlexProps>`

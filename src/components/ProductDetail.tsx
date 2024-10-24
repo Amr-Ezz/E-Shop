@@ -4,9 +4,13 @@ import { fetchProductsById, Product } from "../api/requests";
 import styled from "styled-components";
 import useQuantity from "../Hooks/useQuantity";
 import { Counter, CounterButton, CounterText } from "../shared/Counter";
-import { useCart } from "../Context/CartContext";
 import ActionButtons from "../shared/ActionButtons";
 import SplitText from "./SplitText";
+import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
+import { cardStyle } from "../pages/CheckoutPage/CheckoutPage.styled";
+import { auth } from "../firebase";
+import LoginForm from "./LoginForm/LoginForm";
+import Modal from "./Modal/Modal";
 
 const Main = styled.div`
   width: 100%;
@@ -50,7 +54,6 @@ const StickyImageContainer = styled.div`
   top: 120px;
   height: fit-content;
 `;
-
 const ProductImage = styled.img`
   width: fit-content;
   height: 400px;
@@ -132,7 +135,7 @@ const ColumnCart = styled.div`
   border-radius: 20px;
   box-shadow: 0px -16px 24px 0px rgba(255, 255, 255, 0.25) inset;
   h1 {
-  font-size: 26px;
+    font-size: 26px;
   }
 
   p:nth-child(3) {
@@ -166,17 +169,31 @@ const ListedSpecifications = styled.ul`
     }
   }
 `;
+const PaymentDiv = styled.div``;
+
 const ProductDetail = () => {
+  const [showPayment, setShowPayment] = useState(false);
+  const [product, setProduct] = useState<Product | undefined>();
+  const [showModal, setShowModal] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
   const { id } = useParams<{ id: string }>();
-  const [product, setProduct] = useState<Product | null>(null);
+  const stripe = useStripe();
+  const elements = useElements();
   const { increment, quantity, decrement } = useQuantity();
+  // const totalPrice = {product.price * quantity};
+  const user = auth.currentUser;
+  const userEmail = user?.email || "Anonmynus@example.com";
+  //////////////////////////////////////////////////// useEffect ////////////////////////////////////
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const response = await fetchProductsById(Number(id));
         setProduct(response);
+        setLoading(false);
       } catch (error) {
-        console.log("error fetch product", error);
+        setError("Failed to fetch product");
+        setLoading(false);
       }
     };
 
@@ -184,9 +201,51 @@ const ProductDetail = () => {
       fetchProducts();
     }
   }, [id]);
+
+  useEffect(() => {
+    if (!auth.currentUser) {
+      setShowModal(true);
+    }
+  }, []);
+  ////////////////////////////////////////////////////////////////////////////////////////////////////
   if (!product) {
     return <div>Loading...</div>;
   }
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    if (!stripe || !elements) {
+      return;
+    }
+    if (!auth.currentUser) {
+      setShowModal(true);
+      return;
+    }
+    const cardElement = elements.getElement(CardElement);
+    if (cardElement) {
+      const { error, paymentMethod } = await stripe.createPaymentMethod({
+        type: "card",
+        card: cardElement,
+        billing_details: {
+          email: userEmail,
+          name: user?.displayName || "Anonmynus",
+        },
+      });
+
+      if (error) {
+        console.error(error);
+      } else {
+        console.log(paymentMethod);
+      }
+    }
+  };
+
+  // const navigate = useNavigate();
+
+  // const handleBuy = (product: Product) => {
+  //   navigate("/pages/CheckoutPage", {
+  //     state: { product, totalPrice: product.price * quantity },
+  //   });
+  // };
 
   return (
     <Main>
@@ -199,20 +258,20 @@ const ProductDetail = () => {
             <br />
 
             <ColumnCart>
-            <h1>
-            <SplitText
-                words={product.title.split(" ")}
-                animationDuration={500}
-                style={{
-                  margin: 0,
-                  padding: "2px",
-                  lineHeight: 1.1,
-                  fontSize: "26px",
-                  fontWeight: 800,
-                }}
-              />
-            </h1>
-              
+              <h1>
+                <SplitText
+                  words={product.title.split(" ")}
+                  animationDuration={500}
+                  style={{
+                    margin: 0,
+                    padding: "2px",
+                    lineHeight: 1.1,
+                    fontSize: "26px",
+                    fontWeight: 800,
+                  }}
+                />
+              </h1>
+
               <PriceTag>
                 {product.price * quantity}.99
                 <span>USD</span>
@@ -227,13 +286,26 @@ const ProductDetail = () => {
               </Counter>
               <ActionButtons
                 product={product}
-                onBuy={useCart}
                 showBuyButton={true}
+                showPayment={setShowPayment}
               />
               <ContentDesc>
                 <p>Description</p>
                 <p>{product.description}</p>
               </ContentDesc>
+              {showPayment && (
+                <>
+                  <PaymentDiv>
+                    <h3>Payment Method</h3>
+                    <form onSubmit={handleSubmit}>
+                      <CardElement options={cardStyle} />
+                      <button type="submit" disabled={!stripe}>
+                        Pay
+                      </button>
+                    </form>
+                  </PaymentDiv>
+                </>
+              )}
             </ColumnCart>
           </Content>
         </ProductRow>
@@ -263,6 +335,9 @@ const ProductDetail = () => {
           </ListedSpecifications>
         </Specifications>
       </ProductDiv>
+      <Modal show={showModal} onClose={() => setShowModal(false)}>
+        <LoginForm />
+      </Modal>
     </Main>
   );
 };
