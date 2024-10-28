@@ -177,11 +177,12 @@ const ProductDetail = () => {
   const [showModal, setShowModal] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [clientSecret, setClientSecret] = useState<string | null>(null);
   const { id } = useParams<{ id: string }>();
   const stripe = useStripe();
   const elements = useElements();
   const { increment, quantity, decrement } = useQuantity();
-  // const totalPrice = {product.price * quantity};
+  const totalPrice = product ? product.price * quantity : 0;
   const user = auth.currentUser;
   const userEmail = user?.email || "Anonmynus@example.com";
   //////////////////////////////////////////////////// useEffect ////////////////////////////////////
@@ -220,23 +221,47 @@ const ProductDetail = () => {
       setShowModal(true);
       return;
     }
-    const cardElement = elements.getElement(CardElement);
-    if (cardElement) {
-      const { error, paymentMethod } = await stripe.createPaymentMethod({
-        type: "card",
-        card: cardElement,
-        billing_details: {
-          email: userEmail,
-          name: user?.displayName || "Anonmynus",
-        },
-      });
+    try {
+      const response = await fetch("http://localhost:3001/create-payment-intent", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
 
-      if (error) {
-        console.error(error);
-      } else {
-        console.log(paymentMethod);
-      }
+        },
+        body: JSON.stringify({
+          price: product.price,
+          quantity: quantity,
+          productId: product.id,
+          productName: product.name,
+        }),
+      });
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      };
+     const data = await response.json();
+     setClientSecret(data.clientSecret);
+     const cardElement = elements.getElement(CardElement);
+     if (cardElement) {
+       const { error, paymentMethod } = await stripe.createPaymentMethod({
+         type: "card",
+         card: cardElement,
+         billing_details: {
+           email: userEmail,
+           name: user?.displayName || "Anonmynus",
+         },
+       });
+ 
+       if (error) {
+         console.error(error);
+       } else {
+         console.log(paymentMethod);
+       }
+     }
+    } catch (error) {
+      console.error("Error creating payment intent", error);
     }
+    
+
   };
 
   // const navigate = useNavigate();
@@ -273,7 +298,7 @@ const ProductDetail = () => {
               </h1>
 
               <PriceTag>
-                {product.price * quantity}.99
+                {totalPrice}.99
                 <span>USD</span>
               </PriceTag>
 
@@ -300,7 +325,7 @@ const ProductDetail = () => {
                     <form onSubmit={handleSubmit}>
                       <CardElement options={cardStyle} />
                       <button type="submit" disabled={!stripe}>
-                        Pay
+                        Pay {totalPrice}.99
                       </button>
                     </form>
                   </PaymentDiv>
