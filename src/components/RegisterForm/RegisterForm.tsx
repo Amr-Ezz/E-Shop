@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { auth } from "../../firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useState } from "react";
 
 const Form = styled.form`
@@ -31,6 +31,7 @@ const Input = styled.input`
 `;
 const RegisterForm = () => {
   const [email, setEmail] = useState("");
+  const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [isRegistered, setIsRegistered] = useState(false);
   const handleAuth = async () => {
@@ -39,7 +40,12 @@ const RegisterForm = () => {
       return;
     }
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      const userCredientials = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      await updateProfile(userCredientials.user, { displayName: userName });
       setIsRegistered(true);
       alert("Register Successfull");
     } catch (error) {
@@ -48,37 +54,39 @@ const RegisterForm = () => {
   };
   return (
     <div>
- {!isRegistered && (
-      <Form
-      onSubmit={(e) => {
-        e.preventDefault();
-        handleAuth();
-      }}
-    >
-      <h2>Register</h2>
-      <Input type="text" placeholder="Username" />
-      <Input
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        type="email"
-        placeholder="Email"
-      />
-      <Input
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        type="password"
-        placeholder="Password"
-      />
-      <Button type="submit">
-        Register
-      </Button>
-    </Form>
- )}
+      {!isRegistered ? (
+        <Form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleAuth();
+          }}
+        >
+          <h2>Register</h2>
+          <Input
+            type="text"
+            placeholder="Username"
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
+          />
+          <Input
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            type="email"
+            placeholder="Email"
+          />
+          <Input
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            type="password"
+            placeholder="Password"
+          />
+          <Button type="submit">Register</Button>
+        </Form>
+      ) : (
+        <h2>Welcome, {userName}!</h2>
+      )}
     </div>
-   
-    );
-    };
-    
-  
+  );
+};
 
 export default RegisterForm;

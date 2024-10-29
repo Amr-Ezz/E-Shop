@@ -185,6 +185,8 @@ const ProductDetail = () => {
   const totalPrice = product ? product.price * quantity : 0;
   const user = auth.currentUser;
   const userEmail = user?.email || "Anonmynus@example.com";
+  const userName = user?.displayName;
+  console.log(userName, "UserName");
   //////////////////////////////////////////////////// useEffect ////////////////////////////////////
   useEffect(() => {
     const fetchProducts = async () => {
@@ -222,46 +224,67 @@ const ProductDetail = () => {
       return;
     }
     try {
-      const response = await fetch("http://localhost:3001/create-payment-intent", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-
-        },
-        body: JSON.stringify({
-          price: product.price,
-          quantity: quantity,
-          productId: product.id,
-          productName: product.name,
-        }),
-      });
+      const customerCreate = await fetch(
+        "http://localhost:3001/create-customer",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: userName,
+            email: userEmail,
+          }),
+        }
+      );
+      if (!customerCreate.ok) {
+        throw new Error("Error creating customer!");
+      }
+      const customerData = await customerCreate.json();
+      const customerId = customerData.id;
+      console.log(customerId, "customer iD")
+      const response = await fetch(
+        "http://localhost:3001/create-payment-intent",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            price: product.price,
+            quantity: quantity,
+            productId: product.id,
+            productName: product.title,
+            customer_name: userName,
+            customer_email: userEmail,
+            customerId: customerId
+          }),
+        }
+      );
       if (!response.ok) {
         throw new Error("Network response was not ok");
-      };
-     const data = await response.json();
-     setClientSecret(data.clientSecret);
-     const cardElement = elements.getElement(CardElement);
-     if (cardElement) {
-       const { error, paymentMethod } = await stripe.createPaymentMethod({
-         type: "card",
-         card: cardElement,
-         billing_details: {
-           email: userEmail,
-           name: user?.displayName || "Anonmynus",
-         },
-       });
- 
-       if (error) {
-         console.error(error);
-       } else {
-         console.log(paymentMethod);
-       }
-     }
+      }
+      const data = await response.json();
+      setClientSecret(data.clientSecret);
+      const cardElement = elements.getElement(CardElement);
+      if (cardElement) {
+        const { error, paymentMethod } = await stripe.createPaymentMethod({
+          type: "card",
+          card: cardElement,
+          billing_details: {
+            email: userEmail,
+            name: userName || "Anonmynus",
+            phone: "0110100101",
+          },
+        });
+
+        if (error) {
+          console.error(error);
+        } else {
+          console.log(paymentMethod);
+        }
+      }
     } catch (error) {
       console.error("Error creating payment intent", error);
     }
-    
-
   };
 
   // const navigate = useNavigate();
