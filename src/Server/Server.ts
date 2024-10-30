@@ -41,7 +41,8 @@ app.post("/create-payment-intent", async (req: Request, res: Response) => {
     productName,
     customer_name,
     customer_email,
-    customerId
+    customerId,
+    phone
   } = req.body;
   const amount = Math.round(price * quantity * 100);
 
@@ -49,7 +50,7 @@ app.post("/create-payment-intent", async (req: Request, res: Response) => {
     const paymentIntent = await stripe.paymentIntents.create({
       amount,
       currency: "usd",
-      customer: customerId, // Attach the customer ID here
+      customer: customerId, 
 
       automatic_payment_methods: {
         enabled: true,
@@ -60,8 +61,9 @@ app.post("/create-payment-intent", async (req: Request, res: Response) => {
         quantity: quantity,
         customer_name: customer_name,
         customer_email: customer_email,
+        phoneNumber: phone
       },
-      receipt_email: customer_email, // This will send a receipt to the customer email
+      receipt_email: customer_email, 
     });
     console.log(paymentIntent.metadata, "Meta Data");
 

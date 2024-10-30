@@ -11,6 +11,7 @@ import { cardStyle } from "../pages/CheckoutPage/CheckoutPage.styled";
 import { auth } from "../firebase";
 import LoginForm from "./LoginForm/LoginForm";
 import Modal from "./Modal/Modal";
+import { useUser } from "../Context/UserContext";
 
 const Main = styled.div`
   width: 100%;
@@ -186,7 +187,7 @@ const ProductDetail = () => {
   const user = auth.currentUser;
   const userEmail = user?.email || "Anonmynus@example.com";
   const userName = user?.displayName;
-  console.log(userName, "UserName");
+  const { phoneNumber } = useUser();
   //////////////////////////////////////////////////// useEffect ////////////////////////////////////
   useEffect(() => {
     const fetchProducts = async () => {
@@ -202,6 +203,15 @@ const ProductDetail = () => {
 
     if (id) {
       fetchProducts();
+    }
+    if (error) {
+      console.log(error, "Error");
+    }
+    if (loading) {
+      <div>Loading......</div>;
+    }
+    if (clientSecret) {
+      alert("Client Secret Failed");
     }
   }, [id]);
 
@@ -240,7 +250,6 @@ const ProductDetail = () => {
       }
       const customerData = await customerCreate.json();
       const customerId = customerData.id;
-      console.log(customerId, "customer iD")
       const response = await fetch(
         "http://localhost:3001/create-payment-intent",
         {
@@ -255,7 +264,8 @@ const ProductDetail = () => {
             productName: product.title,
             customer_name: userName,
             customer_email: userEmail,
-            customerId: customerId
+            customerId: customerId,
+            phone: phoneNumber,
           }),
         }
       );
@@ -266,34 +276,30 @@ const ProductDetail = () => {
       setClientSecret(data.clientSecret);
       const cardElement = elements.getElement(CardElement);
       if (cardElement) {
-        const { error, paymentMethod } = await stripe.createPaymentMethod({
-          type: "card",
-          card: cardElement,
-          billing_details: {
-            email: userEmail,
-            name: userName || "Anonmynus",
-            phone: "0110100101",
-          },
-        });
+        const { error, paymentIntent } = await stripe.confirmCardPayment(
+          data.clientSecret,
+          {
+            payment_method: {
+              card: cardElement,
+              billing_details: {
+                email: userEmail,
+                name: userName || "Anonmynus",
+                phone: phoneNumber,
+              },
+            },
+          }
+        );
 
         if (error) {
           console.error(error);
-        } else {
-          console.log(paymentMethod);
+        } else if (paymentIntent) {
+          console.log("Successfull:", paymentIntent);
         }
       }
     } catch (error) {
       console.error("Error creating payment intent", error);
     }
   };
-
-  // const navigate = useNavigate();
-
-  // const handleBuy = (product: Product) => {
-  //   navigate("/pages/CheckoutPage", {
-  //     state: { product, totalPrice: product.price * quantity },
-  //   });
-  // };
 
   return (
     <Main>

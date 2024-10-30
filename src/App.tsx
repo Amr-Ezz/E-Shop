@@ -14,6 +14,7 @@ import ProductDetail from "./components/ProductDetail";
 import ProductPage from "./pages/ProductPage";
 import { ProductProvider } from "./Context/ProductContext";
 import ScrollToTop from "./components/ScrollToTop";
+import { UserProvider } from "./Context/UserContext";
 
 function App() {
   return (
@@ -21,19 +22,24 @@ function App() {
       <ScrollToTop />
       <CartProvider>
         <div className="Container">
-          <Navbar />
-          <ProductProvider>
-            <Routes>
-              <Route path="/pages/Services" element={<Services />} />
-              <Route path="/" element={<Home />} />
-              <Route path="/pages/ContactUs" element={<ContactUs />} />
-              <Route path="/pages/AboutUs" element={<AboutUs />} />
-              <Route path="/pages/CheckoutPage" element={<CheckoutPage />} />
-              <Route path="/search" element={<SearchResults />} />
-              <Route path="/products/:id" element={<ProductDetail />} />
-              <Route path="/products/category/:category" element={<ProductPage />} />
-            </Routes>
-          </ProductProvider>
+          <UserProvider>
+            <Navbar />
+            <ProductProvider>
+              <Routes>
+                <Route path="/pages/Services" element={<Services />} />
+                <Route path="/" element={<Home />} />
+                <Route path="/pages/ContactUs" element={<ContactUs />} />
+                <Route path="/pages/AboutUs" element={<AboutUs />} />
+                <Route path="/pages/CheckoutPage" element={<CheckoutPage />} />
+                <Route path="/search" element={<SearchResults />} />
+                <Route path="/products/:id" element={<ProductDetail />} />
+                <Route
+                  path="/products/category/:category"
+                  element={<ProductPage />}
+                />
+              </Routes>
+            </ProductProvider>
+          </UserProvider>
 
           <Footer />
         </div>

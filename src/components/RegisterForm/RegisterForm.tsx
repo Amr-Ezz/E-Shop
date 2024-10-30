@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { auth } from "../../firebase";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useState } from "react";
+import { useUser } from "../../Context/UserContext";
 
 const Form = styled.form`
   display: flex;
@@ -33,10 +34,12 @@ const RegisterForm = () => {
   const [email, setEmail] = useState("");
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState("");
   const [isRegistered, setIsRegistered] = useState(false);
+  const { setPhoneNumber } = useUser();
   const handleAuth = async () => {
-    if (!email || !password) {
-      alert("Email and password fields cannot be empty");
+    if (!email || !password || !phone) {
+      alert(" All fields cannot be empty");
       return;
     }
     try {
@@ -46,6 +49,8 @@ const RegisterForm = () => {
         password
       );
       await updateProfile(userCredientials.user, { displayName: userName });
+      setPhoneNumber(phone);
+
       setIsRegistered(true);
       alert("Register Successfull");
     } catch (error) {
@@ -79,6 +84,11 @@ const RegisterForm = () => {
             onChange={(e) => setPassword(e.target.value)}
             type="password"
             placeholder="Password"
+          />
+          <Input
+            onChange={(e) => setPhone(e.target.value)}
+            type="text"
+            placeholder="Phone Number"
           />
           <Button type="submit">Register</Button>
         </Form>
