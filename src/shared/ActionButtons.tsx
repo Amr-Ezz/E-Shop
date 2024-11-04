@@ -17,14 +17,15 @@ const ButtonsContainer = styled.div`
   padding-bottom: 1rem;
 `;
 
-const StyledButton = styled.button`
+const StyledBuyButton = styled.button`
   width: 100px;
   height: 50px;
   border-radius: 50px;
+  padding: 1rem;
+  flex: 1;
   font-weight: 600;
-  background-color: ${(props) => props.theme.colors.quaternary};
-  color: ${(props) => props.theme.colors.white};
-  border: 1px solid ${(props) => props.theme.colors.white};
+  background-color: ${(props) => props.theme.colors.tertiary};
+  color: ${(props) => props.theme.colors.text};
   cursor: pointer;
   transition: background-color 0.3s ease;
 
@@ -33,6 +34,24 @@ const StyledButton = styled.button`
     color: ${(props) => props.theme.colors.text};
   }
 `;
+const StyledAddButton = styled.button`
+  width: 100px;
+  height: 50px;
+  border-radius: 50px;
+  padding: 1rem;
+  flex: 1;
+  font-weight: 600;
+  background-color: ${(props) => props.theme.colors.secondary};
+  color: ${(props) => props.theme.colors.text};
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: ${(props) => props.theme.colors.primary};
+    color: ${(props) => props.theme.colors.text};
+  }
+`;
+
 const ActionButtons: React.FC<ButtonProps> = ({
   product,
   showBuyButton,
@@ -51,8 +70,8 @@ const ActionButtons: React.FC<ButtonProps> = ({
 
   return (
     <ButtonsContainer>
-      {showBuyButton && <StyledButton onClick={handleBuy}>BUY</StyledButton>}
-      <StyledButton onClick={handleAddToCart}>Add To Cart</StyledButton>
+      {showBuyButton && <StyledBuyButton onClick={handleBuy}>BUY NOW</StyledBuyButton>}
+      <StyledAddButton onClick={handleAddToCart}>Add To Cart</StyledAddButton>
     </ButtonsContainer>
   );
 };

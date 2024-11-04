@@ -11,12 +11,14 @@ export const Counter = styled.div`
 `;
 
 export const CounterButton = styled.button`
-  background-color: #f0f0f0;
+  background-color: ${props => props.theme.colors.secondary};
   border: none;
-  border-radius: 50%;
+  border-radius: 8px;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
   width: 32px;
   height: 32px;
-  color: black;
+  color: ${props => props.theme.colors.text};
   font-size: 1.2rem;
   cursor: pointer;
   display: flex;

@@ -15,20 +15,19 @@ import { useUser } from "../Context/UserContext";
 
 const Main = styled.div`
   width: 100%;
-  background-color: ${(props) => props.theme.colors.primary};
+  background: ${(props) => props.theme.background};
   height: fit-content;
 `;
 const ProductDiv = styled.div`
   display: flex;
   flex-direction: column;
+  padding: 4rem;
   background: linear-gradient(#fff2, transparent);
   box-shadow: 10px 40px 40px rgba(0.25, 0.25, 0.25, 0.25);
-
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 `;
 const Specifications = styled.div`
-  border: 1px solid white;
   width: 100%;
   display: flex;
   padding: 1rem;
@@ -43,17 +42,21 @@ const Specifications = styled.div`
   }
 `;
 const ProductRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  align-items: flex-start;
-  gap: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  gap: 2rem;
+  padding: 2rem;
   color: ${(props) => props.theme.colors.text};
 `;
 const StickyImageContainer = styled.div`
   position: sticky;
   top: 120px;
   height: fit-content;
+  width: fit-content;
 `;
 const ProductImage = styled.img`
   width: fit-content;
@@ -70,13 +73,14 @@ const ProductImage = styled.img`
 const Content = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 1.5rem;
   text-align: left;
-  justify-content: space-around;
-  align-items: flex-start;
-  padding: 1rem;
   gap: 10px;
   h1 {
     color: ${(props) => props.theme.colors.text};
+    font-size: 2.5rem;
+    line-height: 1.2;
+    margin-bottom: 1rem;
   }
 
   p:nth-child(3) {
@@ -96,15 +100,12 @@ const PriceTag = styled.p`
   display: flex;
   gap: 5px;
   font-weight: 500;
-  border-radius: 100px;
-  padding: 1rem;
-  font-size: 48px;
+  font-size: 2rem;
+  text-align: left;
   align-self: flex-start;
-  box-shadow: 0px -16px 24px 0px rgba(255, 255, 255, 0.25) inset;
-  color: green;
+  color: ${(props) => props.theme.colors.quaternary};
   span {
     color: grey;
-
     font-size: 0.6em;
     vertical-align: super;
   }
@@ -118,6 +119,7 @@ const ContentDesc = styled.div`
     font-weight: 800;
     border-bottom: 1px solid white;
     padding-bottom: 10px;
+    font-size: 1.5rem;
   }
   p:nth-child(2) {
     font-weight: 300;
@@ -134,10 +136,6 @@ const ColumnCart = styled.div`
   justify-content: space-evenly;
   align-items: flex-start;
   border-radius: 20px;
-  box-shadow: 0px -16px 24px 0px rgba(255, 255, 255, 0.25) inset;
-  h1 {
-    font-size: 26px;
-  }
 
   p:nth-child(3) {
     font-weight: 600;
@@ -211,7 +209,7 @@ const ProductDetail = () => {
       <div>Loading......</div>;
     }
     if (clientSecret) {
-      alert("Client Secret Failed");
+      // alert("Client Secret Failed");
     }
   }, [id]);
 
@@ -314,7 +312,7 @@ const ProductDetail = () => {
             <ColumnCart>
               <h1>
                 <SplitText
-                  words={product.title.split(" ")}
+                  words={product.title.substring(0, 50).split(" ")}
                   animationDuration={500}
                   style={{
                     margin: 0,
@@ -347,23 +345,7 @@ const ProductDetail = () => {
                 <p>Description</p>
                 <p>{product.description}</p>
               </ContentDesc>
-              {showPayment && (
-                <>
-                  <PaymentDiv>
-                    <h3>Payment Method</h3>
-                    <form onSubmit={handleSubmit}>
-                      <CardElement options={cardStyle} />
-                      <button type="submit" disabled={!stripe}>
-                        Pay {totalPrice}.99
-                      </button>
-                    </form>
-                  </PaymentDiv>
-                </>
-              )}
-            </ColumnCart>
-          </Content>
-        </ProductRow>
-        <Specifications>
+              <Specifications>
           <h4>Specifications</h4>
           <ListedSpecifications>
             <li>
@@ -388,6 +370,23 @@ const ProductDetail = () => {
             </li>
           </ListedSpecifications>
         </Specifications>
+              {showPayment && (
+                <>
+                  <PaymentDiv>
+                    <h3>Payment Method</h3>
+                    <form onSubmit={handleSubmit}>
+                      <CardElement options={cardStyle} />
+                      <button type="submit" disabled={!stripe}>
+                        Pay {totalPrice}.99
+                      </button>
+                    </form>
+                  </PaymentDiv>
+                </>
+              )}
+            </ColumnCart>
+          </Content>
+        </ProductRow>
+       
       </ProductDiv>
       <Modal show={showModal} onClose={() => setShowModal(false)}>
         <LoginForm />
