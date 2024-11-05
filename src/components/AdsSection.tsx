@@ -5,6 +5,7 @@ import useInView from "../Hooks/useInView";
 import { FlexRow } from "../Utilities/StyledUtilities.styled";
 const AdsMain = styled(FlexRow)<{ isVisible: boolean }>`
   color: ${(props) => props.theme.colors.text};
+  height: 310px;
   background: linear-gradient(
     180deg,
     ${(props) => props.theme.colors.tertiary} 0%,
@@ -64,7 +65,7 @@ const ImageDiv = styled.div<{ isVisible: boolean }>`
 const AdsSection = () => {
   const navigate = useNavigate();
   const { setCategory } = useProduct();
-  const { ref, isInView } = useInView({ threshold: 0.3 });
+  const { ref, isInView } = useInView({ threshold: 0.1 });
 
   const handleNavigate = async (category: string) => {
     try {

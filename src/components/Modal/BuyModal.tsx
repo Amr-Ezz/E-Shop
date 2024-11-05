@@ -1,11 +1,11 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { Product } from "../../api/requests";
-import { useNavigate } from "react-router-dom";
 
 interface BuyTypes {
   onClose: () => void;
   product: Product;
+  children: React.ReactNode;
 }
 
 const ModalOverlay = styled.div`
@@ -22,17 +22,19 @@ const ModalOverlay = styled.div`
 `;
 
 const ModalWrapper = styled.div`
-  background: ${(props) => props.theme.colors.secondary};
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
   border-radius: 30px;
   padding: 16px;
-  width: 90%;
-  max-width: 500px;
-  max-height: 90vh;
-  box-shadow: 15px 15px 30px rgb(25, 25, 25), -15px -15px 30px rgb(60, 60, 60);
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
+  max-width: 1100px;
+  max-height: fit-content;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  overflow-y: auto;
+  overflow: none;
 
   @media (max-width: 768px) {
     padding: 12px;
@@ -80,7 +82,7 @@ export const ProductTitle = styled.h3`
 
 export const ProductDescription = styled.p`
   font-size: 0.85rem;
-  color: ${props => props.theme.colors.text};
+  color: ${(props) => props.theme.colors.text};
   font-weight: 100;
   margin-bottom: 12px;
   text-align: left;
@@ -184,13 +186,32 @@ export const Button = styled.button`
     width: 100%;
   }
 `;
+const ModalRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+`;
+const ModalRows = styled.div`
+  margin-bottom: 2rem;
+  padding: 1rem;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.1);
+  h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1.9rem;
+    text-align: center;
+    position: relative;
+    color: ${(props) => props.theme.colors.text};
+  }
+`;
 
-const BuyModal: React.FC<BuyTypes> = ({ product, onClose }) => {
+const BuyModal: React.FC<BuyTypes> = ({ product, onClose, children }) => {
   const [quantity, setQuantity] = useState(1);
-  const navigate = useNavigate();
   const handleCheckOut = () => {
     const totalPrice = product.price * quantity;
-    navigate("/pages/CheckoutPage", {state: {product, totalPrice}});
   };
 
   if (!product) return <p>Loading...</p>;
@@ -198,17 +219,33 @@ const BuyModal: React.FC<BuyTypes> = ({ product, onClose }) => {
   return (
     <ModalOverlay>
       <ModalWrapper>
-        <ProductImage src={product.image} alt={product.title} />
-        <ProductTitle>{product.title.substring(0, 100)}</ProductTitle>
-        <ProductDescription>{product.description}</ProductDescription>
-        <PriceText>Price: ${(product.price * quantity).toFixed(2)}</PriceText>
-        <Counter>
+        <ModalRows>
+          <h2>Complete Your Purchase</h2>
+          <ModalRow>
+            <p> Product Name: </p>
+            <ProductTitle> {product.title.substring(0, 50)}</ProductTitle>
+          </ModalRow>
+          {/* <ProductImage src={product.image} alt={product.title} /> */}
+          <ModalRow>
+            <p>Quantity:</p> <CounterText>{quantity}</CounterText>
+          </ModalRow>
+          <ModalRow>
+            {" "}
+            <p>Price:</p>{" "}
+            <PriceText> ${(product.price * quantity).toFixed(2)}</PriceText>
+          </ModalRow>
+          <ModalRow style={{fontWeight: 'bold', borderBottom: 'none'}}>
+            <p>Total</p>{" "}
+            <PriceText> ${(product.price * quantity).toFixed(2)}</PriceText>
+          </ModalRow>
+        </ModalRows>
+
+        {/* <Counter>
           <CounterButton
             onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
           >
             -
           </CounterButton>
-          <CounterText>{quantity}</CounterText>
           <CounterButton onClick={() => setQuantity((prev) => prev + 1)}>
             +
           </CounterButton>
@@ -216,7 +253,8 @@ const BuyModal: React.FC<BuyTypes> = ({ product, onClose }) => {
         <ButtonWrapper>
           <Button onClick={onClose}>Close</Button>
           <Button onClick={handleCheckOut}>Buy</Button>
-        </ButtonWrapper>
+        </ButtonWrapper> */}
+        {children}
       </ModalWrapper>
     </ModalOverlay>
   );

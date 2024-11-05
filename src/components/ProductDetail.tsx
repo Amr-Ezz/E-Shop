@@ -12,6 +12,7 @@ import { auth } from "../firebase";
 import LoginForm from "./LoginForm/LoginForm";
 import Modal from "./Modal/Modal";
 import { useUser } from "../Context/UserContext";
+import BuyModal from "./Modal/BuyModal";
 
 const Main = styled.div`
   width: 100%;
@@ -43,23 +44,21 @@ const Specifications = styled.div`
 `;
 const ProductRow = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1.5fr;
   margin: 0 auto;
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   border-radius: 20px;
-  gap: 2rem;
-  padding: 2rem;
+  padding: 3rem;
   color: ${(props) => props.theme.colors.text};
 `;
 const StickyImageContainer = styled.div`
   position: sticky;
-  top: 120px;
-  height: fit-content;
+  top: 140px;
   width: fit-content;
+  height: fit-content;
 `;
 const ProductImage = styled.img`
-  width: fit-content;
   height: 400px;
   border-radius: 20px;
   transition: transform 0.3s ease-in-out;
@@ -67,7 +66,7 @@ const ProductImage = styled.img`
   cursor: pointer;
 
   ${StickyImageContainer}:hover & {
-    transform: scale(1.2);
+    transform: scale(1.1);
   }
 `;
 const Content = styled.div`
@@ -168,7 +167,35 @@ const ListedSpecifications = styled.ul`
     }
   }
 `;
-const PaymentDiv = styled.div``;
+const PaymentDiv = styled.div`
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin: 1.5rem 0;
+  form {
+    padding: 1rem;
+    width: 100%;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.9);
+    margin: 1rem 0;
+  }
+`;
+const ButtonModal = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  button {
+    padding: 1rem;
+    border-radius: 12px;
+    font-size: 1rem;
+    transition: transform 0.2s;
+    background: ${(props) => props.theme.colors.quaternary};
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
+`;
 
 const ProductDetail = () => {
   const [showPayment, setShowPayment] = useState(false);
@@ -222,6 +249,13 @@ const ProductDetail = () => {
   if (!product) {
     return <div>Loading...</div>;
   }
+  const handleBuyButton = () => {
+    if (!user) {
+      setShowModal(true);
+    } else {
+      setShowPayment(true);
+    }
+  };
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     if (!stripe || !elements) {
@@ -346,47 +380,64 @@ const ProductDetail = () => {
                 <p>{product.description}</p>
               </ContentDesc>
               <Specifications>
-          <h4>Specifications</h4>
-          <ListedSpecifications>
-            <li>
-              <span>Free Returns</span>
-            </li>
-            <li>
-              <span>In Stock</span>
-            </li>
-            <li>
-              Color: <span>{product.color}</span>
-            </li>
+                <h4>Specifications</h4>
+                <ListedSpecifications>
+                  <li>
+                    <span>Free Returns</span>
+                  </li>
+                  <li>
+                    <span>In Stock</span>
+                  </li>
+                  <li>
+                    Color: <span>{product.color}</span>
+                  </li>
 
-            <li>
-              Model: <span>{product.model}</span>
-            </li>
+                  <li>
+                    Model: <span>{product.model}</span>
+                  </li>
 
-            <li>
-              Discount: <span>{product.discount}%</span>
-            </li>
-            <li>
-              Brand: <span>{product.brand}</span>
-            </li>
-          </ListedSpecifications>
-        </Specifications>
+                  <li>
+                    Discount: <span>{product.discount}%</span>
+                  </li>
+                  <li>
+                    Brand: <span>{product.brand}</span>
+                  </li>
+                </ListedSpecifications>
+              </Specifications>
               {showPayment && (
                 <>
-                  <PaymentDiv>
-                    <h3>Payment Method</h3>
-                    <form onSubmit={handleSubmit}>
-                      <CardElement options={cardStyle} />
-                      <button type="submit" disabled={!stripe}>
-                        Pay {totalPrice}.99
-                      </button>
-                    </form>
-                  </PaymentDiv>
+                  <Modal
+                    show={showPayment}
+                    onClose={() => setShowPayment(false)}
+                  >
+                    <BuyModal
+                      product={product}
+                      onClose={() => setShowPayment(false)}
+                    >
+                      <PaymentDiv>
+                        <h3>Payment Method</h3>
+                        <form onSubmit={handleSubmit}>
+                          <CardElement options={cardStyle} />
+                        </form>
+                        <ButtonModal>
+                          <button
+                            style={{ background: "rgba(255, 255, 255, 0.1)" }}
+                            onClick={() => setShowPayment(false)}
+                          >
+                            Cancel
+                          </button>
+                          <button type="submit" disabled={!stripe}>
+                            Pay Now
+                          </button>
+                        </ButtonModal>
+                      </PaymentDiv>
+                    </BuyModal>
+                  </Modal>
                 </>
               )}
             </ColumnCart>
           </Content>
         </ProductRow>
-       
       </ProductDiv>
       <Modal show={showModal} onClose={() => setShowModal(false)}>
         <LoginForm />
