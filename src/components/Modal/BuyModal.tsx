@@ -1,4 +1,3 @@
-import { useState } from "react";
 import styled from "styled-components";
 import { Product } from "../../api/requests";
 
@@ -6,6 +5,7 @@ interface BuyTypes {
   onClose: () => void;
   product: Product;
   children: React.ReactNode;
+  quantity: number;
 }
 
 const ModalOverlay = styled.div`
@@ -154,17 +154,17 @@ export const CounterText = styled.p`
   }
 `;
 
-const ButtonWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
+// const ButtonWrapper = styled.div`
+//   display: flex;
+//   justify-content: space-between;
+//   gap: 20px;
 
-  @media (max-width: 480px) {
-    flex-direction: column;
-    gap: 12px;
-    width: 100%;
-  }
-`;
+//   @media (max-width: 480px) {
+//     flex-direction: column;
+//     gap: 12px;
+//     width: 100%;
+//   }
+// `;
 
 export const Button = styled.button`
   width: 86px;
@@ -208,12 +208,11 @@ const ModalRows = styled.div`
   }
 `;
 
-const BuyModal: React.FC<BuyTypes> = ({ product, onClose, children }) => {
-  const [quantity, setQuantity] = useState(1);
-  const handleCheckOut = () => {
-    const totalPrice = product.price * quantity;
-  };
-
+const BuyModal: React.FC<BuyTypes> = ({
+  product,
+  children,
+  quantity,
+}) => {
   if (!product) return <p>Loading...</p>;
 
   return (
@@ -234,7 +233,7 @@ const BuyModal: React.FC<BuyTypes> = ({ product, onClose, children }) => {
             <p>Price:</p>{" "}
             <PriceText> ${(product.price * quantity).toFixed(2)}</PriceText>
           </ModalRow>
-          <ModalRow style={{fontWeight: 'bold', borderBottom: 'none'}}>
+          <ModalRow style={{ fontWeight: "bold", borderBottom: "none" }}>
             <p>Total</p>{" "}
             <PriceText> ${(product.price * quantity).toFixed(2)}</PriceText>
           </ModalRow>

@@ -4,7 +4,7 @@ import { FlexColumn, FlexRow, Padding, FullHeightImage, LinearBackground } from 
 export const cardStyle = {
   style: {
     base: {
-      color: "#fff",
+      color: "black",
       fontFamily: "'Helvetica Neue', Helvetica, sans-serif",
       fontSize: "16px",
       "::placeholder": {

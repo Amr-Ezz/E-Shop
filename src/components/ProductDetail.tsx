@@ -249,13 +249,14 @@ const ProductDetail = () => {
   if (!product) {
     return <div>Loading...</div>;
   }
-  const handleBuyButton = () => {
-    if (!user) {
-      setShowModal(true);
-    } else {
-      setShowPayment(true);
-    }
-  };
+  // const handleBuyButton = () => {
+  //   if (!user) {
+  //     setShowModal(true);
+  //   } else {
+  //     setShowPayment(true);
+  //     return {quantity, totalPrice}
+  //   }
+  // };
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     if (!stripe || !elements) {
@@ -413,6 +414,7 @@ const ProductDetail = () => {
                     <BuyModal
                       product={product}
                       onClose={() => setShowPayment(false)}
+                      quantity={quantity}
                     >
                       <PaymentDiv>
                         <h3>Payment Method</h3>
