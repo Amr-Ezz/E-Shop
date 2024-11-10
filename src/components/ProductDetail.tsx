@@ -8,6 +8,7 @@ import ActionButtons from "../shared/ActionButtons";
 import SplitText from "./SplitText";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import { cardStyle } from "../pages/CheckoutPage/CheckoutPage.styled";
+
 import { auth } from "../firebase";
 import LoginForm from "./LoginForm/LoginForm";
 import Modal from "./Modal/Modal";
@@ -207,7 +208,8 @@ const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
   const stripe = useStripe();
   const elements = useElements();
-  const { increment, quantity, decrement } = useQuantity();
+  const { increment, decrement, quantity } = useQuantity();
+  const localQuantity = quantity;
   const totalPrice = product ? product.price * quantity : 0;
   const user = auth.currentUser;
   const userEmail = user?.email || "Anonmynus@example.com";
@@ -236,7 +238,7 @@ const ProductDetail = () => {
       <div>Loading......</div>;
     }
     if (clientSecret) {
-      // alert("Client Secret Failed");
+      alert("Client Secret Failed");
     }
   }, [id]);
 
@@ -257,82 +259,83 @@ const ProductDetail = () => {
   //     return {quantity, totalPrice}
   //   }
   // };
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-    if (!stripe || !elements) {
-      return;
-    }
-    if (!auth.currentUser) {
-      setShowModal(true);
-      return;
-    }
-    try {
-      const customerCreate = await fetch(
-        "http://localhost:3001/create-customer",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            name: userName,
-            email: userEmail,
-          }),
-        }
-      );
-      if (!customerCreate.ok) {
-        throw new Error("Error creating customer!");
-      }
-      const customerData = await customerCreate.json();
-      const customerId = customerData.id;
-      const response = await fetch(
-        "http://localhost:3001/create-payment-intent",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            price: product.price,
-            quantity: quantity,
-            productId: product.id,
-            productName: product.title,
-            customer_name: userName,
-            customer_email: userEmail,
-            customerId: customerId,
-            phone: phoneNumber,
-          }),
-        }
-      );
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      const data = await response.json();
-      setClientSecret(data.clientSecret);
-      const cardElement = elements.getElement(CardElement);
-      if (cardElement) {
-        const { error, paymentIntent } = await stripe.confirmCardPayment(
-          data.clientSecret,
-          {
-            payment_method: {
-              card: cardElement,
-              billing_details: {
-                email: userEmail,
-                name: userName || "Anonmynus",
-                phone: phoneNumber,
-              },
-            },
-          }
-        );
+  // const handleSubmit = async (event: React.FormEvent) => {
+  //   event.preventDefault();
+  //   if (!stripe || !elements) {
+  //     return;
+  //   }
+  //   if (!auth.currentUser) {
+  //     setShowModal(true);
+  //     return;
+  //   }
+  //   try {
+  //     const customerCreate = await fetch(
+  //       "http://localhost:3001/create-customer",
+  //       {
+  //         method: "POST",
+  //         headers: { "Content-Type": "application/json" },
+  //         body: JSON.stringify({
+  //           name: userName,
+  //           email: userEmail,
+  //         }),
+  //       }
+  //     );
+  //     if (!customerCreate.ok) {
+  //       throw new Error("Error creating customer!");
+  //     }
+  //     const customerData = await customerCreate.json();
+  //     const customerId = customerData.id;
+  //     const response = await fetch(
+  //       "http://localhost:3001/create-payment-intent",
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify({
+  //           price: product.price,
+  //           quantity: quantity,
+  //           productId: product.id,
+  //           productName: product.title,
+  //           customer_name: userName,
+  //           customer_email: userEmail,
+  //           customerId: customerId,
+  //           phone: phoneNumber,
+  //         }),
+  //       }
+  //     );
+  //     if (!response.ok) {
+  //       throw new Error("Network response was not ok");
+  //     }
+  //     const data = await response.json();
+  //     setClientSecret(data.clientSecret);
+  //     console.log(data.clientSecret);
+  //     const cardElement = elements.getElement(CardElement);
+  //     if (cardElement && clientSecret) {
+  //       const { error, paymentIntent } = await stripe.confirmCardPayment(
+  //         clientSecret,
+  //         {
+  //           payment_method: {
+  //             card: cardElement,
+  //             billing_details: {
+  //               email: userEmail,
+  //               name: userName || "Anonmynus",
+  //               phone: phoneNumber,
+  //             },
+  //           },
+  //         }
+  //       );
 
-        if (error) {
-          console.error(error);
-        } else if (paymentIntent) {
-          console.log("Successfull:", paymentIntent);
-        }
-      }
-    } catch (error) {
-      console.error("Error creating payment intent", error);
-    }
-  };
+  //       if (error) {
+  //         console.error("payment Error:", error);
+  //       } else if (paymentIntent && paymentIntent.status === "succeeded") {
+  //         console.log("Successfull:", paymentIntent);
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.error("Error creating payment intent", error);
+  //   }
+  // };
 
   return (
     <Main>
@@ -414,9 +417,11 @@ const ProductDetail = () => {
                     <BuyModal
                       product={product}
                       onClose={() => setShowPayment(false)}
-                      quantity={quantity}
-                    >
-                      <PaymentDiv>
+                      localQuantity={localQuantity}
+                      totalPrice={totalPrice}
+                      phoneNumber={phoneNumber}  
+                   />
+                      {/* <PaymentDiv>
                         <h3>Payment Method</h3>
                         <form onSubmit={handleSubmit}>
                           <CardElement options={cardStyle} />
@@ -428,12 +433,11 @@ const ProductDetail = () => {
                           >
                             Cancel
                           </button>
-                          <button type="submit" disabled={!stripe}>
+                          <button type="submit" disabled={!stripe} onClick={handleSubmit}>
                             Pay Now
                           </button>
                         </ButtonModal>
-                      </PaymentDiv>
-                    </BuyModal>
+                      </PaymentDiv> */}
                   </Modal>
                 </>
               )}

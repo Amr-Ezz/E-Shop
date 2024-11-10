@@ -67,7 +67,7 @@ const ActionButtons: React.FC<ButtonProps> = ({
     e.stopPropagation();
     addToCart(product);
   };
-
+  
   return (
     <ButtonsContainer>
       {showBuyButton && <StyledBuyButton onClick={handleBuy}>BUY NOW</StyledBuyButton>}

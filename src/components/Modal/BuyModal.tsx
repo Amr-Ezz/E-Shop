@@ -1,11 +1,17 @@
 import styled from "styled-components";
 import { Product } from "../../api/requests";
+import useQuantity from "../../Hooks/useQuantity";
+import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
+import { useState } from "react";
+import { cardStyle } from "../../pages/CheckoutPage/CheckoutPage.styled";
+import { auth } from "../../firebase";
 
 interface BuyTypes {
   onClose: () => void;
   product: Product;
-  children: React.ReactNode;
-  quantity: number;
+  localQuantity?: number;
+  totalPrice: number;
+  phoneNumber: string | null;
 }
 
 const ModalOverlay = styled.div`
@@ -189,7 +195,6 @@ export const Button = styled.button`
 const ModalRow = styled.div`
   display: flex;
   flex-direction: row;
-  margin-bottom: 10px;
   justify-content: space-between;
   margin-bottom: 2rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -207,13 +212,125 @@ const ModalRows = styled.div`
     color: ${(props) => props.theme.colors.text};
   }
 `;
+const PaymentDiv = styled.div`
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin: 1.5rem 0;
+  form {
+    padding: 1rem;
+    width: 100%;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.9);
+    margin: 1rem 0;
+  }
+`;
+const ButtonModal = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  button {
+    padding: 1rem;
+    border-radius: 12px;
+    font-size: 1rem;
+    transition: transform 0.2s;
+    background: ${(props) => props.theme.colors.quaternary};
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
+`;
 
 const BuyModal: React.FC<BuyTypes> = ({
   product,
-  children,
-  quantity,
+  localQuantity,
+  totalPrice,
+  phoneNumber,
+  onClose,
 }) => {
   if (!product) return <p>Loading...</p>;
+  const { increment, decrement, quantity} = useQuantity(localQuantity);
+  const stripe = useStripe();
+  const elements = useElements();
+  const [clientSecret, setClientSecret] = useState<string | null>(null);
+  const user = auth.currentUser;
+  const userEmail = user?.email || "Anonmynus@example.com";
+  const userName = user?.displayName || 'Anonmynus';
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    if (!stripe || !elements) {
+      return;
+    }
+
+    try {
+      const customerCreate = await fetch(
+        "http://localhost:3001/create-customer",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: userName,
+            email: userEmail,
+          }),
+        }
+      );
+      if (!customerCreate.ok) {
+        throw new Error("Error creating customer!");
+      }
+      const customerData = await customerCreate.json();
+      const customerId = customerData.id;
+      const response = await fetch(
+        "http://localhost:3001/create-payment-intent",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            price: product.price,
+            quantity: quantity,
+            productId: product.id,
+            productName: product.title,
+            customer_name: userName,
+            customer_email: userEmail,
+            customerId: customerId,
+            phone: phoneNumber,
+          }),
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      setClientSecret(data.clientSecret);
+      console.log(data.clientSecret);
+      const cardElement = elements.getElement(CardElement);
+      if (cardElement && clientSecret) {
+        const { error, paymentIntent } = await stripe.confirmCardPayment(
+          clientSecret,
+          {
+            payment_method: {
+              card: cardElement,
+              billing_details: {
+                email: userEmail,
+                name: userName || "Anonmynus",
+                phone: phoneNumber,
+              },
+            },
+          }
+        );
+
+        if (error) {
+          console.error("payment Error:", error);
+        } else if (paymentIntent && paymentIntent.status === "succeeded") {
+          console.log("Successfull:", paymentIntent);
+        }
+      }
+    } catch (error) {
+      console.error("Error creating payment intent", error);
+    }
+  };
 
   return (
     <ModalOverlay>
@@ -226,7 +343,12 @@ const BuyModal: React.FC<BuyTypes> = ({
           </ModalRow>
           {/* <ProductImage src={product.image} alt={product.title} /> */}
           <ModalRow>
-            <p>Quantity:</p> <CounterText>{quantity}</CounterText>
+            <p>Quantity:</p>{" "}
+            <Counter>
+              <CounterButton onClick={decrement}>-</CounterButton>
+              <CounterText>{quantity}</CounterText>
+              <CounterButton onClick={increment}>+</CounterButton>
+            </Counter>
           </ModalRow>
           <ModalRow>
             {" "}
@@ -238,22 +360,27 @@ const BuyModal: React.FC<BuyTypes> = ({
             <PriceText> ${(product.price * quantity).toFixed(2)}</PriceText>
           </ModalRow>
         </ModalRows>
-
-        {/* <Counter>
-          <CounterButton
-            onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
-          >
-            -
-          </CounterButton>
-          <CounterButton onClick={() => setQuantity((prev) => prev + 1)}>
-            +
-          </CounterButton>
-        </Counter>
-        <ButtonWrapper>
+        {/* <ButtonWrapper>
           <Button onClick={onClose}>Close</Button>
           <Button onClick={handleCheckOut}>Buy</Button>
         </ButtonWrapper> */}
-        {children}
+        <PaymentDiv>
+          <h3>Payment Method</h3>
+          <form onSubmit={handleSubmit}>
+            <CardElement options={cardStyle} />
+          </form>
+          <ButtonModal>
+            <button
+              style={{ background: "rgba(255, 255, 255, 0.1)" }}
+              onClick={onClose}
+            >
+              Cancel
+            </button>
+            <button type="submit" disabled={!stripe} onClick={handleSubmit}>
+              Pay Now
+            </button>
+          </ButtonModal>
+        </PaymentDiv>{" "}
       </ModalWrapper>
     </ModalOverlay>
   );
