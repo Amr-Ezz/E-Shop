@@ -161,14 +161,14 @@ const SaleSection = () => {
             />
           ))}
       </HighlightedButtons>
-      {showBuyModal && selectedProduct && (
+      {/* {showBuyModal && selectedProduct && (
         <BuyModal
           product={selectedProduct}
           onClose={() => setShowBuyModal(false)}
           phoneNumber={phoneNumber}
           totalPrice={selectedProduct.price}
         />
-      )}
+      )} */}
     </MainSection>
   );
 };

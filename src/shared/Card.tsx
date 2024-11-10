@@ -5,6 +5,9 @@ import { useTruncate } from "../Hooks/useTruncate";
 import ActionButtons from "./ActionButtons";
 import useInView from "../Hooks/useInView";
 import { useState } from "react";
+import BuyModal from "../components/Modal/BuyModal";
+import Modal from "../components/Modal/Modal";
+import { useUser } from "../Context/UserContext";
 
 interface CardProps {
   to: string;
@@ -169,9 +172,8 @@ export const CardContainer: React.FC<productProps> = ({ product }) => {
     useTruncate();
   const { ref, isInView } = useInView({ threshold: 0.1 });
   const [showPayment, setShowPayment] = useState(false);
-  const handlePayment = () => {
-    setShowPayment(!showPayment);
-  };
+  const { phoneNumber } = useUser();
+ 
 
   return (
     <CardGrid ref={ref}>
@@ -212,19 +214,23 @@ export const CardContainer: React.FC<productProps> = ({ product }) => {
           </p>
           <p>Model: {product.model}</p>
         </PriceHolder>
-        {showPayment && (
-          <div>
-            <form>
-              <button>Pay</button>
-            </form>
-          </div>
-        )}
+      
         <ActionButtons
           product={product}
           showBuyButton={true}
           showPayment={setShowPayment}
         />
       </Card>
+      {showPayment && (
+          <Modal show={showPayment} onClose={() => setShowPayment(false)}>
+            <BuyModal
+              product={product}
+              onClose={() => setShowPayment(false)}
+              totalPrice={product.price}
+              phoneNumber={phoneNumber}
+            />
+          </Modal>
+        )}
     </CardGrid>
   );
 };

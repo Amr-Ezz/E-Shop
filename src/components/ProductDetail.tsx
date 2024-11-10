@@ -6,8 +6,6 @@ import useQuantity from "../Hooks/useQuantity";
 import { Counter, CounterButton, CounterText } from "../shared/Counter";
 import ActionButtons from "../shared/ActionButtons";
 import SplitText from "./SplitText";
-import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
-import { cardStyle } from "../pages/CheckoutPage/CheckoutPage.styled";
 
 import { auth } from "../firebase";
 import LoginForm from "./LoginForm/LoginForm";
@@ -168,35 +166,6 @@ const ListedSpecifications = styled.ul`
     }
   }
 `;
-const PaymentDiv = styled.div`
-  background: rgba(255, 255, 255, 0.1);
-  padding: 1.5rem;
-  border-radius: 12px;
-  margin: 1.5rem 0;
-  form {
-    padding: 1rem;
-    width: 100%;
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.9);
-    margin: 1rem 0;
-  }
-`;
-const ButtonModal = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-  margin-top: 1.5rem;
-  button {
-    padding: 1rem;
-    border-radius: 12px;
-    font-size: 1rem;
-    transition: transform 0.2s;
-    background: ${(props) => props.theme.colors.quaternary};
-    &:hover {
-      transform: translateY(-2px);
-    }
-  }
-`;
 
 const ProductDetail = () => {
   const [showPayment, setShowPayment] = useState(false);
@@ -204,16 +173,10 @@ const ProductDetail = () => {
   const [showModal, setShowModal] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
-  const [clientSecret, setClientSecret] = useState<string | null>(null);
   const { id } = useParams<{ id: string }>();
-  const stripe = useStripe();
-  const elements = useElements();
   const { increment, decrement, quantity } = useQuantity();
   const localQuantity = quantity;
   const totalPrice = product ? product.price * quantity : 0;
-  const user = auth.currentUser;
-  const userEmail = user?.email || "Anonmynus@example.com";
-  const userName = user?.displayName;
   const { phoneNumber } = useUser();
   //////////////////////////////////////////////////// useEffect ////////////////////////////////////
   useEffect(() => {
@@ -236,9 +199,6 @@ const ProductDetail = () => {
     }
     if (loading) {
       <div>Loading......</div>;
-    }
-    if (clientSecret) {
-      alert("Client Secret Failed");
     }
   }, [id]);
 
@@ -419,25 +379,8 @@ const ProductDetail = () => {
                       onClose={() => setShowPayment(false)}
                       localQuantity={localQuantity}
                       totalPrice={totalPrice}
-                      phoneNumber={phoneNumber}  
-                   />
-                      {/* <PaymentDiv>
-                        <h3>Payment Method</h3>
-                        <form onSubmit={handleSubmit}>
-                          <CardElement options={cardStyle} />
-                        </form>
-                        <ButtonModal>
-                          <button
-                            style={{ background: "rgba(255, 255, 255, 0.1)" }}
-                            onClick={() => setShowPayment(false)}
-                          >
-                            Cancel
-                          </button>
-                          <button type="submit" disabled={!stripe} onClick={handleSubmit}>
-                            Pay Now
-                          </button>
-                        </ButtonModal>
-                      </PaymentDiv> */}
+                      phoneNumber={phoneNumber}
+                    />
                   </Modal>
                 </>
               )}

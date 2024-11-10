@@ -10,7 +10,7 @@ interface BuyTypes {
   onClose: () => void;
   product: Product;
   localQuantity?: number;
-  totalPrice: number;
+  totalPrice?: number;
   phoneNumber: string | null;
 }
 
@@ -24,7 +24,8 @@ const ModalOverlay = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1;
+  z-index: 1000;
+  pointer-events: auto;
 `;
 
 const ModalWrapper = styled.div`
@@ -40,7 +41,7 @@ const ModalWrapper = styled.div`
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
-  overflow: none;
+  z-index: 1001;
 
   @media (max-width: 768px) {
     padding: 12px;
@@ -198,6 +199,7 @@ const ModalRow = styled.div`
   justify-content: space-between;
   margin-bottom: 2rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: ${(props) => props.theme.colors.white};
 `;
 const ModalRows = styled.div`
   margin-bottom: 2rem;
@@ -209,7 +211,7 @@ const ModalRows = styled.div`
     margin-bottom: 1.9rem;
     text-align: center;
     position: relative;
-    color: ${(props) => props.theme.colors.text};
+    color: ${(props) => props.theme.colors.white};
   }
 `;
 const PaymentDiv = styled.div`
@@ -217,6 +219,8 @@ const PaymentDiv = styled.div`
   padding: 1.5rem;
   border-radius: 12px;
   margin: 1.5rem 0;
+  color: ${(props) => props.theme.colors.white};
+
   form {
     padding: 1rem;
     width: 100%;
@@ -230,11 +234,13 @@ const ButtonModal = styled.div`
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
   margin-top: 1.5rem;
+
   button {
     padding: 1rem;
     border-radius: 12px;
     font-size: 1rem;
     transition: transform 0.2s;
+
     background: ${(props) => props.theme.colors.quaternary};
     &:hover {
       transform: translateY(-2px);
@@ -250,13 +256,13 @@ const BuyModal: React.FC<BuyTypes> = ({
   onClose,
 }) => {
   if (!product) return <p>Loading...</p>;
-  const { increment, decrement, quantity} = useQuantity(localQuantity);
+  const { increment, decrement, quantity } = useQuantity(localQuantity);
   const stripe = useStripe();
   const elements = useElements();
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const user = auth.currentUser;
   const userEmail = user?.email || "Anonmynus@example.com";
-  const userName = user?.displayName || 'Anonmynus';
+  const userName = user?.displayName || "Anonmynus";
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     if (!stripe || !elements) {
