@@ -219,18 +219,14 @@ export const CardContainer: React.FC<productProps> = ({ product }) => {
           product={product}
           showBuyButton={true}
           showPayment={setShowPayment}
+          quantity={1}
         />
-      </Card>
-      {showPayment && (
-          <Modal show={showPayment} onClose={() => setShowPayment(false)}>
-            <BuyModal
-              product={product}
-              onClose={() => setShowPayment(false)}
-              totalPrice={product.price}
-              phoneNumber={phoneNumber}
-            />
-          </Modal>
+         {showPayment && (
+          <BuyModal />
         )}
+       
+      </Card>
+     
     </CardGrid>
   );
 };

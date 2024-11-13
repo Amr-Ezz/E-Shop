@@ -6,6 +6,7 @@ import { CardContainer } from "../shared/Card";
 import { useNavigate } from "react-router-dom";
 import useInView from "../Hooks/useInView";
 import { useUser } from "../Context/UserContext";
+import { useBuyModal } from "../Context/BuyContext";
 
 const MainSection = styled.div<{ isVisible: boolean }>`
   display: flex;
@@ -100,6 +101,7 @@ const SaleSection = () => {
   const [showBuyModal, setShowBuyModal] = useState<boolean>(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const { phoneNumber } = useUser();
+  const {openModal} = useBuyModal();
 
   const [selectedCategory, setSelectedCategory] = useState<string>("audio");
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -134,6 +136,7 @@ const SaleSection = () => {
   const handleBuy = (product: Product) => {
     setSelectedProduct(product);
     setShowBuyModal(true);
+    openModal(product, 1, product.price);
   };
 
   return (
@@ -161,14 +164,11 @@ const SaleSection = () => {
             />
           ))}
       </HighlightedButtons>
-      {/* {showBuyModal && selectedProduct && (
+      {showBuyModal && selectedProduct && (
         <BuyModal
-          product={selectedProduct}
-          onClose={() => setShowBuyModal(false)}
-          phoneNumber={phoneNumber}
-          totalPrice={selectedProduct.price}
+       
         />
-      )} */}
+      )}
     </MainSection>
   );
 };

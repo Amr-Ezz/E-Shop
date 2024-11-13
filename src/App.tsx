@@ -15,35 +15,44 @@ import ProductPage from "./pages/ProductPage";
 import { ProductProvider } from "./Context/ProductContext";
 import ScrollToTop from "./components/ScrollToTop";
 import { UserProvider } from "./Context/UserContext";
+import { BuyModalProvider } from "./Context/BuyContext";
+import BuyModal from "./components/Modal/BuyModal";
 
 function App() {
   return (
     <Router>
       <ScrollToTop />
-      <CartProvider>
-        <div className="Container">
-          <UserProvider>
-            <Navbar />
-            <ProductProvider>
-              <Routes>
-                <Route path="/pages/Services" element={<Services />} />
-                <Route path="/" element={<Home />} />
-                <Route path="/pages/ContactUs" element={<ContactUs />} />
-                <Route path="/pages/AboutUs" element={<AboutUs />} />
-                <Route path="/pages/CheckoutPage" element={<CheckoutPage />} />
-                <Route path="/search" element={<SearchResults />} />
-                <Route path="/products/:id" element={<ProductDetail />} />
-                <Route
-                  path="/products/category/:category"
-                  element={<ProductPage />}
-                />
-              </Routes>
-            </ProductProvider>
-          </UserProvider>
+      <BuyModalProvider>
+      <BuyModal />
 
-          <Footer />
-        </div>
-      </CartProvider>
+        <CartProvider>
+          <div className="Container">
+            <UserProvider>
+              <Navbar />
+              <ProductProvider>
+                <Routes>
+                  <Route path="/pages/Services" element={<Services />} />
+                  <Route path="/" element={<Home />} />
+                  <Route path="/pages/ContactUs" element={<ContactUs />} />
+                  <Route path="/pages/AboutUs" element={<AboutUs />} />
+                  <Route
+                    path="/pages/CheckoutPage"
+                    element={<CheckoutPage />}
+                  />
+                  <Route path="/search" element={<SearchResults />} />
+                  <Route path="/products/:id" element={<ProductDetail />} />
+                  <Route
+                    path="/products/category/:category"
+                    element={<ProductPage />}
+                  />
+                </Routes>
+              </ProductProvider>
+            </UserProvider>
+
+            <Footer />
+          </div>
+        </CartProvider>
+      </BuyModalProvider>
     </Router>
   );
 }

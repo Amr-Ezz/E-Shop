@@ -1,18 +1,18 @@
 import styled from "styled-components";
-import { Product } from "../../api/requests";
 import useQuantity from "../../Hooks/useQuantity";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import { useState } from "react";
 import { cardStyle } from "../../pages/CheckoutPage/CheckoutPage.styled";
 import { auth } from "../../firebase";
+import { useBuyModal } from "../../Context/BuyContext";
 
-interface BuyTypes {
-  onClose: () => void;
-  product: Product;
-  localQuantity?: number;
-  totalPrice?: number;
-  phoneNumber: string | null;
-}
+// interface BuyTypes {
+//   onClose: () => void;
+//   product: Product;
+//   localQuantity?: number;
+//   totalPrice?: number;
+//   phoneNumber: string | null;
+// }
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -248,21 +248,19 @@ const ButtonModal = styled.div`
   }
 `;
 
-const BuyModal: React.FC<BuyTypes> = ({
-  product,
-  localQuantity,
-  totalPrice,
-  phoneNumber,
-  onClose,
-}) => {
-  if (!product) return <p>Loading...</p>;
+const BuyModal: React.FC = () => {
+  const { product, localQuantity, phoneNumber, isModalOpen, closeModal } =
+    useBuyModal();
   const { increment, decrement, quantity } = useQuantity(localQuantity);
+
   const stripe = useStripe();
   const elements = useElements();
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const user = auth.currentUser;
   const userEmail = user?.email || "Anonmynus@example.com";
   const userName = user?.displayName || "Anonmynus";
+  if (!isModalOpen || !product) return null;
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     if (!stripe || !elements) {
@@ -374,18 +372,19 @@ const BuyModal: React.FC<BuyTypes> = ({
           <h3>Payment Method</h3>
           <form onSubmit={handleSubmit}>
             <CardElement options={cardStyle} />
-          </form>
-          <ButtonModal>
+            <ButtonModal>
             <button
               style={{ background: "rgba(255, 255, 255, 0.1)" }}
-              onClick={onClose}
+              onClick={closeModal}
             >
               Cancel
             </button>
-            <button type="submit" disabled={!stripe} onClick={handleSubmit}>
+            <button type="submit" disabled={!stripe}>
               Pay Now
             </button>
           </ButtonModal>
+          </form>
+         
         </PaymentDiv>{" "}
       </ModalWrapper>
     </ModalOverlay>
