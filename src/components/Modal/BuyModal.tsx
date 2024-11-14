@@ -24,7 +24,8 @@ const ModalOverlay = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+
+    z-index: 1000;
   pointer-events: auto;
 `;
 
@@ -32,12 +33,11 @@ const ModalWrapper = styled.div`
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(20px);
   border-radius: 30px;
-  padding: 16px;
   width: 100%;
   border: 1px solid rgba(255, 255, 255, 0.2);
 
-  max-width: 1100px;
-  max-height: fit-content;
+  max-width: 1000px;
+  max-height: 100vh;
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
@@ -197,7 +197,6 @@ const ModalRow = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-bottom: 2rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   color: ${(props) => props.theme.colors.white};
 `;
@@ -205,6 +204,9 @@ const ModalRows = styled.div`
   margin-bottom: 2rem;
   padding: 1rem;
   border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   background: rgba(0, 0, 0, 0.1);
   h2 {
     font-size: 1.8rem;

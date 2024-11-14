@@ -2,13 +2,21 @@ import React from "react";
 import SplitText from "../../components/SplitText";
 import useInView from "../../Hooks/useInView";
 import { ArrivalSection, BackgroundVector, Card, CardsContainer, CardTrending, CommunitySection, FormContainer, HeadingText, ImageCard, ImageHolder, InputField, Main, PageContainer, ParagraphSection, SaleBanner, SaleOffer, SubmitButton, TagBrand, TextSection, YoungFavourite, YoungSelection } from "./Services.styled";
+import { useNavigate } from "react-router-dom";
+import { useProduct } from "../../Context/ProductContext";
 
 
 
 const Services: React.FC = () => {
-  const { ref: ref1, isInView: isInView1 } = useInView({ threshold: 0.5 });
-  const { ref: ref2, isInView: isInView2 } = useInView({ threshold: 0.5 });
-  const { ref: ref3, isInView: isInView3 } = useInView({ threshold: 0.5 });
+  const { ref: ref1, isInView: isInView1 } = useInView({ threshold: 0.3 });
+  const { ref: ref2, isInView: isInView2 } = useInView({ threshold: 0.3 });
+  const { ref: ref3, isInView: isInView3 } = useInView({ threshold: 0.3 });
+  const {setCategory} = useProduct();
+  const navigate = useNavigate();
+  const handleNavigate = (category: string) => {
+    setCategory(category);
+    navigate(`/products/category/${category}`)
+  }
 
   return (
     <PageContainer>
@@ -49,7 +57,7 @@ const Services: React.FC = () => {
         <BackgroundVector src="/Vector 8.png" />
         <HeadingText>New Arrivals</HeadingText>
         <CardsContainer>
-          <Card>
+          <Card onClick={() => handleNavigate("gaming")}>
             <ImageCard src="/Rectangle 20.png" />
             <div>
               <h4> Gaming Sets</h4>
@@ -57,7 +65,7 @@ const Services: React.FC = () => {
               <img src="/Arrow 1.png" />
             </div>
           </Card>
-          <Card>
+          <Card onClick={() => handleNavigate("mobile")}>
             <ImageCard src="/Rectangle 21.png" />
             <div>
               <h4> Phones</h4>
@@ -65,7 +73,7 @@ const Services: React.FC = () => {
               <img src="/Arrow 1.png" />
             </div>
           </Card>
-          <Card>
+          <Card onClick={() => handleNavigate("audio")}>
             <ImageCard src="/Rectangle 22.png" />
             <div>
               <h4>Earphones</h4>

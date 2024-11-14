@@ -130,6 +130,7 @@ export const Card = styled.div`
   flex-direction: column;
   justify-content: space-around;
   box-sizing: border-box;
+  cursor: pointer;
 
   div {
     display: flex;
