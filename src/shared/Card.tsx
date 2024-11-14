@@ -4,10 +4,6 @@ import { Product } from "../api/requests";
 import { useTruncate } from "../Hooks/useTruncate";
 import ActionButtons from "./ActionButtons";
 import useInView from "../Hooks/useInView";
-import { useState } from "react";
-import BuyModal from "../components/Modal/BuyModal";
-import Modal from "../components/Modal/Modal";
-import { useUser } from "../Context/UserContext";
 
 interface CardProps {
   to: string;
@@ -164,15 +160,12 @@ const CircleDiv = styled.div`
 `;
 interface productProps {
   product: Product;
-  onBuy: (product: Product) => void;
 }
 
 export const CardContainer: React.FC<productProps> = ({ product }) => {
   const { truncateDescription, toggleDescription, toggleHandler } =
     useTruncate();
   const { ref, isInView } = useInView({ threshold: 0.1 });
-  const [showPayment, setShowPayment] = useState(false);
-  const { phoneNumber } = useUser();
  
 
   return (
@@ -218,12 +211,11 @@ export const CardContainer: React.FC<productProps> = ({ product }) => {
         <ActionButtons
           product={product}
           showBuyButton={true}
-          showPayment={setShowPayment}
           quantity={1}
         />
-         {showPayment && (
+         {/* {showPayment && (
           <BuyModal />
-        )}
+        )} */}
        
       </Card>
      

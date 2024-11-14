@@ -1,5 +1,4 @@
 import { Product } from "../api/requests";
-import BuyModal from "../components/Modal/BuyModal";
 import { useBuyModal } from "../Context/BuyContext";
 import { useCart } from "../Context/CartContext";
 import styled from "styled-components";
@@ -7,7 +6,6 @@ import styled from "styled-components";
 interface ButtonProps {
   product: Product;
   showBuyButton?: boolean;
-  showPayment: (show: boolean) => void;
   quantity?: number;
 }
 const ButtonsContainer = styled.div`
@@ -58,13 +56,11 @@ const StyledAddButton = styled.button`
 const ActionButtons: React.FC<ButtonProps> = ({
   product,
   showBuyButton,
-  showPayment,
   quantity
 }) => {
   const { addToCart } = useCart();
   const {openModal} = useBuyModal();
-  const handleBuy = (product: Product) => {
-    showPayment(true);
+  const handleBuy = () => {
     openModal(product, quantity, product.price);
   };
   const handleAddToCart = (e: React.MouseEvent) => {
@@ -74,7 +70,7 @@ const ActionButtons: React.FC<ButtonProps> = ({
   
   return (
     <ButtonsContainer>
-      {showBuyButton && <StyledBuyButton onClick={() => handleBuy(product)}>BUY NOW</StyledBuyButton>}
+      {showBuyButton && <StyledBuyButton onClick={handleBuy}>BUY NOW</StyledBuyButton>}
       <StyledAddButton onClick={handleAddToCart}>Add To Cart</StyledAddButton>
     </ButtonsContainer>
   );

@@ -1,12 +1,8 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { fetchProducts, Product } from "../api/requests";
-import BuyModal from "./Modal/BuyModal";
 import { CardContainer } from "../shared/Card";
-import { useNavigate } from "react-router-dom";
 import useInView from "../Hooks/useInView";
-import { useUser } from "../Context/UserContext";
-import { useBuyModal } from "../Context/BuyContext";
 
 const MainSection = styled.div<{ isVisible: boolean }>`
   display: flex;
@@ -98,16 +94,10 @@ const StyledButton = styled.button<StyledButtonProps>`
 
 const SaleSection = () => {
   const [products, setProducts] = useState<Product[]>([]);
-  const [showBuyModal, setShowBuyModal] = useState<boolean>(false);
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const { phoneNumber } = useUser();
-  const {openModal} = useBuyModal();
-
   const [selectedCategory, setSelectedCategory] = useState<string>("audio");
   const [currentPage, setCurrentPage] = useState<number>(1);
   const { ref, isInView } = useInView({ threshold: 0.1 });
 
-  const navigate = useNavigate();
 
   useEffect(() => {
     const getProducts = async () => {
@@ -133,11 +123,7 @@ const SaleSection = () => {
   const startIndex = (currentPage - 1) * 3;
   const displayedProducts = products.slice(startIndex, startIndex + 3);
 
-  const handleBuy = (product: Product) => {
-    setSelectedProduct(product);
-    setShowBuyModal(true);
-    openModal(product, 1, product.price);
-  };
+  
 
   return (
     <MainSection ref={ref} isVisible={isInView}>
@@ -150,7 +136,7 @@ const SaleSection = () => {
       </ul>
       <GridContainer>
         {displayedProducts.map((product) => (
-          <CardContainer product={product} onBuy={handleBuy} key={product.id} />
+          <CardContainer product={product} key={product.id} />
         ))}
       </GridContainer>
       <HighlightedButtons>
@@ -164,11 +150,11 @@ const SaleSection = () => {
             />
           ))}
       </HighlightedButtons>
-      {showBuyModal && selectedProduct && (
+      {/* {showBuyModal && selectedProduct && (
         <BuyModal
        
         />
-      )}
+      )} */}
     </MainSection>
   );
 };

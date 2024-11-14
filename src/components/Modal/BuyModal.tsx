@@ -372,18 +372,19 @@ const BuyModal: React.FC = () => {
           <h3>Payment Method</h3>
           <form onSubmit={handleSubmit}>
             <CardElement options={cardStyle} />
-            <ButtonModal>
+         
+          </form>
+          <ButtonModal>
             <button
               style={{ background: "rgba(255, 255, 255, 0.1)" }}
               onClick={closeModal}
             >
               Cancel
             </button>
-            <button type="submit" disabled={!stripe}>
+            <button type="submit" disabled={!stripe} onClick={handleSubmit}>
               Pay Now
             </button>
           </ButtonModal>
-          </form>
          
         </PaymentDiv>{" "}
       </ModalWrapper>
