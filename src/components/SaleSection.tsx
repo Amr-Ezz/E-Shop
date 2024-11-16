@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { fetchProducts, Product } from "../api/requests";
+import { fetchProductsByCategory, Product } from "../api/requests";
 import { CardContainer } from "../shared/Card";
 import useInView from "../Hooks/useInView";
 
@@ -98,11 +98,10 @@ const SaleSection = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const { ref, isInView } = useInView({ threshold: 0.1 });
 
-
   useEffect(() => {
     const getProducts = async () => {
       try {
-        const productData = await fetchProducts(selectedCategory);
+        const productData = await fetchProductsByCategory(selectedCategory);
         setProducts(productData);
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -122,8 +121,6 @@ const SaleSection = () => {
 
   const startIndex = (currentPage - 1) * 3;
   const displayedProducts = products.slice(startIndex, startIndex + 3);
-
-  
 
   return (
     <MainSection ref={ref} isVisible={isInView}>

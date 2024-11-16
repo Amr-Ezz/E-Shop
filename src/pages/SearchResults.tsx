@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 import { Product } from "../api/requests";
@@ -11,9 +11,8 @@ const ResultsDiv = styled.div`
   grid-gap: 10px;
 `;
 
-
 const Main = styled.div`
-background-color: ${props => props.theme.colors.primary};
+  background-color: ${(props) => props.theme.colors.primary};
   h1 {
     padding: 1rem;
   }
@@ -23,7 +22,7 @@ const SearchResults = () => {
   const location = useLocation();
   const [products, setProducts] = useState<Product[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
- 
+
   const searchParams = new URLSearchParams(location.search);
   const query = searchParams.get("q");
 
@@ -44,13 +43,12 @@ const SearchResults = () => {
     }
   }, [query, products]);
 
- const navigate = useNavigate();
+  //  const navigate = useNavigate();
 
- 
-  const handleBuy = (product: Product) => {
-    const totalPrice = product.price;
-    navigate("/pages/CheckoutPage", { state: { product, totalPrice } });
-  };
+  // const handleBuy = (product: Product) => {
+  //   const totalPrice = product.price;
+  //   navigate("/pages/CheckoutPage", { state: { product, totalPrice } });
+  // };
 
   return (
     <Main>
@@ -59,8 +57,7 @@ const SearchResults = () => {
       <ResultsDiv>
         {filteredProducts.length > 0 ? (
           filteredProducts.map((product) => (
-            <CardContainer key={product.id} product={product} onBuy={handleBuy} />
-            
+            <CardContainer key={product.id} product={product} />
           ))
         ) : (
           <p>No results found.</p>

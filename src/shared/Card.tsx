@@ -56,7 +56,6 @@ const Card = styled(Link)<CardProps>`
     font-size: 1.5rem;
     text-align: center;
     color: ${(props) => props.theme.colors.white};
-    max-height: 4rem;
     overflow: hidden;
   }
 
@@ -126,38 +125,38 @@ const PriceHolder = styled.div`
     }
   }
 `;
-const CircleDiv = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 108px;
-  height: 28px;
-  justify-content: space-between;
+// const CircleDiv = styled.div`
+//   display: flex;
+//   flex-direction: row;
+//   width: 108px;
+//   height: 28px;
+//   justify-content: space-between;
 
-  div {
-    width: 28px;
-    height: 28px;
-    border-radius: 100%;
-    background-color: #c47530;
+//   div {
+//     width: 28px;
+//     height: 28px;
+//     border-radius: 100%;
+//     background-color: #c47530;
 
-    &:nth-child(2) {
-      background-color: #fac585;
-    }
+//     &:nth-child(2) {
+//       background-color: #fac585;
+//     }
 
-    &:nth-child(3) {
-      background-color: #05697c;
-    }
-  }
+//     &:nth-child(3) {
+//       background-color: #05697c;
+//     }
+//   }
 
-  @media (max-width: 768px) {
-    width: 84px;
-    height: 22px;
+//   @media (max-width: 768px) {
+//     width: 84px;
+//     height: 22px;
 
-    div {
-      width: 22px;
-      height: 22px;
-    }
-  }
-`;
+//     div {
+//       width: 22px;
+//       height: 22px;
+//     }
+//   }
+// `;
 interface productProps {
   product: Product;
 }
@@ -177,11 +176,11 @@ export const CardContainer: React.FC<productProps> = ({ product }) => {
       >
         <img src={product.image} alt={product.title} />
         <h1>{product.title.substring(0, 50)}</h1>
-        <CircleDiv>
+        {/* <CircleDiv>
           <div></div>
           <div></div>
           <div></div>
-        </CircleDiv>
+        </CircleDiv> */}
         <p style={{ lineHeight: "20px" }}>
           {truncateDescription(product.description, 100, product.id)}
           {product.description.length > 100 && (

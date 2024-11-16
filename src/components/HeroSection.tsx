@@ -2,6 +2,7 @@ import styled, { keyframes } from "styled-components";
 import Image3D from "./Image3D";
 import SplitText from "./SplitText";
 import { FlexColumn, FlexRow } from "../Utilities/StyledUtilities.styled";
+import { useNavigate } from "react-router-dom";
 
 const puffInCenter = keyframes`
  0% {
@@ -183,6 +184,10 @@ const ContainerDiv = styled(FlexColumn)`
 const words = ["Explore", "the", "Ultimate", "Tech", "Collection"];
 
 const HeroSection = () => {
+  const navigate = useNavigate();
+  const handleNavigate = () => {
+    navigate("/pages/Shop/ShopNow");
+  };
   return (
     <ContainerDiv>
       <HeroDiv>
@@ -194,7 +199,7 @@ const HeroSection = () => {
           <p>
             Level up with the latest in gaming, sound, and screen experiences
           </p>
-          <button>SHOP NOW</button>
+          <button onClick={handleNavigate}>SHOP NOW</button>
         </FontSection>
         <div>
           <Image3D url={"/Rectangle 3.png"} width={300} height={300} />

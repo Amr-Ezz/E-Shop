@@ -12,22 +12,24 @@ export interface Product {
   brand: string;
   model: string;
   color: string;
- 
 }
-export const fetchProducts = async (category: string): Promise<Product[]> => {
+export const fetchProducts = async (): Promise<Product[]> => {
   try {
-    const response = await axios.get('https://fakestoreapi.in/api/products');
+    const response = await axios.get("https://fakestoreapi.in/api/products");
     const products = response.data.products || response.data;
-    return products.filter((product: Product) => product.category === category);
-    
+    return products;
   } catch (error: any) {
-    console.error('Error fetching the products:', error.message);
+    console.error("Error fetching the products:", error.message);
     return [];
   }
 };
-export const fetchProductsByCategory = async (category: string): Promise<Product[]> => {
+export const fetchProductsByCategory = async (
+  category: string
+): Promise<Product[]> => {
   try {
-    const response = await axios.get(`https://fakestoreapi.in/api/products/category?type=${category}`);
+    const response = await axios.get(
+      `https://fakestoreapi.in/api/products/category?type=${category}`
+    );
     return response.data.products || [];
   } catch (error) {
     console.error("Error fetching products by category:", error);
@@ -37,14 +39,12 @@ export const fetchProductsByCategory = async (category: string): Promise<Product
 
 export const fetchProductsById = async (id: number): Promise<Product> => {
   try {
-    const response = await axios.get(`https://fakestoreapi.in/api/products/${id}`);
-    return response.data.product || response.data; 
-
+    const response = await axios.get(
+      `https://fakestoreapi.in/api/products/${id}`
+    );
+    return response.data.product || response.data;
   } catch (error) {
     console.error(error, "error fetch single product");
-    throw new Error("Could not fetch product"); 
-
+    throw new Error("Could not fetch product");
   }
-}
-
-
+};

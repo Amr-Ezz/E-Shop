@@ -17,6 +17,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import { UserProvider } from "./Context/UserContext";
 import { BuyModalProvider } from "./Context/BuyContext";
 import BuyModal from "./components/Modal/BuyModal";
+import ShopNow from "./pages/Shop/ShopNow";
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
                     path="/products/category/:category"
                     element={<ProductPage />}
                   />
+                  <Route path="/pages/Shop/ShopNow" element={<ShopNow />} />
                 </Routes>
               </ProductProvider>
             </UserProvider>

@@ -1,22 +1,45 @@
 import React from "react";
 import SplitText from "../../components/SplitText";
 import useInView from "../../Hooks/useInView";
-import { ArrivalSection, BackgroundVector, Card, CardsContainer, CardTrending, CommunitySection, FormContainer, HeadingText, ImageCard, ImageHolder, InputField, Main, PageContainer, ParagraphSection, SaleBanner, SaleOffer, SubmitButton, TagBrand, TextSection, YoungFavourite, YoungSelection } from "./Services.styled";
+import {
+  ArrivalSection,
+  BackgroundVector,
+  Card,
+  CardsContainer,
+  CardTrending,
+  CommunitySection,
+  FormContainer,
+  HeadingText,
+  ImageCard,
+  ImageHolder,
+  InputField,
+  Main,
+  PageContainer,
+  ParagraphSection,
+  SaleBanner,
+  SaleOffer,
+  SubmitButton,
+  TagBrand,
+  TextSection,
+  YoungFavourite,
+  YoungSelection,
+} from "./Services.styled";
 import { useNavigate } from "react-router-dom";
 import { useProduct } from "../../Context/ProductContext";
-
-
 
 const Services: React.FC = () => {
   const { ref: ref1, isInView: isInView1 } = useInView({ threshold: 0.3 });
   const { ref: ref2, isInView: isInView2 } = useInView({ threshold: 0.3 });
   const { ref: ref3, isInView: isInView3 } = useInView({ threshold: 0.3 });
-  const {setCategory} = useProduct();
+  const { setCategory } = useProduct();
   const navigate = useNavigate();
-  const handleNavigate = (category: string) => {
+  const handleNavigateByCategory = (category: string) => {
     setCategory(category);
-    navigate(`/products/category/${category}`)
-  }
+    navigate(`/products/category/${category}`);
+  };
+  const handleNavigate = () => {
+    navigate("/pages/Shop/ShopNow");
+  };
 
   return (
     <PageContainer>
@@ -57,7 +80,7 @@ const Services: React.FC = () => {
         <BackgroundVector src="/Vector 8.png" />
         <HeadingText>New Arrivals</HeadingText>
         <CardsContainer>
-          <Card onClick={() => handleNavigate("gaming")}>
+          <Card onClick={() => handleNavigateByCategory("gaming")}>
             <ImageCard src="/Rectangle 20.png" />
             <div>
               <h4> Gaming Sets</h4>
@@ -65,7 +88,7 @@ const Services: React.FC = () => {
               <img src="/Arrow 1.png" />
             </div>
           </Card>
-          <Card onClick={() => handleNavigate("mobile")}>
+          <Card onClick={() => handleNavigateByCategory("mobile")}>
             <ImageCard src="/Rectangle 21.png" />
             <div>
               <h4> Phones</h4>
@@ -73,7 +96,7 @@ const Services: React.FC = () => {
               <img src="/Arrow 1.png" />
             </div>
           </Card>
-          <Card onClick={() => handleNavigate("audio")}>
+          <Card onClick={() => handleNavigateByCategory("audio")}>
             <ImageCard src="/Rectangle 22.png" />
             <div>
               <h4>Earphones</h4>
@@ -99,7 +122,7 @@ const Services: React.FC = () => {
                   <span>1 June - 10 June 2021</span> <br />
                   *Terms & Conditions apply
                 </p>
-                <button>SHOP NOW</button>
+                <button onClick={handleNavigate}>SHOP NOW</button>
               </ParagraphSection>
             </div>
           </SaleOffer>
