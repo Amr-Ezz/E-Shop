@@ -6,9 +6,11 @@ import LoginForm from "./LoginForm/LoginForm";
 import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../Context/CartContext";
 import CartModal from "./Modal/CartModal";
-import { FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaSearch, FaTimes } from "react-icons/fa";
 import { useTheme } from "../Context/ThemeContext";
 import { FlexColumn, FlexRow } from "../Utilities/StyledUtilities.styled";
+import { useUser } from "../Context/UserContext";
+import { FaUser } from "react-icons/fa";
 
 const NavbarContainer = styled.div`
   width: 100%;
@@ -251,6 +253,24 @@ const StyledCheckbox = styled(CheckBox)`
     box-shadow: inset -1px 1px 2px 0px #a3fff4;
   }
 `;
+const UserLoggedIn = styled.div`
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  span {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: ${(props) => props.theme.colors.text};
+  }
+`;
+const ThemedIconUser = styled(FaUser)`
+  color: ${(props) => props.theme.colors.text};
+  font-size: 34px;
+`;
+const ThemedIconSearch = styled(FaSearch)`
+  color: ${(props) => props.theme.colors.text};
+  font-size: 24px;
+`;
 
 const Navbar = () => {
   const [showModal, setShowModal] = useState(false);
@@ -283,6 +303,7 @@ const Navbar = () => {
 
   const { cartItemsCount } = useCart();
   const { theme, toggleTheme } = useTheme();
+  const { user, setUser } = useUser();
 
   return (
     <>
@@ -337,29 +358,34 @@ const Navbar = () => {
           </Nav>
           <WrapperButtons>
             <ButtonDiv>
-              <img
-                src="/icons/magnifying-glass-solid.svg"
-                alt="Search Icon"
-                onClick={toggleSearch}
-              />
-              <img src="/icons/user-regular.svg" alt="User Icon" />
-              <button
-                onClick={() => {
-                  setIsRegister(false);
-                  toggleModal();
-                }}
-              >
-                Login
-              </button>
-              /
-              <button
-                onClick={() => {
-                  setIsRegister(true);
-                  toggleModal();
-                }}
-              >
-                Register
-              </button>
+              <ThemedIconSearch onClick={toggleSearch} />
+              {user ? (
+                <UserLoggedIn>
+                  <ThemedIconUser />
+                  <span>Hello, {user.displayName}</span>
+                  <button onClick={() => setUser(null)}>Log Out</button>
+                </UserLoggedIn>
+              ) : (
+                <>
+                  <button
+                    onClick={() => {
+                      setIsRegister(false);
+                      toggleModal();
+                    }}
+                  >
+                    Login
+                  </button>
+                  /
+                  <button
+                    onClick={() => {
+                      setIsRegister(true);
+                      toggleModal();
+                    }}
+                  >
+                    Register
+                  </button>
+                </>
+              )}
             </ButtonDiv>
             {searchVisible && (
               <form onSubmit={handleSearchForm}>
