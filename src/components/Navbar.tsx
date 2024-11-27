@@ -303,7 +303,15 @@ const Navbar = () => {
 
   const { cartItemsCount } = useCart();
   const { theme, toggleTheme } = useTheme();
-  const { user, setUser } = useUser();
+  const { user, logOut } = useUser();
+  const handleLogOut = async () => {
+    try {
+      await logOut();
+      console.log("User logged out successfully");
+    } catch (error) {
+      console.error("error logging out", error);
+    }
+  };
 
   return (
     <>
@@ -363,7 +371,7 @@ const Navbar = () => {
                 <UserLoggedIn>
                   <ThemedIconUser />
                   <span>Hello, {user.displayName}</span>
-                  <button onClick={() => setUser(null)}>Log Out</button>
+                  <button onClick={handleLogOut}>Log Out</button>
                 </UserLoggedIn>
               ) : (
                 <>

@@ -6,12 +6,10 @@ interface BuyModalProps {
   product: Product | null;
   localQuantity: number;
   totalPrice?: number;
-  phoneNumber?: string | null;
   openModal: (
     product: Product,
     quantity?: number,
     totalPrice?: number,
-    phoneNumber?: string
   ) => void;
   closeModal: () => void;
 }
@@ -25,17 +23,14 @@ export const BuyModalProvider: React.FC<{ children: ReactNode }> = ({
   const [product, setProduct] = useState<Product | null>(null);
   const [localQuantity, setLocalQuantity] = useState(1);
   const [totalPrice, setTotalPrice] = useState(0);
-  const [phoneNumber, setPhoneNumber] = useState<string | null>(null);
   const openModal = (
     product: Product,
     quantity: number = 1,
     totalPrice: number = 0,
-    phoneNumber: string = ""
   ) => {
     setProduct(product);
     setLocalQuantity(quantity);
     setTotalPrice(totalPrice);
-    setPhoneNumber(phoneNumber);
     setIsModalOpen(true);
   };
   const closeModal = () => {
@@ -49,7 +44,6 @@ export const BuyModalProvider: React.FC<{ children: ReactNode }> = ({
         product,
         localQuantity,
         totalPrice,
-        phoneNumber,
         openModal,
         closeModal,
       }}

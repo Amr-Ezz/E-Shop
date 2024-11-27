@@ -23,12 +23,13 @@ function App() {
   return (
     <Router>
       <ScrollToTop />
+      <UserProvider>
+
       <BuyModalProvider>
       <BuyModal />
 
         <CartProvider>
           <div className="Container">
-            <UserProvider>
               <Navbar />
               <ProductProvider>
                 <Routes>
@@ -49,12 +50,13 @@ function App() {
                   <Route path="/pages/Shop/ShopNow" element={<ShopNow />} />
                 </Routes>
               </ProductProvider>
-            </UserProvider>
 
             <Footer />
           </div>
         </CartProvider>
       </BuyModalProvider>
+      </UserProvider>
+
     </Router>
   );
 }

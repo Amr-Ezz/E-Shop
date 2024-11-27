@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import { auth } from "../../firebase";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
 import { useState } from "react";
 import { useUser } from "../../Context/UserContext";
 
@@ -48,9 +51,9 @@ const RegisterForm = () => {
         email,
         password
       );
-      await updateProfile(userCredientials.user, { displayName: userName });
-      setPhoneNumber(phone);
 
+      await updateProfile(userCredientials.user, { displayName: userName });    
+      setPhoneNumber(phone);
       setIsRegistered(true);
       alert("Register Successfull");
     } catch (error) {
@@ -86,6 +89,7 @@ const RegisterForm = () => {
             placeholder="Password"
           />
           <Input
+            value={phone}
             onChange={(e) => setPhone(e.target.value)}
             type="text"
             placeholder="Phone Number"

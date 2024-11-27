@@ -5,6 +5,7 @@ import { useState } from "react";
 import { cardStyle } from "../../pages/CheckoutPage/CheckoutPage.styled";
 import { auth } from "../../firebase";
 import { useBuyModal } from "../../Context/BuyContext";
+import { useUser } from "../../Context/UserContext";
 
 // interface BuyTypes {
 //   onClose: () => void;
@@ -251,8 +252,9 @@ const ButtonModal = styled.div`
 `;
 
 const BuyModal: React.FC = () => {
-  const { product, localQuantity, phoneNumber, isModalOpen, closeModal } =
+  const { product, localQuantity, isModalOpen, closeModal } =
     useBuyModal();
+    const {phoneNumber} = useUser();
   const { increment, decrement, quantity } = useQuantity(localQuantity);
 
   const stripe = useStripe();
@@ -261,6 +263,7 @@ const BuyModal: React.FC = () => {
   const user = auth.currentUser;
   const userEmail = user?.email || "Anonmynus@example.com";
   const userName = user?.displayName || "Anonmynus";
+  const userPhone = phoneNumber;
   if (!isModalOpen || !product) return null;
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -301,7 +304,7 @@ const BuyModal: React.FC = () => {
             customer_name: userName,
             customer_email: userEmail,
             customerId: customerId,
-            phone: phoneNumber,
+            phoneNumber: userPhone,
           }),
         }
       );
@@ -321,7 +324,7 @@ const BuyModal: React.FC = () => {
               billing_details: {
                 email: userEmail,
                 name: userName || "Anonmynus",
-                phone: phoneNumber,
+                phone: userPhone,
               },
             },
           }
