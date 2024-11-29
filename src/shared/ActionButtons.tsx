@@ -16,6 +16,9 @@ const ButtonsContainer = styled.div`
   width: 100%;
   margin-top: 1rem;
   padding-bottom: 1rem;
+  button {
+  border: none;
+  }
 `;
 
 const StyledBuyButton = styled.button`
