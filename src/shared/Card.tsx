@@ -33,6 +33,7 @@ const Card = styled(Link)<CardProps>`
   animation: ${(props) => (props.isVisible ? scaleInCenter : "none")} 0.5s
     ease-in-out;
   gap: 10px;
+  text-decoration: none;
   max-height: 600px;
   overflow: hidden;
   align-items: center;
@@ -56,7 +57,7 @@ const Card = styled(Link)<CardProps>`
     font-size: 1.5rem;
     text-align: center;
     color: ${(props) => props.theme.colors.white};
-    overflow: hidden;
+    
   }
 
   p {
@@ -165,7 +166,6 @@ export const CardContainer: React.FC<productProps> = ({ product }) => {
   const { truncateDescription, toggleDescription, toggleHandler } =
     useTruncate();
   const { ref, isInView } = useInView({ threshold: 0.1 });
- 
 
   return (
     <CardGrid ref={ref}>
@@ -206,18 +206,12 @@ export const CardContainer: React.FC<productProps> = ({ product }) => {
           </p>
           <p>Model: {product.model}</p>
         </PriceHolder>
-      
-        <ActionButtons
-          product={product}
-          showBuyButton={true}
-          quantity={1}
-        />
-         {/* {showPayment && (
+
+        <ActionButtons product={product} showBuyButton={true} quantity={1} />
+        {/* {showPayment && (
           <BuyModal />
         )} */}
-       
       </Card>
-     
     </CardGrid>
   );
 };
