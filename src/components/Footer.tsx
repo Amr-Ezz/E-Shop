@@ -13,6 +13,12 @@ const FooterMain = styled(FlexRow)`
     ${(props) => props.theme.colors.primary} 100%
   );
   color: ${(props) => props.theme.colors.text};
+  ${({ theme }) => `
+  
+      @media (max-width: ${theme.breakPoints.md}) {
+padding: 0;      }
+        
+  `}
 
   @media (max-width: 768px) {
     height: auto;
@@ -26,20 +32,25 @@ const OfferText = styled(FlexRow)`
   gap: 52px;
   text-align: left;
 
-  @media (max-width: 768px) {
-    flex-direction: column;
+  ${({ theme }) => `
+  
+      @media (max-width: ${theme.breakPoints.md}) {
+flex-direction: row;
     align-items: flex-start;
-    gap: 30px;
-  }
+    gap: 20px;
+      }
+        
+  `}
 `;
 
 const FooterColumn = styled(FlexColumn)`
-justify-content: flex-start;
-align-items: flex-start;
-gap: 15px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 15px;
+
 
   h3 {
-    color: ${props => props.theme.colors.text};
+    color: ${(props) => props.theme.colors.text};
     font-size: 24px;
     font-weight: bold;
 
@@ -107,7 +118,6 @@ gap: 15px;
 `;
 
 const MobileContainer = styled(FlexRow)`
-
   @media (max-width: 768px) {
     flex-direction: column;
   }

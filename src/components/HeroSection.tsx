@@ -63,22 +63,30 @@ const HeroDiv = styled(FlexRow)`
 
 const FontSection = styled(FlexColumn)`
   align-items: flex-start;
-  padding: 0.2rem;
+  padding: 0.5rem;
   color: ${(props) => props.theme.colors.text};
   h1 {
-    margin: 0;
+    margin: 1rem;
     line-height: 1.1;
     text-align: start;
     font-size: 76px;
     font-weight: 600;
+    ${({ theme }) => `
+    @media (max-width: ${theme.breakPoints.sm}) {
+     font-size: 36px;
+    }
+      @media (max-width: ${theme.breakPoints.xs}) {
+      font-size: 16px;
 
-    @media (max-width: 768px) {
+      }
+      @media (max-width: ${theme.breakPoints.md}) {
       font-size: 48px;
-    }
+            text-align: center;
+                  line-height: 1.5;
 
-    @media (max-width: 480px) {
-      font-size: 36px;
-    }
+
+      }
+    `}
   }
 
   p {
@@ -86,13 +94,14 @@ const FontSection = styled(FlexColumn)`
     margin: 8px 0;
     color: ${(props) => props.theme.colors.text};
 
-    @media (max-width: 768px) {
-      font-size: 18px;
-    }
+    ${({theme}) => `
+      @media (max-width: ${theme.breakPoints.md}) {
+            text-align: center;
 
-    @media (max-width: 480px) {
-      font-size: 16px;
-    }
+
+      }
+    `}
+ 
   }
 
   button {
@@ -113,17 +122,12 @@ const FontSection = styled(FlexColumn)`
       color: ${(props) => props.theme.colors.primary};
     }
 
-    @media (max-width: 768px) {
-      width: 150px;
-      height: 50px;
-      font-size: 18px;
-    }
+    ${({ theme }) => `
+ @media (max-width: ${theme.breakPoints.md}) {
+align-self: center;
+      }
 
-    @media (max-width: 480px) {
-      width: 130px;
-      height: 45px;
-      font-size: 16px;
-    }
+      `}
   }
 `;
 

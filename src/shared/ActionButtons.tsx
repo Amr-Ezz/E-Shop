@@ -17,7 +17,7 @@ const ButtonsContainer = styled.div`
   margin-top: 1rem;
   padding-bottom: 1rem;
   button {
-  border: none;
+    border: none;
   }
 `;
 
@@ -32,6 +32,14 @@ const StyledBuyButton = styled.button`
   color: ${(props) => props.theme.colors.text};
   cursor: pointer;
   transition: background-color 0.3s ease;
+  ${({ theme }) => `
+  
+      @media (max-width: ${theme.breakPoints.md}) {
+font-size: 0.7rem;
+
+      }
+        
+  `}
 
   &:hover {
     background-color: ${(props) => props.theme.colors.primary};
@@ -49,6 +57,14 @@ const StyledAddButton = styled.button`
   color: ${(props) => props.theme.colors.text};
   cursor: pointer;
   transition: background-color 0.3s ease;
+  ${({ theme }) => `
+  
+      @media (max-width: ${theme.breakPoints.md}) {
+font-size: 0.7rem;
+
+      }
+        
+  `}
 
   &:hover {
     background-color: ${(props) => props.theme.colors.primary};
@@ -59,10 +75,10 @@ const StyledAddButton = styled.button`
 const ActionButtons: React.FC<ButtonProps> = ({
   product,
   showBuyButton,
-  quantity
+  quantity,
 }) => {
   const { addToCart } = useCart();
-  const {openModal} = useBuyModal();
+  const { openModal } = useBuyModal();
   const handleBuy = () => {
     openModal(product, quantity, product.price);
   };
@@ -70,10 +86,12 @@ const ActionButtons: React.FC<ButtonProps> = ({
     e.stopPropagation();
     addToCart(product);
   };
-  
+
   return (
     <ButtonsContainer>
-      {showBuyButton && <StyledBuyButton onClick={handleBuy}>BUY NOW</StyledBuyButton>}
+      {showBuyButton && (
+        <StyledBuyButton onClick={handleBuy}>BUY NOW</StyledBuyButton>
+      )}
       <StyledAddButton onClick={handleAddToCart}>Add To Cart</StyledAddButton>
     </ButtonsContainer>
   );

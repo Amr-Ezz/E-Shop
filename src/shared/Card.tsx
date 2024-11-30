@@ -34,7 +34,7 @@ const Card = styled(Link)<CardProps>`
     ease-in-out;
   gap: 10px;
   text-decoration: none;
-  max-height: 600px;
+  max-height: 800px;
   overflow: hidden;
   align-items: center;
   background-color: transparent;
@@ -42,6 +42,14 @@ const Card = styled(Link)<CardProps>`
 
   border-radius: 1rem;
   box-shadow: 0px -16px 24px 0px rgba(255, 255, 255, 0.25) inset;
+   ${({ theme }) => `
+  
+      @media (max-width: ${theme.breakPoints.md}) {
+gap: 30px;
+
+      }
+        
+  `}
 
   img {
     width: 100%;
@@ -56,14 +64,30 @@ const Card = styled(Link)<CardProps>`
   h1 {
     font-size: 1.5rem;
     text-align: center;
-    color: ${(props) => props.theme.colors.white};
-    
+    color: ${(props) => props.theme.colors.text};
+    ${({ theme }) => `
+  
+      @media (max-width: ${theme.breakPoints.md}) {
+font-size: 1rem;
+text-align: flex-start;
+
+      }
+        
+  `}
   }
 
   p {
     text-align: left;
     color: ${(props) => props.theme.colors.text};
     max-height: 60px;
+     ${({ theme }) => `
+  
+      @media (max-width: ${theme.breakPoints.md}) {
+font-size: 0.8rem;
+
+      }
+        
+  `}
 
     span {
       color: green;
@@ -75,6 +99,7 @@ const PriceHolder = styled.div`
   flex-direction: column;
   width: 100%;
   align-items: flex-start;
+  gap: 10px;
 
   p:nth-child(1) {
     color: ${(props) => props.theme.colors.text};
@@ -83,6 +108,15 @@ const PriceHolder = styled.div`
     padding: 1rem;
     border-radius: 100%;
     box-shadow: 0px -16px 24px 0px rgba(255, 255, 255, 0.25) inset;
+     ${({ theme }) => `
+  
+      @media (max-width: ${theme.breakPoints.md}) {
+font-size: 1rem;
+padding: 1rem;
+
+      }
+        
+  `}
 
     img {
       width: 20px;

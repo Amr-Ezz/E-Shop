@@ -1,3 +1,10 @@
+
+const breakPoints = {
+  xs: "480px",
+  sm: "768px",
+  md: "1024px",
+  lg: "1200px",
+}
 export const darkTheme = {
   colors: {
     primary: "#522258",
@@ -15,6 +22,7 @@ export const darkTheme = {
     lineHeight: "1.1",
     fontWeight: "600",
   },
+  breakPoints,
   background: `
     radial-gradient(
       at 88% 40%,
@@ -45,6 +53,7 @@ export const lightTheme = {
     lineHeight: "1.1",
     fontWeight: "600",
   },
+  breakPoints,
   background: `
   radial-gradient(circle at 100% 107%, #ff89cc 0%, #9cb8ec 50%, #00ffee 60%, #62c2fe 50%)
 `,
