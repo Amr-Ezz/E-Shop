@@ -69,16 +69,23 @@ const FontSection = styled(FlexColumn)`
     margin: 1rem;
     line-height: 1.1;
     text-align: start;
-    font-size: 76px;
+    font-size: 56px;
     font-weight: 600;
     ${({ theme }) => `
-    @media (max-width: ${theme.breakPoints.sm}) {
-     font-size: 36px;
-    }
-      @media (max-width: ${theme.breakPoints.xs}) {
+     @media (max-width: ${theme.breakPoints.xs}) {
       font-size: 16px;
-
+      line-height: 0;
+      margin: 0;
+      font-weight: 100;
       }
+    @media (max-width: ${theme.breakPoints.sm}) {
+     font-size: 16px;
+     font-weight: 200;
+     margin: 0;
+     text-align: start;
+     line-height: 0;
+    }
+     
       @media (max-width: ${theme.breakPoints.md}) {
       font-size: 48px;
             text-align: center;
@@ -94,14 +101,13 @@ const FontSection = styled(FlexColumn)`
     margin: 8px 0;
     color: ${(props) => props.theme.colors.text};
 
-    ${({theme}) => `
+    ${({ theme }) => `
       @media (max-width: ${theme.breakPoints.md}) {
             text-align: center;
 
 
       }
     `}
- 
   }
 
   button {
@@ -185,7 +191,7 @@ const ContainerDiv = styled(FlexColumn)`
   }
 `;
 
-const words = ["Explore", "the", "Ultimate", "Tech", "Collection"];
+const words = ["Explore", "The", "Ultimate", "Tech", "Collection"];
 
 const HeroSection = () => {
   const navigate = useNavigate();

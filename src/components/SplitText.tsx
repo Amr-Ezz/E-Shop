@@ -38,7 +38,6 @@ const SplitText: React.FC<SplitTextProps> = ({
           style={{
             display: "inline-block",
             marginRight: "0.5rem",
-            fontWeight: "800",
           }}
         >
           {word.split("").map((char, charIndex) => (

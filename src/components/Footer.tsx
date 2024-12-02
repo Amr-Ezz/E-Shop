@@ -3,8 +3,8 @@ import { FlexColumn, FlexRow } from "../Utilities/StyledUtilities.styled";
 
 const FooterMain = styled(FlexRow)`
   width: 100%;
-  padding: 2rem 1rem;
   border-top: 1px solid white;
+  overflow: hidden;
   background: ${(props) => props.theme.colors.quaternary};
   background: linear-gradient(
     180deg,
@@ -13,17 +13,9 @@ const FooterMain = styled(FlexRow)`
     ${(props) => props.theme.colors.primary} 100%
   );
   color: ${(props) => props.theme.colors.text};
-  ${({ theme }) => `
-  
-      @media (max-width: ${theme.breakPoints.md}) {
-padding: 0;      }
-        
-  `}
+ 
 
-  @media (max-width: 768px) {
-    height: auto;
-    padding: 2rem 0.5rem;
-  }
+  
 `;
 
 const OfferText = styled(FlexRow)`
@@ -35,9 +27,10 @@ const OfferText = styled(FlexRow)`
   ${({ theme }) => `
   
       @media (max-width: ${theme.breakPoints.md}) {
-flex-direction: row;
-    align-items: flex-start;
-    gap: 20px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+
+    grid-gap: 20px;
       }
         
   `}
@@ -54,9 +47,13 @@ const FooterColumn = styled(FlexColumn)`
     font-size: 24px;
     font-weight: bold;
 
-    @media (max-width: 768px) {
-      font-size: 20px;
+    ${({ theme }) => `
+  
+      @media (max-width: ${theme.breakPoints.md}) {
+font-size: 14px;
     }
+        
+  `}
   }
 
   h4 {
@@ -133,7 +130,7 @@ const ImageMobileColumn = styled.div`
 `;
 
 const ContentColumn = styled(FlexColumn)`
-  flex: 1;
+  // flex: 1;
   justify-content: space-between;
 
   @media (max-width: 768px) {

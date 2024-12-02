@@ -22,8 +22,8 @@ const NavbarContainer = styled.div`
   z-index: 10;
   background-color: ${(props) => props.theme.colors.primary};
   border-bottom: 1px solid #eee;
-  color: ${(props) => props.theme.colors.text} @media (max-width: 768px) {
-    padding: 8px;
+  color: ${(props) => props.theme.colors.text} 
+  @media (max-width: 768px) {
   }
 `;
 

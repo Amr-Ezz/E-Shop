@@ -29,7 +29,8 @@ const CardGrid = styled.div`
 const Card = styled(Link)<CardProps>`
   display: flex;
   flex-direction: column;
-  padding: 1rem;
+  padding: 0.5rem;
+  height: fit-content;
   animation: ${(props) => (props.isVisible ? scaleInCenter : "none")} 0.5s
     ease-in-out;
   gap: 10px;
