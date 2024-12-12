@@ -1,12 +1,8 @@
-import { useState } from "react";
+import React, { Suspense, useState } from "react";
 import styled from "styled-components";
-import Modal from "./Modal/Modal";
-import RegisterForm from "./RegisterForm/RegisterForm";
-import LoginForm from "./LoginForm/LoginForm";
 import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../Context/CartContext";
-import CartModal from "./Modal/CartModal";
-import { FaBars, FaSearch, FaTimes } from "react-icons/fa";
+import { FaSearch } from "react-icons/fa";
 import { useTheme } from "../Context/ThemeContext";
 import { FlexColumn, FlexRow } from "../Utilities/StyledUtilities.styled";
 import { useUser } from "../Context/UserContext";
@@ -22,8 +18,8 @@ const NavbarContainer = styled.div`
   z-index: 10;
   background-color: ${(props) => props.theme.colors.primary};
   border-bottom: 1px solid #eee;
-  color: ${(props) => props.theme.colors.text} 
-  @media (max-width: 768px) {
+  color: ${(props) => props.theme.colors.text} @media (max-width: 768px) {
+
   }
 `;
 
@@ -272,6 +268,19 @@ const ThemedIconSearch = styled(FaSearch)`
   font-size: 24px;
 `;
 
+// dynamic imports
+const Modal = React.lazy(() => import("./Modal/Modal"));
+const RegisterForm = React.lazy(() => import("./RegisterForm/RegisterForm"));
+const LoginForm = React.lazy(() => import("./LoginForm/LoginForm"));
+const CartModal = React.lazy(() => import("./Modal/CartModal"));
+const FaBars = React.lazy(() =>
+  import("react-icons/fa").then((mod) => ({ default: mod.FaBars }))
+);
+const FaTimes = React.lazy(() =>
+  import("react-icons/fa").then((mod) => ({ default: mod.FaTimes }))
+);
+///////////////////////////////////////////////////////////////////////
+
 const Navbar = () => {
   const [showModal, setShowModal] = useState(false);
   const [isRegister, setIsRegister] = useState(true);
@@ -322,7 +331,9 @@ const Navbar = () => {
             <span>Go</span> Shop
           </Logo>
           <Hamburger onClick={toggleMenu}>
-            {menuOpen ? <FaTimes /> : <FaBars />}
+            <Suspense fallback={<span>loading....</span>}>
+              {menuOpen ? <FaTimes /> : <FaBars />}
+            </Suspense>
           </Hamburger>
           <Nav isopen={menuOpen}>
             <ul>
@@ -353,7 +364,11 @@ const Navbar = () => {
                     <CartCount>{cartItemsCount}</CartCount>
                   )}
                 </a>
-                {cartModal && <CartModal onClose={toggleCart} />}
+                {cartModal && (
+                  <Suspense fallback={<span>loading...</span>}>
+                    <CartModal onClose={toggleCart} />
+                  </Suspense>
+                )}
               </li>
               <LabelSwitch>
                 <StyledCheckbox
@@ -407,10 +422,19 @@ const Navbar = () => {
               </form>
             )}
           </WrapperButtons>
-
-          <Modal show={showModal} onClose={toggleModal}>
-            {isRegister ? <RegisterForm /> : <LoginForm />}
-          </Modal>
+          <Suspense fallback={<span>Loading Modal ....</span>}>
+            <Modal show={showModal} onClose={toggleModal}>
+              {isRegister ? (
+                <Suspense fallback={<span>Register loading ...</span>}>
+                  <RegisterForm />
+                </Suspense>
+              ) : (
+                <Suspense fallback={<span>Login loading ...</span>}>
+                  <LoginForm />
+                </Suspense>
+              )}
+            </Modal>
+          </Suspense>
         </Header>
       </NavbarContainer>
     </>

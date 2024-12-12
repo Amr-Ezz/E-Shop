@@ -38,6 +38,10 @@ export const UserProvider: React.FC<UserProps> = ({ children }) => {
       } else {
         localStorage.removeItem("user");
       }
+      return () => {
+        localStorage.removeItem("user");
+
+      }
     });
     return unsubscribe;
   }, []);
