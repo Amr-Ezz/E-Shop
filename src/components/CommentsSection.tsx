@@ -7,7 +7,7 @@ import "../App.css";
 import useInView from "../Hooks/useInView";
 import { FlexColumn, FlexRow } from "../Utilities/StyledUtilities.styled";
 
-const CommentsMain = styled.div<{isVisible: boolean}>`
+const CommentsMain = styled.div<{ isVisible: boolean }>`
   display: flex;
   padding: 5rem 1rem;
   flex-direction: column;
@@ -21,14 +21,10 @@ const CommentsMain = styled.div<{isVisible: boolean}>`
     ${(props) => props.theme.colors.secondary} 50%,
     ${(props) => props.theme.colors.primary} 100%
   );
-    opacity: ${(props) => (props.isVisible ? 1 : 0)};
+  opacity: ${(props) => (props.isVisible ? 1 : 0)};
   transform: ${(props) =>
     props.isVisible ? "translateY(0)" : "translateY(20px)"};
   transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-
-  @media (max-width: 768px) {
-    padding: 3rem 1rem;
-  }
 `;
 
 const CommentsDiv = styled.div`
@@ -38,7 +34,7 @@ const CommentsDiv = styled.div`
   align-items: center;
 
   @media (max-width: 768px) {
-    gap: 30px;
+    gap: 10px;
   }
 `;
 
@@ -46,11 +42,6 @@ const CommentRow = styled(FlexRow)`
   padding: 2.5rem;
   height: auto;
   transition: transform 0.5s ease-in-out;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-    padding: 0;
-  }
 `;
 
 const Comment = styled(FlexColumn)`
@@ -65,7 +56,6 @@ const Comment = styled(FlexColumn)`
   border-radius: 12px;
   background: linear-gradient(#fff2, transparent);
   box-shadow: 10px 40px 40px rgba(0.25, 0.25, 0.25, 0.25);
-  
 
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -126,7 +116,6 @@ const Name = styled(FlexColumn)`
   }
 `;
 
-
 const CommentsSection = () => {
   const commentsArray = [
     {
@@ -162,17 +151,26 @@ const CommentsSection = () => {
         "This dress exceeded my expectations. It’s elegant, stylish, and the perfect length. I’ve worn it multiple times already and always get compliments.",
     },
   ];
-  const {ref, isInView} = useInView({threshold: 0.1})
+  const { ref, isInView } = useInView({ threshold: 0.1 });
   return (
     <CommentsMain ref={ref} isVisible={isInView}>
       <h1>What Are People Saying</h1>
       <Swiper
         modules={[Navigation, Autoplay]}
-        slidesPerView={2}
+        slidesPerView={1}
         navigation
         loop={true}
         autoplay={{ delay: 5000 }}
         style={{ width: "100%" }}
+        breakpoints={{
+          768: {
+            slidesPerView: 1,
+          },
+          1024: {
+            slidesPerView: 2,
+          },
+          
+        }}
       >
         <CommentsDiv>
           {commentsArray.map((comment) => (
