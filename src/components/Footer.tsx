@@ -29,8 +29,8 @@ const OfferText = styled(FlexRow)`
       @media (max-width: ${theme.breakPoints.md}) {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-
     grid-gap: 20px;
+    padding: 1rem;
       }
         
   `}
@@ -160,10 +160,10 @@ const Footer = () => {
           <h3>Exclusive</h3>
           <h4>Subscribe</h4>
           <p>Get 10% off your first order</p>
-          <form>
+          {/* <form>
             <input placeholder="Enter Your Email" />
             <img src="/icons/icon-send.svg" alt="icon" />
-          </form>
+          </form> */}
         </FooterColumn>
         <FooterColumn>
           <h3>Support</h3>
