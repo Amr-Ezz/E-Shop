@@ -17,6 +17,13 @@ export const Main = styled.div<{ isVisible: boolean }>`
   transform: ${(props) =>
     props.isVisible ? "translateY(0)" : "translateY(20px)"};
   transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  ${({ theme }) => `
+  
+      @media (max-width: ${theme.breakPoints.md}) {
+      flex-direction: column;
+      }
+        
+  `}
 `;
 export const TextHolder = styled.div`
   display: flex;
@@ -27,17 +34,29 @@ export const TextHolder = styled.div`
   padding: 5rem;
   h3 {
     display: flex;
-    gap: 10px;
     font-size: 54px;
     font-weight: 600;
     line-height: 64px;
     align-self: flex-start;
+    ${({ theme }) => `
+  
+      @media (max-width: ${theme.breakPoints.md}) {
+      font-size: 36px;
+      }
+        
+  `}
     span {
       color: ${(props) => props.theme.colors.tertiary};
     }
   }
   p {
     line-height: 26px;
+    ${({ theme }) => `
+  
+      @media (max-width: ${theme.breakPoints.md}) {
+      }
+        
+  `}
   }
 `;
 export const ImageHolder = styled.img`
@@ -46,6 +65,12 @@ export const ImageHolder = styled.img`
   object-fit: cover;
   object-position: 100% 50%;
   border-radius: 20px;
+  ${({ theme }) => `
+  
+      @media (max-width: ${theme.breakPoints.md}) {
+      }
+        
+  `}
 `;
 export const RatingsDiv = styled.div`
   display: flex;
@@ -57,10 +82,16 @@ export const RatingsDiv = styled.div`
     ${(props) => props.theme.colors.secondary} 50%,
     ${(props) => props.theme.colors.tertiary} 100%
   );
-  gap: 30px;
+  gap: 10px;
   justify-content: center;
   align-items: center;
   margin-top: 83px;
+  ${({ theme }) => `
+  
+      @media (max-width: ${theme.breakPoints.md}) {
+flex-direction: column;      }
+        
+  `}
 `;
 
 export const CardRating = styled.div`
@@ -118,6 +149,14 @@ export const CastGrid = styled.div`
   padding: 4rem;
   background-color: ${(props) => props.theme.colors.primary};
   color: ${(props) => props.theme.colors.text};
+  ${({ theme }) => `
+  
+      @media (max-width: ${theme.breakPoints.md}) {
+      grid-template-columns: repeat(1, 1fr);
+      padding: 1rem;
+      }
+        
+  `}
 `;
 export const CardDiv = styled.div<{ isVisible: boolean }>`
   display: flex;
@@ -153,7 +192,7 @@ export const CardDiv = styled.div<{ isVisible: boolean }>`
 export const SocialMediaIcons = styled.span`
   display: flex;
   flex-direction: row;
-  wdith: 104px;
+  width: 104px;
   height: 24px;
   justify-content: flex-start;
   gap: 10px;
@@ -172,6 +211,12 @@ export const FullServiceDiv = styled.div`
   justify-content: center;
   align-items: center;
   gap: 88px;
+  ${({ theme }) => `
+  
+      @media (max-width: ${theme.breakPoints.md}) {
+gap: 10px;      }
+        
+  `}
 `;
 
 export const ServiceCard = styled.div`
@@ -193,4 +238,5 @@ export const ServiceCard = styled.div`
 export const HighDiv = styled.div`
   background-color: ${(props) => props.theme.colors.primary};
   color: ${(props) => props.theme.colors.text};
+  width: 100%;
 `;
