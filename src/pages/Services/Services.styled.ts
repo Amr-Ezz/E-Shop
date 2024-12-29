@@ -34,28 +34,67 @@ export const Main = styled(FlexContainer)<{ isVisible: boolean }>`
   transform: ${(props) =>
     props.isVisible ? "translateY(0)" : "translateY(20px)"};
   transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  ${({ theme }) => `
+  
+      @media (max-width: ${theme.breakPoints.md}) {
+     height: 89vh;
+     padding: 0;
+      }
+        
+  `}
 `;
 export const TextSection = styled(FlexColumn)`
   width: 100%;
   justify-content: center;
   padding: 5rem;
+  ${({ theme }) => `
+  
+      @media (max-width: ${theme.breakPoints.md}) {
+    padding: 0.5rem;
+      }
+        
+  `}
   h1 {
     font-size: ${(props) => props.theme.font.fontSize};
     font-weight: ${(props) => props.theme.font.fontWeight};
     text-align: left;
     background-color: transparent;
     width: fit-content;
+    ${({ theme }) => `
+  
+      @media (max-width: ${theme.breakPoints.md}) {
+     font-size: 56px;
+     padding: 0;
+     text-align: center;
+      }
+        
+  `}
     h4 {
       color: ${(props) => props.theme.colors.text};
       background-color: ${(props) => props.theme.colors.secondary};
       border-radius: 20px;
       width: fit-content;
+      ${({ theme }) => `
+  
+      @media (max-width: ${theme.breakPoints.md}) {
+     text-align: center;
+     width: 100vw;
+      }
+        
+  `}
     }
   }
   p {
     padding-top: 1rem;
     text-align: left;
     font-size: 28px;
+    ${({ theme }) => `
+  
+      @media (max-width: ${theme.breakPoints.md}) {
+justify-self: flex-start; 
+align-self: flex-start;     }
+        
+  `}
   }
 `;
 export const ImageHolder = styled.div`
@@ -74,15 +113,38 @@ export const TagBrand = styled.div`
   height: 20vh;
   margin-top: 2rem;
   padding: 2px;
+  ${({ theme }) => `
+  
+      @media (max-width: ${theme.breakPoints.md}) {
+      height: 15vh;
+      }
+        
+  `}
 
   div {
     padding: 1rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    ${({ theme }) => `
+  
+      @media (max-width: ${theme.breakPoints.md}) {
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      }
+        
+  `}
     img {
       mix-blend-mode: multiply;
       width: fit-content;
+      ${({ theme }) => `
+  
+      @media (max-width: ${theme.breakPoints.md}) {
+      width: 100px;
+      }
+        
+  `}
     }
   }
 `;
@@ -117,6 +179,13 @@ export const CardsContainer = styled.div`
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
   width: 100%;
+  ${({ theme }) => `
+  
+      @media (max-width: ${theme.breakPoints.md}) {
+      grid-template-columns: repeat(1, 1fr);
+      }
+        
+  `}
 `;
 export const Card = styled.div`
   display: flex;
@@ -138,6 +207,13 @@ export const Card = styled.div`
     justify-content: space-around;
     position: relative;
     margin-bottom: 30px;
+    ${({ theme }) => `
+  
+      @media (max-width: ${theme.breakPoints.md}) {
+      margin-top: 50px;
+      }
+        
+  `}
     p {
       color: ${(props) => props.theme.colors.text};
     }
@@ -199,6 +275,14 @@ export const SaleOffer = styled.div`
       font-family: poppins;
       margin-top: 0;
       margin-bottom: 1rem;
+      ${({ theme }) => `
+  
+      @media (max-width: ${theme.breakPoints.md}) {
+      color: black;
+      background-color: white;
+      }
+        
+  `}
     }
   }
 `;
@@ -244,17 +328,34 @@ export const YoungSelection = styled(FlexColumn)<{ isVisible: boolean }>`
 export const YoungFavourite = styled(FlexRow)`
   gap: 1rem;
   width: 100%;
+  ${({ theme }) => `
+  
+      @media (max-width: ${theme.breakPoints.md}) {
+     flex-direction: column;
+    
+
+      }
+        
+  `}
 `;
 export const CardTrending = styled.div`
   width: 100%;
-  height: 100vh;
   min-height: auto;
   padding: 1rem;
+
   img {
     width: 100%;
     height: 70vh;
     border-radius: 50px;
     object-fit: cover;
+    ${({ theme }) => `
+  
+      @media (max-width: ${theme.breakPoints.md}) {
+     height: 50vh;
+     object-fit: cover;
+      }
+        
+  `}
   }
   h4 {
     text-align: left;
@@ -270,6 +371,13 @@ export const CommunitySection = styled(FlexColumn)`
   background-color: ${(props) => props.theme.colors.primary};
   width: 100%;
   height: 50vh;
+   ${({ theme }) => `
+  
+      @media (max-width: ${theme.breakPoints.md}) {
+     padding: 1rem;
+      }
+        
+  `}
   h3 {
     font-size: 38px;
     font-weight: 800;
@@ -286,6 +394,12 @@ export const FormContainer = styled.form`
   align-content: center;
   width: 100%;
   padding: 1rem;
+   ${({ theme }) => `
+  
+      @media (max-width: ${theme.breakPoints.md}) {
+      }
+        
+  `}
 `;
 export const InputField = styled.input`
   padding: 10px;
@@ -299,4 +413,13 @@ export const InputField = styled.input`
 
 export const SubmitButton = styled(Button)`
   width: 10%;
+  font-weight: 800;
+   ${({ theme }) => `
+  
+      @media (max-width: ${theme.breakPoints.md}) {
+    width: fit-content;
+      }
+        
+  `}
+
 `;
