@@ -26,11 +26,12 @@ import {
 } from "./Services.styled";
 import { useNavigate } from "react-router-dom";
 import { useProduct } from "../../Context/ProductContext";
+import getDynamicThreshold from "../../Utilities/DynamicThreshold";
 
 const Services: React.FC = () => {
-  const { ref: ref1, isInView: isInView1 } = useInView({ threshold: 0.3 });
-  const { ref: ref2, isInView: isInView2 } = useInView({ threshold: 0.3 });
-  const { ref: ref3, isInView: isInView3 } = useInView({ threshold: 0.3 });
+  const { ref: ref1, isInView: isInView1 } = useInView(getDynamicThreshold);
+  const { ref: ref2, isInView: isInView2 } = useInView(getDynamicThreshold);
+  const { ref: ref3, isInView: isInView3 } = useInView(getDynamicThreshold);
   const { setCategory } = useProduct();
   const navigate = useNavigate();
   const handleNavigateByCategory = (category: string) => {

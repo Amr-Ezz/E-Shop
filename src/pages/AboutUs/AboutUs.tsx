@@ -1,5 +1,6 @@
 import SplitText from "../../components/SplitText";
 import useInView from "../../Hooks/useInView";
+import getDynamicThreshold from "../../Utilities/DynamicThreshold";
 import {
   CardDiv,
   CardRating,
@@ -16,8 +17,8 @@ import {
 } from "./AboutUs.styled";
 
 const AboutUs = () => {
-  const { ref: ref1, isInView: isInView1 } = useInView({ threshold: 0.5 });
-  const { ref: ref2, isInView: isInView2 } = useInView({ threshold: 0.5 });
+  const { ref: ref1, isInView: isInView1 } = useInView(getDynamicThreshold);
+  const { ref: ref2, isInView: isInView2 } = useInView(getDynamicThreshold);
 
   return (
     <HighDiv>
@@ -73,8 +74,8 @@ const AboutUs = () => {
           <p>Annual Gross Sales on Our Site</p>
         </CardRating>
       </RatingsDiv>
-      <CastGrid>
-        <CardDiv ref={ref2} isVisible={isInView2}>
+      <CastGrid ref={ref2} isVisible={isInView2}>
+        <CardDiv>
           <div>
             <img src="/image 46.png" alt="Cast Member" />
           </div>
@@ -86,7 +87,7 @@ const AboutUs = () => {
             <img src="/icons/icon-instagram.svg" alt="Instagram icon" />
           </SocialMediaIcons>
         </CardDiv>
-        <CardDiv ref={ref2} isVisible={isInView2}>
+        <CardDiv>
           <div>
             <img src="/image 47.png" alt="Cast Member" />
           </div>
@@ -98,7 +99,7 @@ const AboutUs = () => {
             <img src="/icons/icon-instagram.svg" alt="Instagram icon" />
           </SocialMediaIcons>
         </CardDiv>
-        <CardDiv ref={ref2} isVisible={isInView2}>
+        <CardDiv>
           <div>
             <img src="/image 51.png" alt="Cast Member" />
           </div>

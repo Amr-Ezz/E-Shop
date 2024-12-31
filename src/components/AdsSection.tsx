@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useProduct } from "../Context/ProductContext";
 import useInView from "../Hooks/useInView";
 import { FlexRow } from "../Utilities/StyledUtilities.styled";
+import getDynamicThreshold from "../Utilities/DynamicThreshold";
 const AdsMain = styled(FlexRow)<{ isVisible: boolean }>`
   color: ${(props) => props.theme.colors.text};
   height: 310px;
@@ -65,7 +66,7 @@ const ImageDiv = styled.div<{ isVisible: boolean }>`
 const AdsSection = () => {
   const navigate = useNavigate();
   const { setCategory } = useProduct();
-  const { ref, isInView } = useInView({ threshold: 0.1 });
+  const { ref, isInView } = useInView(getDynamicThreshold);
 
   const handleNavigate = async (category: string) => {
     try {

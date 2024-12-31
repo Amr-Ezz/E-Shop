@@ -4,6 +4,7 @@ import { Product } from "../api/requests";
 import { useTruncate } from "../Hooks/useTruncate";
 import ActionButtons from "./ActionButtons";
 import useInView from "../Hooks/useInView";
+import getDynamicThreshold from "../Utilities/DynamicThreshold";
 
 interface CardProps {
   to: string;
@@ -200,7 +201,7 @@ interface productProps {
 export const CardContainer: React.FC<productProps> = ({ product }) => {
   const { truncateDescription, toggleDescription, toggleHandler } =
     useTruncate();
-  const { ref, isInView } = useInView({ threshold: 0.1 });
+  const { ref, isInView } = useInView(getDynamicThreshold);
 
   return (
     <CardGrid ref={ref}>

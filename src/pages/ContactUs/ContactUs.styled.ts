@@ -12,7 +12,15 @@ export const ContactContainer = styled.div`
     ${(props) => props.theme.colors.primary} 0%,
     ${(props) => props.theme.colors.secondary} 100%
   );
-
+ ${({ theme }) => `
+  
+      @media (max-width: ${theme.breakPoints.md}) {
+     padding: 0;
+     flex-direction: column;
+     justify-content: space-evenly;
+      }
+        
+  `}
 `;
 
 export const ContactForm = styled.form`
@@ -48,12 +56,22 @@ export const MessageInput = styled.textarea`
 export const ImageHolder = styled.div`
   display: flex;
   align-items: center;
+  justify-content: center;
   img {
     object-fit: cover;
     object-position: 100% 50%;
     border-radius: 8px;
     width: 428px;
     height: 494px;
+     ${({ theme }) => `
+  
+      @media (max-width: ${theme.breakPoints.md}) {
+     width: 100%;
+     object-fit: cover;
+
+      }
+        
+  `}
   }
 `;
 export const CheckBox = styled.div`

@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 
-const useInView = (options: IntersectionObserverInit) => {
+const useInView = (getOptions: () => IntersectionObserverInit) => {
   const [isInView, setIsInView] = useState(false);
   const ref = useRef(null);
   useEffect(() => {
+    const options = getOptions(); 
     const observer = new IntersectionObserver((entries) => {
       setIsInView(entries[0].isIntersecting);
     }, options);
@@ -15,7 +16,7 @@ const useInView = (options: IntersectionObserverInit) => {
         observer.unobserve(ref.current);
       }
     };
-  }, [ref, options]);
+  }, [ref, getOptions]);
   return { ref, isInView };
 };
 export default useInView;

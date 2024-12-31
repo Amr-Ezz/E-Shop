@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { fetchProductsByCategory, Product } from "../api/requests";
 import { CardContainer } from "../shared/Card";
 import useInView from "../Hooks/useInView";
+import getDynamicThreshold from "../Utilities/DynamicThreshold";
 
 const MainSection = styled.div<{ isVisible: boolean }>`
   display: flex;
@@ -100,7 +101,7 @@ const SaleSection = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("audio");
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const { ref, isInView } = useInView({ threshold: 0.1 });
+  const { ref, isInView } = useInView(getDynamicThreshold);
 
   useEffect(() => {
     const getProducts = async () => {

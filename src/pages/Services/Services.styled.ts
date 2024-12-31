@@ -63,7 +63,7 @@ export const TextSection = styled(FlexColumn)`
     ${({ theme }) => `
   
       @media (max-width: ${theme.breakPoints.md}) {
-     font-size: 56px;
+     font-size: 46px;
      padding: 0;
      text-align: center;
       }
@@ -382,6 +382,12 @@ export const CommunitySection = styled(FlexColumn)`
     font-size: 38px;
     font-weight: 800;
     color: white;
+      ${({ theme }) => `
+  
+      @media (max-width: ${theme.breakPoints.md}) {
+font-size: 28px;      }
+        
+  `}
   }
   p {
     color: white;

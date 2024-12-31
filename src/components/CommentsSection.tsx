@@ -6,6 +6,7 @@ import "swiper/css/navigation";
 import "../App.css";
 import useInView from "../Hooks/useInView";
 import { FlexColumn, FlexRow } from "../Utilities/StyledUtilities.styled";
+import getDynamicThreshold from "../Utilities/DynamicThreshold";
 
 const CommentsMain = styled.div<{ isVisible: boolean }>`
   display: flex;
@@ -151,7 +152,7 @@ const CommentsSection = () => {
         "This dress exceeded my expectations. It’s elegant, stylish, and the perfect length. I’ve worn it multiple times already and always get compliments.",
     },
   ];
-  const { ref, isInView } = useInView({ threshold: 0.1 });
+  const { ref, isInView } = useInView(getDynamicThreshold);
   return (
     <CommentsMain ref={ref} isVisible={isInView}>
       <h1>What Are People Saying</h1>

@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Main = styled.div<{ isVisible: boolean }>`
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
   width: 100%;
   color: ${(props) => props.theme.colors.text};
@@ -32,6 +32,13 @@ export const TextHolder = styled.div`
   gap: 10px;
   text-align: left;
   padding: 5rem;
+  ${({ theme }) => `
+  
+      @media (max-width: ${theme.breakPoints.md}) {
+      padding: 2rem;
+      }
+        
+  `}
   h3 {
     display: flex;
     font-size: 54px;
@@ -142,13 +149,17 @@ export const CardRatingOrange = styled(CardRating)`
   background-color: ${(props) => props.theme.colors.tertiary};
   color: ${(props) => props.theme.colors.text};
 `;
-export const CastGrid = styled.div`
+export const CastGrid = styled.div<{isVisible: boolean}>`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 20px;
   padding: 4rem;
   background-color: ${(props) => props.theme.colors.primary};
   color: ${(props) => props.theme.colors.text};
+    opacity: ${(props) => (props.isVisible ? 1 : 0)};
+  transform: ${(props) =>
+    props.isVisible ? "translateY(0)" : "translateY(20px)"};
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
   ${({ theme }) => `
   
       @media (max-width: ${theme.breakPoints.md}) {
@@ -158,22 +169,20 @@ export const CastGrid = styled.div`
         
   `}
 `;
-export const CardDiv = styled.div<{ isVisible: boolean }>`
+export const CardDiv = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   text-align: left;
   gap: 10px;
-  opacity: ${(props) => (props.isVisible ? 1 : 0)};
-  transform: ${(props) =>
-    props.isVisible ? "translateY(0)" : "translateY(20px)"};
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+
   div {
     display: flex;
     justify-content: center;
     border-radius: 50px;
     background-color: #f5f5f5;
-    width: 370px;
+    width: 100%;
+    max-width: 370px;
     height: 430px;
     img {
       object-fit: cover;
@@ -210,11 +219,11 @@ export const FullServiceDiv = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 88px;
+  width: fit-content;
   ${({ theme }) => `
   
       @media (max-width: ${theme.breakPoints.md}) {
-gap: 10px;      }
+gap: 5px;      }
         
   `}
 `;
@@ -223,6 +232,13 @@ export const ServiceCard = styled.div`
   display: flex;
   flex-direction: column;
   padding: 1rem;
+  ${({ theme }) => `
+  
+      @media (max-width: ${theme.breakPoints.md}) {
+padding: 0;
+margin-bottom: 25px;      }
+        
+  `}
   h3 {
     text-align: left;
     font-size: 20px;
