@@ -8,6 +8,8 @@ import compression from 'compression';
 
 dotenv.config({ path: ".env.local" });
 const app = express();
+app.use(compression());
+
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
   apiVersion: "2024-06-20",
 });
@@ -20,7 +22,6 @@ app.use(
     credentials: true,
   })
 );
-app.use(compression());
 app.listen(3001, () => {
   console.log("Server is running on http://localhost:3001");
 });

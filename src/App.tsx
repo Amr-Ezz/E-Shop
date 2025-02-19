@@ -4,33 +4,35 @@ import React from "react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Services from "./pages/Services/Services";
-import ContactUs from "./pages/ContactUs/ContactUs";
-import AboutUs from "./pages/AboutUs/AboutUs";
 import { CartProvider } from "./Context/CartContext";
-import CheckoutPage from "./pages/CheckoutPage/CheckoutPage";
-import SearchResults from "./pages/SearchResults";
 import ProductDetail from "./components/ProductDetail";
-import ProductPage from "./pages/ProductPage";
 import { ProductProvider } from "./Context/ProductContext";
 import ScrollToTop from "./components/ScrollToTop";
 import { UserProvider } from "./Context/UserContext";
 import { BuyModalProvider } from "./Context/BuyContext";
 import BuyModal from "./components/Modal/BuyModal";
-import ShopNow from "./pages/Shop/ShopNow";
 
 function App() {
-  const Home = React.lazy(() => import("./pages/Home/Home"))
+  const Home = React.lazy(() => import("./pages/Home/Home"));
+  const CheckoutPage = React.lazy(
+    () => import("./pages/CheckoutPage/CheckoutPage")
+  );
+  const SearchResults = React.lazy(() => import("./pages/SearchResults"));
+  const ProductPage = React.lazy(() => import("./pages/ProductPage"));
+  const ShopNow = React.lazy(() => import("./pages/Shop/ShopNow"));
+  const AboutUs = React.lazy(() => import("./pages/AboutUs/AboutUs"));
+  const ContactUs = React.lazy(() => import("./pages/ContactUs/ContactUs"));
+  const Services = React.lazy(() => import("./pages/Services/Services"));
+
   return (
     <Router>
       <ScrollToTop />
       <UserProvider>
+        <BuyModalProvider>
+          <BuyModal />
 
-      <BuyModalProvider>
-      <BuyModal />
-
-        <CartProvider>
-          <div className="Container">
+          <CartProvider>
+            <div className="Container">
               <Navbar />
               <ProductProvider>
                 <Routes>
@@ -52,12 +54,11 @@ function App() {
                 </Routes>
               </ProductProvider>
 
-            <Footer />
-          </div>
-        </CartProvider>
-      </BuyModalProvider>
+              <Footer />
+            </div>
+          </CartProvider>
+        </BuyModalProvider>
       </UserProvider>
-
     </Router>
   );
 }

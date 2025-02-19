@@ -7,6 +7,7 @@ import AdsSection from "../../components/AdsSection";
 import CommentsSection from "../../components/CommentsSection";
 
 const Home: React.FC = () => {
+  
   return (
     <Container>
       <Suspense fallback={<div>loading...</div>}>
