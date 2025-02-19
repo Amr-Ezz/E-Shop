@@ -210,7 +210,7 @@ export const CardContainer: React.FC<productProps> = ({ product }) => {
         to={`/products/${product.id}`}
         isVisible={isInView}
       >
-        <img src={product.image} alt={product.title} />
+        <img src={product.image} alt={product.title} loading="lazy"/>
         <h1>{product.title.substring(0, 50)}</h1>
         {/* <CircleDiv>
           <div></div>
@@ -232,13 +232,13 @@ export const CardContainer: React.FC<productProps> = ({ product }) => {
         <PriceHolder>
           <p>
             {product.price}
-            <img src="/icons/dollar-symbol.png" alt="dollar" />
+            <img src="/icons/dollar-symbol.png" alt="dollar" loading="lazy"/>
           </p>
           <p>
-            {product.brand} <img src="/icons/star.png" alt="star" />
+            {product.brand} <img src="/icons/star.png" alt="star" loading="lazy"/>
           </p>
           <p>
-            {product.discount} <img src="/icons/trolley.png" alt="Items left" />
+            {product.discount} <img src="/icons/trolley.png" alt="Items left" loading="lazy"/>
           </p>
           <p>Model: {product.model}</p>
         </PriceHolder>

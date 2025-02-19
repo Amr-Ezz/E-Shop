@@ -212,7 +212,7 @@ const HeroSection = () => {
           <button onClick={handleNavigate}>SHOP NOW</button>
         </FontSection>
         <div>
-          <Image3D url={"/Rectangle 3.png"} width={300} height={300} />
+          <Image3D url={"/Rectangle 3.png"} width={300} height={300}  />
         </div>
       </HeroDiv>
       <FooterHeroSection>

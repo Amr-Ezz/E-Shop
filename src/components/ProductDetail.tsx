@@ -10,7 +10,7 @@ import SplitText from "./SplitText";
 import { auth } from "../firebase";
 import LoginForm from "./LoginForm/LoginForm";
 import Modal from "./Modal/Modal";
-import { useUser } from "../Context/UserContext";
+// import { useUser } from "../Context/UserContext";
 import BuyModal from "./Modal/BuyModal";
 
 const Main = styled.div`
@@ -175,9 +175,9 @@ const ProductDetail = () => {
   const [loading, setLoading] = useState(true);
   const { id } = useParams<{ id: string }>();
   const { increment, decrement, quantity } = useQuantity();
-  const localQuantity = quantity;
+  // const localQuantity = quantity;
   const totalPrice = product ? product.price * quantity : 0;
-  const { phoneNumber } = useUser();
+  // const { phoneNumber } = useUser();
   //////////////////////////////////////////////////// useEffect ////////////////////////////////////
   useEffect(() => {
     const fetchProducts = async () => {
@@ -302,7 +302,7 @@ const ProductDetail = () => {
       <ProductDiv>
         <ProductRow>
           <StickyImageContainer>
-            <ProductImage src={product.image} alt={product.title} />
+            <ProductImage src={product.image} alt={product.title} loading="lazy" />
           </StickyImageContainer>{" "}
           <Content>
             <br />
@@ -337,7 +337,6 @@ const ProductDetail = () => {
               <ActionButtons
                 product={product}
                 showBuyButton={true}
-                showPayment={setShowPayment}
               />
               <ContentDesc>
                 <p>Description</p>
@@ -375,11 +374,11 @@ const ProductDetail = () => {
                     onClose={() => setShowPayment(false)}
                   >
                     <BuyModal
-                      product={product}
-                      onClose={() => setShowPayment(false)}
-                      localQuantity={localQuantity}
-                      totalPrice={totalPrice}
-                      phoneNumber={phoneNumber}
+                      // product={product}
+                      // onClose={() => setShowPayment(false)}
+                      // localQuantity={localQuantity}
+                      // totalPrice={totalPrice}
+                      // phoneNumber={phoneNumber}
                     />
                   </Modal>
                 </>

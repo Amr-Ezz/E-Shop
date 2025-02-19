@@ -29,7 +29,7 @@ const ContactUs = () => {
       </GlassContainer>
 
       <ImageHolder>
-        <img src="/FashionBackground.jpg" alt="models" />
+        <img src="/FashionBackground.jpg" alt="models" loading="lazy"/>
       </ImageHolder>
     </ContactContainer>
   );

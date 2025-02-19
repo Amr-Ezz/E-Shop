@@ -3,6 +3,8 @@ import Stripe from "stripe";
 import cors from "cors";
 import dotenv from "dotenv";
 import { Request, Response } from "express";
+import compression from 'compression';
+
 
 dotenv.config({ path: ".env.local" });
 const app = express();
@@ -18,6 +20,7 @@ app.use(
     credentials: true,
   })
 );
+app.use(compression());
 app.listen(3001, () => {
   console.log("Server is running on http://localhost:3001");
 });

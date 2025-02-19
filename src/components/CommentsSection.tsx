@@ -179,7 +179,7 @@ const CommentsSection = () => {
               <CommentRow>
                 <Comment>
                   <User>
-                    <img src={comment.avatar} alt={`${comment.name} Avatar`} />
+                    <img src={comment.avatar} alt={`${comment.name} Avatar`} loading="lazy" />
                     <Name>
                       <h5>
                         <strong>{comment.name}</strong>
@@ -187,7 +187,7 @@ const CommentsSection = () => {
                       <p>{comment.description}</p>
                     </Name>
                     <div>
-                      <img src="/Vector.png" alt="Vector" />
+                      <img src="/Vector.png" alt="Vector" loading="lazy" />
                     </div>
                   </User>
                   <p>{comment.comment}</p>

@@ -5,7 +5,6 @@ import {
   Button,
   PriceText,
   ProductDescription,
-  ProductImage,
   ProductTitle,
 } from "../../components/Modal/BuyModal";
 import {
@@ -51,7 +50,7 @@ const CheckoutPage = () => {
   return (
     <PaymentDiv>
       <ProductInfo>
-        <img src={product.image} alt={product.title}></img>
+        <img src={product.image} alt={product.title} loading="lazy"/>
         <ProductDetail>
           <h3>Product Info</h3>
           <hr />

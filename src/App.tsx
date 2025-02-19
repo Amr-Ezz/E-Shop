@@ -1,10 +1,10 @@
 // App.tsx
 import "./App.css";
+import React from "react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Services from "./pages/Services/Services";
-import Home from "./pages/Home/Home";
 import ContactUs from "./pages/ContactUs/ContactUs";
 import AboutUs from "./pages/AboutUs/AboutUs";
 import { CartProvider } from "./Context/CartContext";
@@ -20,6 +20,7 @@ import BuyModal from "./components/Modal/BuyModal";
 import ShopNow from "./pages/Shop/ShopNow";
 
 function App() {
+  const Home = React.lazy(() => import("./pages/Home/Home"))
   return (
     <Router>
       <ScrollToTop />

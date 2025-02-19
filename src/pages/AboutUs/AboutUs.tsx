@@ -77,59 +77,95 @@ const AboutUs = () => {
       <CastGrid ref={ref2} isVisible={isInView2}>
         <CardDiv>
           <div>
-            <img src="/image 46.png" alt="Cast Member" />
+            <img src="/image 46.png" alt="Cast Member" loading="lazy" />
           </div>
           <h3>Tom Cruise</h3>
           <p>Founder & Chairman</p>
           <SocialMediaIcons>
-            <img src="/icons/Icon-Twitter.svg" alt="Twitter icon" />
-            <img src="/icons/Icon-Linkedin.svg" alt="LinkedIn icon" />
-            <img src="/icons/icon-instagram.svg" alt="Instagram icon" />
+            <img
+              src="/icons/Icon-Twitter.svg"
+              alt="Twitter icon"
+              loading="lazy"
+            />
+            <img
+              src="/icons/Icon-Linkedin.svg"
+              alt="LinkedIn icon"
+              loading="lazy"
+            />
+            <img
+              src="/icons/icon-instagram.svg"
+              alt="Instagram icon"
+              loading="lazy"
+            />
           </SocialMediaIcons>
         </CardDiv>
         <CardDiv>
           <div>
-            <img src="/image 47.png" alt="Cast Member" />
+            <img src="/image 47.png" alt="Cast Member" loading="lazy" />
           </div>
           <h3>Will Smith</h3>
           <p>Product Designer</p>
           <SocialMediaIcons>
-            <img src="/icons/Icon-Twitter.svg" alt="Twitter icon" />
-            <img src="/icons/Icon-Linkedin.svg" alt="LinkedIn icon" />
-            <img src="/icons/icon-instagram.svg" alt="Instagram icon" />
+            <img
+              src="/icons/Icon-Twitter.svg"
+              alt="Twitter icon"
+              loading="lazy"
+            />
+            <img
+              src="/icons/Icon-Linkedin.svg"
+              alt="LinkedIn icon"
+              loading="lazy"
+            />
+            <img
+              src="/icons/icon-instagram.svg"
+              alt="Instagram icon"
+              loading="lazy"
+            />
           </SocialMediaIcons>
         </CardDiv>
         <CardDiv>
           <div>
-            <img src="/image 51.png" alt="Cast Member" />
+            <img src="/image 51.png" alt="Cast Member" loading="lazy" />
           </div>
           <h3>Emma Watson</h3>
           <p>Managing Director</p>
           <SocialMediaIcons>
-            <img src="/icons/Icon-Twitter.svg" alt="Twitter icon" />
-            <img src="/icons/Icon-Linkedin.svg" alt="LinkedIn icon" />
-            <img src="/icons/icon-instagram.svg" alt="Instagram icon" />
+            <img
+              src="/icons/Icon-Twitter.svg"
+              alt="Twitter icon"
+              loading="lazy"
+            />
+            <img
+              src="/icons/Icon-Linkedin.svg"
+              alt="LinkedIn icon"
+              loading="lazy"
+            />
+            <img
+              src="/icons/icon-instagram.svg"
+              alt="Instagram icon"
+              loading="lazy"
+            />
           </SocialMediaIcons>
         </CardDiv>
       </CastGrid>
       <FullServiceDiv>
         <ServiceCard>
           <div>
-            <img src="/icons/Services1.svg" alt="shop icon" />
+            <img src="/icons/Services1.svg" alt="shop icon" loading="lazy" />
           </div>
           <h3>FREE AND FAST DELIVERY</h3>
           <p>Free delivery for all orders over $140</p>
         </ServiceCard>
         <ServiceCard>
           <div>
-            <img src="/icons/Services (4).svg" alt="shop icon" />
+            <img src="/icons/Services (4).svg" alt="shop icon" loading="lazy" />
           </div>
           <h3>24/7 CUSTOMER SERVICE</h3>
           <p>Friendly 24/7 customer support</p>
         </ServiceCard>
         <ServiceCard>
           <div>
-            <img src="/icons/Services (5).svg" alt="shop icon" />
+            <img src="/icons/Services (5).svg" alt="shop icon" loading="lazy" />
           </div>
           <h3>MONEY BACK GUARANTEE</h3>
           <p>We return money within 30 days</p>

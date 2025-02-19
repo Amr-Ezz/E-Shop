@@ -84,7 +84,7 @@ const AdsSection = () => {
         isVisible={isInView}
         onClick={() => handleNavigate("gaming")}
       >
-        <img src="Rectangle 4.png" alt="Model Image" />
+        <img src="Rectangle 4.png" alt="Model Image" loading="lazy" />
         <h1>Ultimate Gaming Gear</h1>
       </ImageDiv>
       <ImageDiv
@@ -92,7 +92,7 @@ const AdsSection = () => {
         isVisible={isInView}
         onClick={() => handleNavigate("audio")}
       >
-        <img src="Rectangle 6.png" alt="Model Image" />
+        <img src="Rectangle 6.png" alt="Model Image" loading="lazy" />
         <h1>50% Off Premium Sound</h1>
       </ImageDiv>
       <ImageDiv
@@ -104,6 +104,7 @@ const AdsSection = () => {
           src="Rectangle 5.png"
           alt="Model Image"
           style={{ objectPosition: "100% 30%" }}
+          loading="lazy"
         />
         <h1>Newest Smartphones</h1>
       </ImageDiv>

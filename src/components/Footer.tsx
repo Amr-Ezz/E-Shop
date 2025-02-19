@@ -191,14 +191,14 @@ const Footer = () => {
           <p>Save $3 with App New User Only</p>
           <MobileContainer>
             <ImageMobileColumn>
-              <img src="/Qrcode 1.png" alt="QR Code" />
+              <img src="/Qrcode 1.png" alt="QR Code" loading="lazy"/>
             </ImageMobileColumn>
             <ContentColumn>
               <Element>
-                <img src="/GooglePlay.png" alt="GooglePlay" />
+                <img src="/GooglePlay.png" alt="GooglePlay" loading="lazy"/>
               </Element>
               <Element>
-                <img src="/download-appstore.png" alt="App Store" />
+                <img src="/download-appstore.png" alt="App Store" loading="lazy"/>
               </Element>
             </ContentColumn>
           </MobileContainer>
