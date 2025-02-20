@@ -44,7 +44,7 @@ const Services: React.FC = () => {
 
   return (
     <PageContainer>
-      <Main ref={ref1} isVisible={isInView1}>
+      <Main ref={ref1} isvisible={isInView1 ? true : undefined}>
         <TextSection>
           <h1>
             <SplitText
@@ -77,7 +77,7 @@ const Services: React.FC = () => {
           <img src="/Amazon.png" alt="brand" />
         </div>
       </TagBrand>
-      <ArrivalSection ref={ref2} isVisible={isInView2}>
+      <ArrivalSection ref={ref2} isvisible={isInView2 ? true : undefined}>
         <BackgroundVector src="/Vector 8.png" />
         <HeadingText>New Arrivals</HeadingText>
         <CardsContainer>
@@ -130,7 +130,7 @@ const Services: React.FC = () => {
           {/* <img src="/Purple.PNG" alt="model" /> */}
         </div>
       </SaleBanner>
-      <YoungSelection ref={ref3} isVisible={isInView3}>
+      <YoungSelection ref={ref3} isvisible={isInView3? true : undefined}>
         <BackgroundVector src="/Vector 8.png" />
         <HeadingText>Young's Favourite</HeadingText>
         <YoungFavourite>

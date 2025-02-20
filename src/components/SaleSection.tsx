@@ -5,7 +5,7 @@ import { CardContainer } from "../shared/Card";
 import useInView from "../Hooks/useInView";
 import getDynamicThreshold from "../Utilities/DynamicThreshold";
 
-const MainSection = styled.div<{ isVisible: boolean }>`
+const MainSection = styled.div<{ isvisible: boolean | undefined }>`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -20,9 +20,9 @@ const MainSection = styled.div<{ isVisible: boolean }>`
     ${(props) => props.theme.colors.secondary} 50%,
     ${(props) => props.theme.colors.tertiary} 100%
   );
-  opacity: ${(props) => (props.isVisible ? 1 : 0)};
+  opacity: ${(props) => (props.isvisible ? 1 : 0)};
   transform: ${(props) =>
-    props.isVisible ? "translateY(0)" : "translateY(20px)"};
+    props.isvisible ? "translateY(0)" : "translateY(20px)"};
   transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 
   ul {
@@ -128,7 +128,7 @@ const SaleSection = () => {
   const displayedProducts = products.slice(startIndex, startIndex + 3);
 
   return (
-    <MainSection ref={ref} isVisible={isInView}>
+    <MainSection ref={ref} isvisible={isInView ? true : undefined}>
       <h1>Flash Sale</h1>
       <ul>
         <li onClick={() => handleCategory("audio")}>Audio</li>

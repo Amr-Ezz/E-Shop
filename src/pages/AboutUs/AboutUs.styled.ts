@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Main = styled.div<{ isVisible: boolean }>`
+export const Main = styled.div<{ isvisible: boolean | undefined }>`
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -13,9 +13,9 @@ export const Main = styled.div<{ isVisible: boolean }>`
     ${(props) => props.theme.colors.primary} 0%,
     ${(props) => props.theme.colors.secondary} 100%
   );
-  opacity: ${(props) => (props.isVisible ? 1 : 0)};
+  opacity: ${(props) => (props.isvisible ? 1 : 0)};
   transform: ${(props) =>
-    props.isVisible ? "translateY(0)" : "translateY(20px)"};
+    props.isvisible ? "translateY(0)" : "translateY(20px)"};
   transition: opacity 0.6s ease-out, transform 0.6s ease-out;
   ${({ theme }) => `
   
@@ -149,7 +149,7 @@ export const CardRatingOrange = styled(CardRating)`
   background-color: ${(props) => props.theme.colors.tertiary};
   color: ${(props) => props.theme.colors.text};
 `;
-export const CastGrid = styled.div<{isVisible: boolean}>`
+export const CastGrid = styled.div<{isVisible: boolean | undefined}>`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 20px;

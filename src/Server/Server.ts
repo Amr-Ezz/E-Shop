@@ -3,13 +3,15 @@ import Stripe from "stripe";
 import cors from "cors";
 import dotenv from "dotenv";
 import { Request, Response } from "express";
-import compression from 'compression';
-
+import compression from "compression";
 
 dotenv.config({ path: ".env.local" });
 const app = express();
 app.use(compression());
-
+if (!process.env.STRIPE_SECRET_KEY) {
+  console.error(`STRIPE_SECRET_KEY is missing in .env.local`);
+  process.exit(1);
+}
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
   apiVersion: "2024-06-20",
 });
@@ -20,14 +22,19 @@ app.use(
     origin: "http://localhost:5173",
     methods: ["GET", "POST"],
     credentials: true,
+    optionsSuccessStatus: 200,
   })
 );
-app.listen(3001, () => {
-  console.log("Server is running on http://localhost:3001");
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
 app.post("/create-customer", async (req, res) => {
   try {
     const { email, name } = req.body;
+    if (!email || !name) {
+      return res.status(400).json({ error: "Email and name are required" });
+    }
     const customer = await stripe.customers.create({
       email: email,
       name: name,
@@ -46,7 +53,7 @@ app.post("/create-payment-intent", async (req: Request, res: Response) => {
     customer_name,
     customer_email,
     customerId,
-    phone
+    phone,
   } = req.body;
   const amount = Math.round(price * quantity * 100);
 
@@ -54,7 +61,7 @@ app.post("/create-payment-intent", async (req: Request, res: Response) => {
     const paymentIntent = await stripe.paymentIntents.create({
       amount,
       currency: "usd",
-      customer: customerId, 
+      customer: customerId,
 
       automatic_payment_methods: {
         enabled: true,
@@ -65,9 +72,9 @@ app.post("/create-payment-intent", async (req: Request, res: Response) => {
         quantity: quantity,
         customer_name: customer_name,
         customer_email: customer_email,
-        phoneNumber: phone
+        phoneNumber: phone,
       },
-      receipt_email: customer_email, 
+      receipt_email: customer_email,
     });
     console.log(paymentIntent.metadata, "Meta Data");
 

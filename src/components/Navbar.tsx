@@ -46,9 +46,9 @@ const Header = styled.header`
 const Logo = styled.h1`
   font-size: 30px;
   font-weight: bold;
-  color: ${(props) => props.theme.colors.text};
+  color: ${({theme}) => theme.colors.text};
   span {
-    color: ${(props) => props.theme.colors.tertiary};
+    color: ${({theme}) => theme.colors.tertiary};
   }
 
   @media (max-width: 768px) {
@@ -56,11 +56,11 @@ const Logo = styled.h1`
   }
 `;
 
-interface NavProps {
-  isopen: boolean;
-}
+// interface NavProps {
+//   isopen: boolean;
+// }
 
-const Nav = styled.nav<NavProps>`
+const Nav = styled.nav<{isopen: boolean | undefined}>`
   ul {
     display: flex;
     list-style-type: none;
@@ -74,12 +74,12 @@ const Nav = styled.nav<NavProps>`
       transition: color 0.3s ease;
 
       &:hover {
-        color: ${(props) => props.theme.colors.tertiary};
+        color: ${({theme}) => theme.colors.tertiary};
       }
 
       a {
         text-decoration: none;
-        color: ${(props) => props.theme.colors.text};
+        color: ${({theme}) => theme.colors.text};
         position: relative;
       }
     }
@@ -89,8 +89,8 @@ const Nav = styled.nav<NavProps>`
     ul {
       flex-direction: column;
       align-items: center;
-      display: ${(props) => (props.isopen ? "flex" : "none")};
-      background-color: ${(props) => props.theme.colors.primary};
+      display: ${({theme}) => (theme.isopen ? "flex" : "none")};
+      background-color: ${({theme}) => theme.colors.primary};
       position: absolute;
       top: 50px;
       left: 0;
@@ -121,7 +121,7 @@ const ButtonDiv = styled(FlexRow)`
   position: relative;
   button {
     background-color: transparent;
-    color: ${(props) => props.theme.colors.text};
+    color: ${({theme}) => theme.colors.text};
     font-weight: bold;
     font-size: 20px;
     cursor: pointer;
@@ -129,7 +129,7 @@ const ButtonDiv = styled(FlexRow)`
     transition: color 0.3s ease;
 
     &:hover {
-      color: ${(props) => props.theme.colors.tertiary};
+      color: ${({theme}) => theme.colors.tertiary};
     }
   }
 
@@ -173,12 +173,12 @@ const CartCount = styled.div`
     font-size: 8px;
   }
 `;
-const SearchInput = styled.input<{ isVisible: boolean }>`
+const SearchInput = styled.input<{ isvisible: boolean | undefined }>`
   width: 200px;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  display: ${({ isVisible }) => (isVisible ? "block" : "none")};
+  display: ${({ isvisible }) => (isvisible ? "block" : "none")};
 
   @media (max-width: 768px) {
     width: 150px;
@@ -307,7 +307,9 @@ const Navbar = () => {
     setCartModal(!cartModal);
     console.log("Entered");
   };
-  const toggleMenu = () => setMenuOpen(!menuOpen);
+  const toggleMenu = () => {
+    setMenuOpen((prev) => !prev)
+  };
   const toggleSearch = () => setSearchVisible(!searchVisible);
 
   const { cartItemsCount } = useCart();
@@ -329,13 +331,13 @@ const Navbar = () => {
         <Header>
           <Logo>
             <span>Go</span> Shop
-          </Logo>
+          </Logo> 
           <Hamburger onClick={toggleMenu}>
             <Suspense fallback={<span>loading....</span>}>
               {menuOpen ? <FaTimes /> : <FaBars />}
             </Suspense>
           </Hamburger>
-          <Nav isopen={menuOpen}>
+          <Nav isopen={menuOpen ? true : undefined}>
             <ul>
               <li>
                 <Link to="/" onClick={toggleMenu}>
@@ -413,7 +415,7 @@ const Navbar = () => {
             {searchVisible && (
               <form onSubmit={handleSearchForm}>
                 <SearchInput
-                  isVisible={searchVisible}
+                  isvisible={searchVisible ? true : undefined}
                   onChange={handleSearchChange}
                   value={searchValue}
                   placeholder="Search..."

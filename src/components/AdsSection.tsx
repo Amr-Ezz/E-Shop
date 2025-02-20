@@ -4,7 +4,7 @@ import { useProduct } from "../Context/ProductContext";
 import useInView from "../Hooks/useInView";
 import { FlexRow } from "../Utilities/StyledUtilities.styled";
 import getDynamicThreshold from "../Utilities/DynamicThreshold";
-const AdsMain = styled(FlexRow)<{ isVisible: boolean }>`
+const AdsMain = styled(FlexRow)<{ isvisible: boolean | undefined }>`
   color: ${(props) => props.theme.colors.text};
   height: 310px;
   background: linear-gradient(
@@ -13,9 +13,9 @@ const AdsMain = styled(FlexRow)<{ isVisible: boolean }>`
     ${(props) => props.theme.colors.secondary} 50%,
     ${(props) => props.theme.colors.primary} 100%
   );
-   opacity: ${(props) => (props.isVisible ? 1 : 0)};
+   opacity: ${(props) => (props.isvisible ? 1 : 0)};
   transform: ${(props) =>
-    props.isVisible ? "translateY(0)" : "translateY(20px)"};
+    props.isvisible ? "translateY(0)" : "translateY(20px)"};
   transition: opacity 0.6s ease-out, transform 0.6s ease-out;
   padding: 0;
   margin: 0;
@@ -23,7 +23,7 @@ const AdsMain = styled(FlexRow)<{ isVisible: boolean }>`
   z-index: 1;
   will-change: opacity;
 `;
-const ImageDiv = styled.div<{ isVisible: boolean }>`
+const ImageDiv = styled.div<{ isvisible: boolean | undefined }>`
   position: relative;
   z-index: 1;
   perspective: 1000px;
@@ -41,7 +41,7 @@ const ImageDiv = styled.div<{ isVisible: boolean }>`
     height: 310px;
     object-fit: cover;
     object-position: 100% 70%;
-    transform: ${(props) => (props.isVisible ? "slideInLeft" : "all")};
+    transform: ${(props) => (props.isvisible ? "slideInLeft" : "all")};
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     transform-style: preserve-3d;
     &:hover {
@@ -78,10 +78,10 @@ const AdsSection = () => {
   };
 
   return (
-    <AdsMain isVisible={isInView} ref={ref}>
+    <AdsMain isvisible={isInView ? true : undefined} ref={ref}>
       <ImageDiv
         ref={ref}
-        isVisible={isInView}
+        isvisible={isInView ? true : undefined}
         onClick={() => handleNavigate("gaming")}
       >
         <img src="Rectangle 4.png" alt="Model Image" loading="lazy" />
@@ -89,7 +89,7 @@ const AdsSection = () => {
       </ImageDiv>
       <ImageDiv
         ref={ref}
-        isVisible={isInView}
+        isvisible={isInView ? true : undefined}
         onClick={() => handleNavigate("audio")}
       >
         <img src="Rectangle 6.png" alt="Model Image" loading="lazy" />
@@ -97,7 +97,7 @@ const AdsSection = () => {
       </ImageDiv>
       <ImageDiv
         ref={ref}
-        isVisible={isInView}
+        isvisible={isInView ? true : undefined}
         onClick={() => handleNavigate("mobile")}
       >
         <img

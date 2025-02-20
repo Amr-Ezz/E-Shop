@@ -8,7 +8,7 @@ import useInView from "../Hooks/useInView";
 import { FlexColumn, FlexRow } from "../Utilities/StyledUtilities.styled";
 import getDynamicThreshold from "../Utilities/DynamicThreshold";
 
-const CommentsMain = styled.div<{ isVisible: boolean }>`
+const CommentsMain = styled.div<{ isvisible: boolean | undefined }>`
   display: flex;
   padding: 5rem 1rem;
   flex-direction: column;
@@ -22,9 +22,9 @@ const CommentsMain = styled.div<{ isVisible: boolean }>`
     ${(props) => props.theme.colors.secondary} 50%,
     ${(props) => props.theme.colors.primary} 100%
   );
-  opacity: ${(props) => (props.isVisible ? 1 : 0)};
+  opacity: ${(props) => (props.isvisible ? 1 : 0)};
   transform: ${(props) =>
-    props.isVisible ? "translateY(0)" : "translateY(20px)"};
+    props.isvisible ? "translateY(0)" : "translateY(20px)"};
   transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 `;
 
@@ -154,7 +154,7 @@ const CommentsSection = () => {
   ];
   const { ref, isInView } = useInView(getDynamicThreshold);
   return (
-    <CommentsMain ref={ref} isVisible={isInView}>
+    <CommentsMain ref={ref} isvisible={isInView ? true : undefined}>
       <h1>What Are People Saying</h1>
       <Swiper
         modules={[Navigation, Autoplay]}

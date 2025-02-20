@@ -22,7 +22,7 @@ const AboutUs = () => {
 
   return (
     <HighDiv>
-      <Main ref={ref1} isVisible={isInView1}>
+      <Main ref={ref1} isvisible={isInView1 ? true : undefined}>
         <TextHolder>
           <h3>
             <SplitText words={["Our"]} animationDuration={1500} />

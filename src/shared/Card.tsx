@@ -8,7 +8,7 @@ import getDynamicThreshold from "../Utilities/DynamicThreshold";
 
 interface CardProps {
   to: string;
-  isVisible: boolean;
+  isvisible: boolean | undefined;
 }
 const scaleInCenter = keyframes`
   0% {
@@ -32,7 +32,7 @@ const Card = styled(Link)<CardProps>`
   flex-direction: column;
   padding: 0.5rem;
   height: fit-content;
-  animation: ${(props) => (props.isVisible ? scaleInCenter : "none")} 0.5s
+  animation: ${(props) => (props.isvisible ? scaleInCenter : "none")} 0.5s
     ease-in-out;
   gap: 10px;
   text-decoration: none;
@@ -208,7 +208,7 @@ export const CardContainer: React.FC<productProps> = ({ product }) => {
       <Card
         key={product.id}
         to={`/products/${product.id}`}
-        isVisible={isInView}
+        isvisible={isInView ? true : undefined}
       >
         <img src={product.image} alt={product.title} loading="lazy"/>
         <h1>{product.title.substring(0, 50)}</h1>

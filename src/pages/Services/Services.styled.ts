@@ -20,7 +20,7 @@ export const PageContainer = styled.div`
     ${(props) => props.theme.colors.secondary} 100%
   );
 `;
-export const Main = styled(FlexContainer)<{ isVisible: boolean }>`
+export const Main = styled(FlexContainer)<{ isvisible: boolean | undefined }>`
   height: fit-content;
   width: 100%;
   max-width: 100vw;
@@ -30,9 +30,9 @@ export const Main = styled(FlexContainer)<{ isVisible: boolean }>`
   border-radius: 100px;
   background: url("/Rectangle 126.png");
   background-color: ${(props) => props.theme.colors.primary};
-  opacity: ${(props) => (props.isVisible ? 1 : 0)};
+  opacity: ${(props) => (props.isvisible ? 1 : 0)};
   transform: ${(props) =>
-    props.isVisible ? "translateY(0)" : "translateY(20px)"};
+    props.isvisible ? "translateY(0)" : "translateY(20px)"};
   transition: opacity 0.6s ease-out, transform 0.6s ease-out;
   ${({ theme }) => `
   
@@ -148,14 +148,14 @@ export const TagBrand = styled.div`
     }
   }
 `;
-export const ArrivalSection = styled(FlexColumn)<{ isVisible: boolean }>`
+export const ArrivalSection = styled(FlexColumn)<{ isvisible: boolean | undefined }>`
   margin-top: 2rem;
   justify-content: space-around;
   align-items: flex-start;
   position: relative;
-  opacity: ${(props) => (props.isVisible ? 1 : 0)};
+  opacity: ${(props) => (props.isvisible ? 1 : 0)};
   transform: ${(props) =>
-    props.isVisible ? "translateY(0)" : "translateY(20px)"};
+    props.isvisible ? "translateY(0)" : "translateY(20px)"};
   transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 `;
 export const HeadingText = styled.h3`
@@ -315,14 +315,14 @@ export const ParagraphSection = styled(FlexColumn)`
     }
   }
 `;
-export const YoungSelection = styled(FlexColumn)<{ isVisible: boolean }>`
+export const YoungSelection = styled(FlexColumn)<{ isvisible: boolean | undefined }>`
   margin-top: 2rem;
   justify-content: space-around;
   align-items: flex-start;
   position: relative;
-  opacity: ${(props) => (props.isVisible ? 1 : 0)};
+  opacity: ${(props) => (props.isvisible ? 1 : 0)};
   transform: ${(props) =>
-    props.isVisible ? "translateY(0)" : "translateY(20px)"};
+    props.isvisible ? "translateY(0)" : "translateY(20px)"};
   transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 `;
 export const YoungFavourite = styled(FlexRow)`
