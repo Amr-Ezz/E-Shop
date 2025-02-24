@@ -19,6 +19,7 @@ import {
 const AboutUs = () => {
   const { ref: ref1, isInView: isInView1 } = useInView(getDynamicThreshold);
   const { ref: ref2, isInView: isInView2 } = useInView(getDynamicThreshold);
+ 
 
   return (
     <HighDiv>

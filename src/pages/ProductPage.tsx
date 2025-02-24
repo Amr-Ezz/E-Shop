@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { CardContainer } from "../shared/Card";
 import { useProduct } from "../Context/ProductContext";
-import { useCart } from "../Context/CartContext";
 
 const ProductsContainer = styled.div`
   display: grid;
@@ -46,7 +45,7 @@ const ProductPage = () => {
   return (
     <ProductsContainer>
       {products.map((product) => (
-        <CardContainer product={product} onBuy={useCart} />
+        <CardContainer product={product} />
       ))}
     </ProductsContainer>
   );

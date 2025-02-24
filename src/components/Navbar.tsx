@@ -7,6 +7,8 @@ import { useTheme } from "../Context/ThemeContext";
 import { FlexColumn, FlexRow } from "../Utilities/StyledUtilities.styled";
 import { useUser } from "../Context/UserContext";
 import { FaUser } from "react-icons/fa";
+import { Loader } from "./Loader/Loader";
+import { useLoader } from "../Context/LoaderContext";
 
 const NavbarContainer = styled.div`
   width: 100%;
@@ -60,7 +62,7 @@ const Logo = styled.h1`
 //   isopen: boolean;
 // }
 
-const Nav = styled.nav<{isopen: boolean | undefined}>`
+const Nav = styled.nav<{isopen: boolean}>`
   ul {
     display: flex;
     list-style-type: none;
@@ -288,17 +290,27 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [searchVisible, setSearchVisible] = useState(false);
+  const {isLoading, setIsLoading} = useLoader();
 
   const navigate = useNavigate();
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    setSearchValue(e.target.value);
+
+      e.preventDefault();
+      setSearchValue(e.target.value);
+   
+
   };
   const handleSearchForm = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchValue.trim()) {
-      navigate(`/search?q=${encodeURIComponent(searchValue)}`);
-      setSearchVisible(false);
+      try {
+        setIsLoading(true);
+        navigate(`/search?q=${encodeURIComponent(searchValue)}`);
+        setSearchVisible(false);
+      } finally {
+        setIsLoading(false);
+      }
+   
     }
   };
 
@@ -323,28 +335,34 @@ const Navbar = () => {
       console.error("error logging out", error);
     }
   };
+  const handleNavigation = (path: string) => {
+    navigate(path);
+    setIsLoading(true)
+  }
 
   return (
     <>
       <NavbarSpace />
       <NavbarContainer>
+        {isLoading && <Loader />}
         <Header>
           <Logo>
             <span>Go</span> Shop
           </Logo> 
           <Hamburger onClick={toggleMenu}>
-            <Suspense fallback={<span>loading....</span>}>
+            <Suspense fallback={<Loader />}>
               {menuOpen ? <FaTimes /> : <FaBars />}
             </Suspense>
           </Hamburger>
-          <Nav isopen={menuOpen ? true : undefined}>
+          <Nav isopen={menuOpen}>
             <ul>
+              <Suspense fallback={<Loader />}>
               <li>
                 <Link to="/" onClick={toggleMenu}>
                   Home
                 </Link>
               </li>
-              <li>
+              <li onClick={() => handleNavigation("/pages/AboutUs")}>
                 <Link to="/pages/AboutUs" onClick={toggleMenu}>
                   About Us
                 </Link>
@@ -367,11 +385,13 @@ const Navbar = () => {
                   )}
                 </a>
                 {cartModal && (
-                  <Suspense fallback={<span>loading...</span>}>
+                  <Suspense fallback={<Loader />}>
                     <CartModal onClose={toggleCart} />
                   </Suspense>
                 )}
               </li>
+              </Suspense>
+              
               <LabelSwitch>
                 <StyledCheckbox
                   checked={theme === "light"}
@@ -424,16 +444,13 @@ const Navbar = () => {
               </form>
             )}
           </WrapperButtons>
-          <Suspense fallback={<span>Loading Modal ....</span>}>
+          <Suspense fallback={<Loader />}>
             <Modal show={showModal} onClose={toggleModal}>
               {isRegister ? (
-                <Suspense fallback={<span>Register loading ...</span>}>
                   <RegisterForm />
-                </Suspense>
               ) : (
-                <Suspense fallback={<span>Login loading ...</span>}>
                   <LoginForm />
-                </Suspense>
+          
               )}
             </Modal>
           </Suspense>

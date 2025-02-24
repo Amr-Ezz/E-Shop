@@ -5,12 +5,13 @@ import HeroSection from "../../components/HeroSection";
 import SaleSection from "../../components/SaleSection";
 import AdsSection from "../../components/AdsSection";
 import CommentsSection from "../../components/CommentsSection";
+import { Loader } from "../../components/Loader/Loader";
 
 const Home: React.FC = () => {
   
   return (
     <Container>
-      <Suspense fallback={<div>loading...</div>}>
+      <Suspense fallback={<Loader />}>
         <HeroSection />
         <SaleSection />
         <BuyModal />

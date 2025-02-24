@@ -1,9 +1,9 @@
 // App.tsx
 import "./App.css";
-import React from "react";
+import React, { Suspense, useEffect } from "react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { CartProvider } from "./Context/CartContext";
 import ProductDetail from "./components/ProductDetail";
 import { ProductProvider } from "./Context/ProductContext";
@@ -11,6 +11,10 @@ import ScrollToTop from "./components/ScrollToTop";
 import { UserProvider } from "./Context/UserContext";
 import { BuyModalProvider } from "./Context/BuyContext";
 import BuyModal from "./components/Modal/BuyModal";
+import { Loader } from "./components/Loader/Loader";
+import { LoaderProvider, useLoader} from "./Context/LoaderContext";
+
+
 
 function App() {
   const Home = React.lazy(() => import("./pages/Home/Home"));
@@ -23,18 +27,25 @@ function App() {
   const AboutUs = React.lazy(() => import("./pages/AboutUs/AboutUs"));
   const ContactUs = React.lazy(() => import("./pages/ContactUs/ContactUs"));
   const Services = React.lazy(() => import("./pages/Services/Services"));
+  
 
   return (
     <Router>
+      <LoaderProvider>
+        
       <ScrollToTop />
       <UserProvider>
         <BuyModalProvider>
           <BuyModal />
 
           <CartProvider>
+
             <div className="Container">
               <Navbar />
               <ProductProvider>
+                <Suspense fallback={<Loader />}>
+                <LoaderWrapper />
+
                 <Routes>
                   <Route path="/pages/Services" element={<Services />} />
                   <Route path="/" element={<Home />} />
@@ -52,6 +63,8 @@ function App() {
                   />
                   <Route path="/pages/Shop/ShopNow" element={<ShopNow />} />
                 </Routes>
+                </Suspense>
+              
               </ProductProvider>
 
               <Footer />
@@ -59,8 +72,23 @@ function App() {
           </CartProvider>
         </BuyModalProvider>
       </UserProvider>
+      </LoaderProvider>
+     
     </Router>
   );
-}
+};
+const LoaderWrapper = () => {
+  const { isLoading, setIsLoading } = useLoader();
+  const location = useLocation(); // ✅ Get current route
+
+  useEffect(() => {
+    setIsLoading(true); // Start loading when route changes
+    const timer = setTimeout(() => setIsLoading(false), 1000); // Simulate load time
+    return () => clearTimeout(timer); // Cleanup on unmount
+  }, [location.pathname]); // ✅ Re-run when pathname changes
+
+  return isLoading ? <Loader /> : null;
+ }
+
 
 export default App;
