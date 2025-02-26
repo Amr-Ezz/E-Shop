@@ -8,7 +8,7 @@ import useInView from "../Hooks/useInView";
 import { FlexColumn, FlexRow } from "../Utilities/StyledUtilities.styled";
 import getDynamicThreshold from "../Utilities/DynamicThreshold";
 
-const CommentsMain = styled.div<{ isvisible: boolean | undefined }>`
+const CommentsMain = styled.div.withConfig({shouldForwardProp: (prop) => prop !== "isvisible"})<{ isvisible: boolean }>`
   display: flex;
   padding: 5rem 1rem;
   flex-direction: column;
@@ -154,7 +154,7 @@ const CommentsSection = () => {
   ];
   const { ref, isInView } = useInView(getDynamicThreshold);
   return (
-    <CommentsMain ref={ref} isvisible={isInView ? true : undefined}>
+    <CommentsMain ref={ref} isvisible={isInView}>
       <h1>What Are People Saying</h1>
       <Swiper
         modules={[Navigation, Autoplay]}

@@ -8,7 +8,7 @@ import getDynamicThreshold from "../Utilities/DynamicThreshold";
 
 interface CardProps {
   to: string;
-  isvisible: boolean | undefined;
+  isvisible: boolean;
 }
 const scaleInCenter = keyframes`
   0% {
@@ -27,7 +27,9 @@ const CardGrid = styled.div`
   width: 100%;
   justify-items: center;
 `;
-const Card = styled(Link)<CardProps>`
+const Card = styled(Link).withConfig({
+  shouldForwardProp: (prop) => prop !== "isvisible",
+})<CardProps>`
   display: flex;
   flex-direction: column;
   padding: 0.5rem;
@@ -44,7 +46,7 @@ const Card = styled(Link)<CardProps>`
 
   border-radius: 1rem;
   box-shadow: 0px -16px 24px 0px rgba(255, 255, 255, 0.25) inset;
-   ${({ theme }) => `
+  ${({ theme }) => `
   
       @media (max-width: ${theme.breakPoints.md}) {
 gap: 30px;
@@ -82,7 +84,7 @@ text-align: flex-start;
     text-align: left;
     color: ${(props) => props.theme.colors.text};
     max-height: 60px;
-     ${({ theme }) => `
+    ${({ theme }) => `
   
       @media (max-width: ${theme.breakPoints.md}) {
 font-size: 0.8rem;
@@ -110,7 +112,7 @@ const PriceHolder = styled.div`
     padding: 1rem;
     border-radius: 100%;
     box-shadow: 0px -16px 24px 0px rgba(255, 255, 255, 0.25) inset;
-     ${({ theme }) => `
+    ${({ theme }) => `
   
       @media (max-width: ${theme.breakPoints.md}) {
 font-size: 1rem;
@@ -208,9 +210,9 @@ export const CardContainer: React.FC<productProps> = ({ product }) => {
       <Card
         key={product.id}
         to={`/products/${product.id}`}
-        isvisible={isInView ? true : undefined}
+        isvisible={isInView}
       >
-        <img src={product.image} alt={product.title} loading="lazy"/>
+        <img src={product.image} alt={product.title} loading="lazy" />
         <h1>{product.title.substring(0, 50)}</h1>
         {/* <CircleDiv>
           <div></div>
@@ -232,13 +234,15 @@ export const CardContainer: React.FC<productProps> = ({ product }) => {
         <PriceHolder>
           <p>
             {product.price}
-            <img src="/icons/dollar-symbol.png" alt="dollar" loading="lazy"/>
+            <img src="/icons/dollar-symbol.png" alt="dollar" loading="lazy" />
           </p>
           <p>
-            {product.brand} <img src="/icons/star.png" alt="star" loading="lazy"/>
+            {product.brand}{" "}
+            <img src="/icons/star.png" alt="star" loading="lazy" />
           </p>
           <p>
-            {product.discount} <img src="/icons/trolley.png" alt="Items left" loading="lazy"/>
+            {product.discount}{" "}
+            <img src="/icons/trolley.png" alt="Items left" loading="lazy" />
           </p>
           <p>Model: {product.model}</p>
         </PriceHolder>

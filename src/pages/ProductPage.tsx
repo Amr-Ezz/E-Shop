@@ -45,7 +45,7 @@ const ProductPage = () => {
   return (
     <ProductsContainer>
       {products.map((product) => (
-        <CardContainer product={product} />
+        <CardContainer product={product}  key={product.id}/>
       ))}
     </ProductsContainer>
   );

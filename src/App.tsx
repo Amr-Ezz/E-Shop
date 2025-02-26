@@ -13,6 +13,7 @@ import { BuyModalProvider } from "./Context/BuyContext";
 import BuyModal from "./components/Modal/BuyModal";
 import { Loader } from "./components/Loader/Loader";
 import { LoaderProvider, useLoader} from "./Context/LoaderContext";
+import ErrorPage from "./pages/ErrorPage";
 
 
 
@@ -62,6 +63,8 @@ function App() {
                     element={<ProductPage />}
                   />
                   <Route path="/pages/Shop/ShopNow" element={<ShopNow />} />
+                  <Route path="*" element={<ErrorPage />} />
+
                 </Routes>
                 </Suspense>
               

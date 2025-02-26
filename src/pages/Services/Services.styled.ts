@@ -20,7 +20,7 @@ export const PageContainer = styled.div`
     ${(props) => props.theme.colors.secondary} 100%
   );
 `;
-export const Main = styled(FlexContainer)<{ isvisible: boolean | undefined }>`
+export const Main = styled(FlexContainer).withConfig({shouldForwardProp: (prop) => prop !== "isvisible"})<{ isvisible: boolean }>`
   height: fit-content;
   width: 100%;
   max-width: 100vw;
@@ -148,7 +148,7 @@ export const TagBrand = styled.div`
     }
   }
 `;
-export const ArrivalSection = styled(FlexColumn)<{ isvisible: boolean | undefined }>`
+export const ArrivalSection = styled(FlexColumn)<{ isvisible: string }>`
   margin-top: 2rem;
   justify-content: space-around;
   align-items: flex-start;
@@ -315,7 +315,7 @@ export const ParagraphSection = styled(FlexColumn)`
     }
   }
 `;
-export const YoungSelection = styled(FlexColumn)<{ isvisible: boolean | undefined }>`
+export const YoungSelection = styled(FlexColumn)<{ isvisible: string }>`
   margin-top: 2rem;
   justify-content: space-around;
   align-items: flex-start;

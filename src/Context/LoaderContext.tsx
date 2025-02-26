@@ -2,10 +2,8 @@ import {
   createContext,
   ReactNode,
   useContext,
-  useEffect,
   useState,
 } from "react";
-import { useLocation } from "react-router-dom";
 
 export type LoaderContextProps = {
   isLoading: boolean;

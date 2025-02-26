@@ -5,7 +5,7 @@ import { CardContainer } from "../shared/Card";
 import useInView from "../Hooks/useInView";
 import getDynamicThreshold from "../Utilities/DynamicThreshold";
 
-const MainSection = styled.div<{ isvisible: boolean | undefined }>`
+const MainSection = styled.div.withConfig({shouldForwardProp: (prop) => prop !== "isvisible"})<{ isvisible: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -128,7 +128,7 @@ const SaleSection = () => {
   const displayedProducts = products.slice(startIndex, startIndex + 3);
 
   return (
-    <MainSection ref={ref} isvisible={isInView ? true : undefined}>
+    <MainSection ref={ref} isvisible={isInView ? true : false}>
       <h1>Flash Sale</h1>
       <ul>
         <li onClick={() => handleCategory("audio")}>Audio</li>

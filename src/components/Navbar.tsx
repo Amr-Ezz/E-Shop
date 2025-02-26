@@ -48,9 +48,9 @@ const Header = styled.header`
 const Logo = styled.h1`
   font-size: 30px;
   font-weight: bold;
-  color: ${({theme}) => theme.colors.text};
+  color: ${({ theme }) => theme.colors.text};
   span {
-    color: ${({theme}) => theme.colors.tertiary};
+    color: ${({ theme }) => theme.colors.tertiary};
   }
 
   @media (max-width: 768px) {
@@ -62,7 +62,7 @@ const Logo = styled.h1`
 //   isopen: boolean;
 // }
 
-const Nav = styled.nav<{isopen: boolean}>`
+const Nav = styled.nav.withConfig({shouldForwardProp: (prop) => prop !== "isopen"})<{ isopen: boolean }>`
   ul {
     display: flex;
     list-style-type: none;
@@ -76,12 +76,12 @@ const Nav = styled.nav<{isopen: boolean}>`
       transition: color 0.3s ease;
 
       &:hover {
-        color: ${({theme}) => theme.colors.tertiary};
+        color: ${({ theme }) => theme.colors.tertiary};
       }
 
       a {
         text-decoration: none;
-        color: ${({theme}) => theme.colors.text};
+        color: ${({ theme }) => theme.colors.text};
         position: relative;
       }
     }
@@ -91,8 +91,8 @@ const Nav = styled.nav<{isopen: boolean}>`
     ul {
       flex-direction: column;
       align-items: center;
-      display: ${({theme}) => (theme.isopen ? "flex" : "none")};
-      background-color: ${({theme}) => theme.colors.primary};
+      display: ${({ isopen }) => (isopen ? "flex" : "none")};
+      background-color: ${({ theme }) => theme.colors.primary};
       position: absolute;
       top: 50px;
       left: 0;
@@ -123,7 +123,7 @@ const ButtonDiv = styled(FlexRow)`
   position: relative;
   button {
     background-color: transparent;
-    color: ${({theme}) => theme.colors.text};
+    color: ${({ theme }) => theme.colors.text};
     font-weight: bold;
     font-size: 20px;
     cursor: pointer;
@@ -131,7 +131,7 @@ const ButtonDiv = styled(FlexRow)`
     transition: color 0.3s ease;
 
     &:hover {
-      color: ${({theme}) => theme.colors.tertiary};
+      color: ${({ theme }) => theme.colors.tertiary};
     }
   }
 
@@ -175,13 +175,14 @@ const CartCount = styled.div`
     font-size: 8px;
   }
 `;
-const SearchInput = styled.input<{ isvisible: boolean | undefined }>`
+const SearchInput = styled.input<{ isvisible: boolean }>`
   width: 200px;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  display: ${({ isvisible }) => (isvisible ? "block" : "none")};
+  opacity: ${({ isvisible }) => (isvisible ? "1" : "0")};
 
+  visibility: ${({ isvisible }) => (isvisible ? "visible" : "hidden")};
   @media (max-width: 768px) {
     width: 150px;
   }
@@ -290,27 +291,23 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [searchVisible, setSearchVisible] = useState(false);
-  const {isLoading, setIsLoading} = useLoader();
+  const { isLoading, setIsLoading } = useLoader();
 
   const navigate = useNavigate();
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-
-      e.preventDefault();
-      setSearchValue(e.target.value);
-   
-
+    e.preventDefault();
+    setSearchValue(e.target.value);
   };
-  const handleSearchForm = (e: React.FormEvent) => {
+  const handleSearchForm = async (e: React.FormEvent) => {
     e.preventDefault();
     if (searchValue.trim()) {
       try {
         setIsLoading(true);
-        navigate(`/search?q=${encodeURIComponent(searchValue)}`);
+        await navigate(`/search?q=${encodeURIComponent(searchValue)}`);
         setSearchVisible(false);
       } finally {
         setIsLoading(false);
       }
-   
     }
   };
 
@@ -320,7 +317,7 @@ const Navbar = () => {
     console.log("Entered");
   };
   const toggleMenu = () => {
-    setMenuOpen((prev) => !prev)
+    setMenuOpen((prev) => !prev);
   };
   const toggleSearch = () => setSearchVisible(!searchVisible);
 
@@ -337,8 +334,8 @@ const Navbar = () => {
   };
   const handleNavigation = (path: string) => {
     navigate(path);
-    setIsLoading(true)
-  }
+    setIsLoading(true);
+  };
 
   return (
     <>
@@ -348,7 +345,7 @@ const Navbar = () => {
         <Header>
           <Logo>
             <span>Go</span> Shop
-          </Logo> 
+          </Logo>
           <Hamburger onClick={toggleMenu}>
             <Suspense fallback={<Loader />}>
               {menuOpen ? <FaTimes /> : <FaBars />}
@@ -357,41 +354,41 @@ const Navbar = () => {
           <Nav isopen={menuOpen}>
             <ul>
               <Suspense fallback={<Loader />}>
-              <li>
-                <Link to="/" onClick={toggleMenu}>
-                  Home
-                </Link>
-              </li>
-              <li onClick={() => handleNavigation("/pages/AboutUs")}>
-                <Link to="/pages/AboutUs" onClick={toggleMenu}>
-                  About Us
-                </Link>
-              </li>
-              <li>
-                <Link to="/pages/Services" onClick={toggleMenu}>
-                  Services
-                </Link>
-              </li>
-              <li>
-                <Link to="/pages/ContactUs" onClick={toggleMenu}>
-                  Contact Us
-                </Link>
-              </li>
-              <li>
-                <a onClick={toggleCart}>
-                  Cart{" "}
-                  {cartItemsCount > 0 && (
-                    <CartCount>{cartItemsCount}</CartCount>
+                <li>
+                  <Link to="/" onClick={toggleMenu}>
+                    Home
+                  </Link>
+                </li>
+                <li onClick={() => handleNavigation("/pages/AboutUs")}>
+                  <Link to="/pages/AboutUs" onClick={toggleMenu}>
+                    About Us
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/pages/Services" onClick={toggleMenu}>
+                    Services
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/pages/ContactUs" onClick={toggleMenu}>
+                    Contact Us
+                  </Link>
+                </li>
+                <li>
+                  <a onClick={toggleCart}>
+                    Cart{" "}
+                    {cartItemsCount > 0 && (
+                      <CartCount>{cartItemsCount}</CartCount>
+                    )}
+                  </a>
+                  {cartModal && (
+                    <Suspense fallback={<Loader />}>
+                      <CartModal onClose={toggleCart} />
+                    </Suspense>
                   )}
-                </a>
-                {cartModal && (
-                  <Suspense fallback={<Loader />}>
-                    <CartModal onClose={toggleCart} />
-                  </Suspense>
-                )}
-              </li>
+                </li>
               </Suspense>
-              
+
               <LabelSwitch>
                 <StyledCheckbox
                   checked={theme === "light"}
@@ -435,7 +432,7 @@ const Navbar = () => {
             {searchVisible && (
               <form onSubmit={handleSearchForm}>
                 <SearchInput
-                  isvisible={searchVisible ? true : undefined}
+                  isvisible={searchVisible}
                   onChange={handleSearchChange}
                   value={searchValue}
                   placeholder="Search..."
@@ -446,12 +443,7 @@ const Navbar = () => {
           </WrapperButtons>
           <Suspense fallback={<Loader />}>
             <Modal show={showModal} onClose={toggleModal}>
-              {isRegister ? (
-                  <RegisterForm />
-              ) : (
-                  <LoginForm />
-          
-              )}
+              {isRegister ? <RegisterForm /> : <LoginForm />}
             </Modal>
           </Suspense>
         </Header>

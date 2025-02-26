@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Main = styled.div<{ isvisible: boolean | undefined }>`
+export const Main = styled.div.withConfig({shouldForwardProp: (prop) => prop !== "isvisible"})<{ isvisible: boolean}>`
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;

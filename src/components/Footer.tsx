@@ -1,24 +1,25 @@
 import styled from "styled-components";
 import { FlexColumn, FlexRow } from "../Utilities/StyledUtilities.styled";
+import React from "react";
 
 const FooterMain = styled(FlexRow)`
   width: 100%;
+  min-height: 200px;
   border-top: 1px solid white;
   overflow: hidden;
-  background: ${(props) => props.theme.colors.quaternary};
+  background: ${({ theme }) => theme.colors.quaternary};
   background: linear-gradient(
     180deg,
-    ${(props) => props.theme.colors.tertiary} 0%,
-    ${(props) => props.theme.colors.secondary} 50%,
-    ${(props) => props.theme.colors.primary} 100%
+    ${({ theme }) => theme.colors.tertiary} 0%,
+    ${({ theme }) => theme.colors.secondary} 50%,
+    ${({ theme }) => theme.colors.primary} 100%
   );
   color: ${(props) => props.theme.colors.text};
- 
-
-  
 `;
 
 const OfferText = styled(FlexRow)`
+  width: 100%;
+  height: auto;
   align-items: flex-start;
   justify-content: space-between;
   gap: 52px;
@@ -32,6 +33,10 @@ const OfferText = styled(FlexRow)`
     grid-gap: 20px;
     padding: 1rem;
       }
+    @media (max-width: ${theme.breakPoints.sm}) {
+    display: flex;
+    flex-direction: column;
+    }
         
   `}
 `;
@@ -40,10 +45,10 @@ const FooterColumn = styled(FlexColumn)`
   justify-content: flex-start;
   align-items: flex-start;
   gap: 15px;
-
-
+  width: 100%;
+  min-height: 150px;
   h3 {
-    color: ${(props) => props.theme.colors.text};
+    color: ${({ theme }) => theme.colors.text};
     font-size: 24px;
     font-weight: bold;
 
@@ -126,6 +131,9 @@ const ImageMobileColumn = styled.div`
   img {
     object-fit: cover;
     width: 100%;
+    min-width: 100px;
+    min-height: 100px;
+    display: block;
   }
 `;
 
@@ -143,6 +151,8 @@ const Element = styled(FlexRow)`
   cursor: pointer;
 
   img {
+    width: 100%;
+    height: auto;
     border-radius: 10px;
     max-width: 100%;
   }
@@ -152,7 +162,7 @@ const Element = styled(FlexRow)`
   }
 `;
 
-const Footer = () => {
+const Footer = React.memo(() => {
   return (
     <FooterMain>
       <OfferText>
@@ -191,14 +201,32 @@ const Footer = () => {
           <p>Save $3 with App New User Only</p>
           <MobileContainer>
             <ImageMobileColumn>
-              <img src="/Qrcode 1.png" alt="QR Code" loading="lazy"/>
+              <img
+                src="/Qrcode 1.png"
+                alt="QR Code"
+                loading="lazy"
+                width="100"
+                height="100"
+              />
             </ImageMobileColumn>
             <ContentColumn>
               <Element>
-                <img src="/GooglePlay.png" alt="GooglePlay" loading="lazy"/>
+                <img
+                  src="/GooglePlay.png"
+                  alt="GooglePlay"
+                  loading="lazy"
+                  width={135}
+                  height={40}
+                />
               </Element>
               <Element>
-                <img src="/download-appstore.png" alt="App Store" loading="lazy"/>
+                <img
+                  src="/download-appstore.png"
+                  alt="App Store"
+                  loading="lazy"
+                  width={135}
+                  height={40}
+                />
               </Element>
             </ContentColumn>
           </MobileContainer>
@@ -206,6 +234,6 @@ const Footer = () => {
       </OfferText>
     </FooterMain>
   );
-};
+});
 
 export default Footer;
