@@ -28,6 +28,9 @@ function App() {
   const AboutUs = React.lazy(() => import("./pages/AboutUs/AboutUs"));
   const ContactUs = React.lazy(() => import("./pages/ContactUs/ContactUs"));
   const Services = React.lazy(() => import("./pages/Services/Services"));
+useEffect(() => {
+  import("./pages/Home/Home")
+}, [])
   
 
   return (
@@ -66,11 +69,12 @@ function App() {
                   <Route path="*" element={<ErrorPage />} />
 
                 </Routes>
+                <Footer />
+
                 </Suspense>
               
               </ProductProvider>
 
-              <Footer />
             </div>
           </CartProvider>
         </BuyModalProvider>

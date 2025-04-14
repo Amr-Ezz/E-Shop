@@ -3,6 +3,7 @@ import Image3D from "./Image3D";
 import SplitText from "./SplitText";
 import { FlexColumn, FlexRow } from "../Utilities/StyledUtilities.styled";
 import { useNavigate } from "react-router-dom";
+import React, { useCallback } from "react";
 
 const puffInCenter = keyframes`
  0% {
@@ -65,6 +66,7 @@ const FontSection = styled(FlexColumn)`
   align-items: flex-start;
   padding: 0.5rem;
   color: ${(props) => props.theme.colors.text};
+  min-height: 100px;
   h1 {
     margin: 1rem;
     line-height: 1.1;
@@ -98,8 +100,8 @@ const FontSection = styled(FlexColumn)`
 
   p {
     font-size: 24px;
-    margin: 8px 0;
-    color: ${(props) => props.theme.colors.text};
+    color: ${(props) => props.theme.colors.text} || #ffffff;
+    min-height: 32px;
 
     ${({ theme }) => `
       @media (max-width: ${theme.breakPoints.md}) {
@@ -193,22 +195,22 @@ const ContainerDiv = styled(FlexColumn)`
 
 const words = ["Explore", "The", "Ultimate", "Tech", "Collection"];
 
-const HeroSection = () => {
+const HeroSection = React.memo(() => {
   const navigate = useNavigate();
-  const handleNavigate = () => {
+  const handleNavigate = useCallback(() => {
     navigate("/pages/Shop/ShopNow");
-  };
+  }, [navigate]);
   return (
     <ContainerDiv>
       <HeroDiv>
         <FontSection>
           <h1>
-            <SplitText words={words} animationDuration={1000} />
+            <SplitText words={words}  />
           </h1>
 
-          <p>
+          {/* <p>
             Level up with the latest in gaming, sound, and screen experiences
-          </p>
+          </p> */}
           <button onClick={handleNavigate}>SHOP NOW</button>
         </FontSection>
         <div>
@@ -225,6 +227,6 @@ const HeroSection = () => {
       </FooterHeroSection>
     </ContainerDiv>
   );
-};
+});
 
 export default HeroSection;

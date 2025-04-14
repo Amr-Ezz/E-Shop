@@ -7,6 +7,7 @@ import "../App.css";
 import useInView from "../Hooks/useInView";
 import { FlexColumn, FlexRow } from "../Utilities/StyledUtilities.styled";
 import getDynamicThreshold from "../Utilities/DynamicThreshold";
+import React from "react";
 
 const CommentsMain = styled.div.withConfig({shouldForwardProp: (prop) => prop !== "isvisible"})<{ isvisible: boolean }>`
   display: flex;
@@ -117,7 +118,7 @@ const Name = styled(FlexColumn)`
   }
 `;
 
-const CommentsSection = () => {
+const CommentsSection = React.memo(() => {
   const commentsArray = [
     {
       id: 1,
@@ -199,6 +200,6 @@ const CommentsSection = () => {
       </Swiper>
     </CommentsMain>
   );
-};
+});
 
 export default CommentsSection;

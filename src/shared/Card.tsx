@@ -23,7 +23,7 @@ const scaleInCenter = keyframes`
 const CardGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(autofill, minmax(250px, 1fr));
-  gap: 20px;
+  grid-gap: 1rem;
   width: 100%;
   justify-items: center;
 `;
@@ -38,7 +38,7 @@ const Card = styled(Link).withConfig({
     ease-in-out;
   gap: 10px;
   text-decoration: none;
-  max-height: 800px;
+  max-height: 600px;
   overflow: hidden;
   align-items: center;
   background-color: transparent;
@@ -58,15 +58,14 @@ gap: 30px;
   img {
     width: 100%;
     height: 200px;
-    max-height: 350px;
+    max-height: 200px;
     border-radius: 50px;
     object-fit: scale-down;
-    max-width: 200px;
-    max-height: 300px;
+    max-width: 150px;
   }
 
   h1 {
-    font-size: 1.5rem;
+    font-size: 1rem;
     text-align: center;
     color: ${(props) => props.theme.colors.text};
     ${({ theme }) => `
@@ -83,7 +82,6 @@ text-align: flex-start;
   p {
     text-align: left;
     color: ${(props) => props.theme.colors.text};
-    max-height: 60px;
     ${({ theme }) => `
   
       @media (max-width: ${theme.breakPoints.md}) {
@@ -103,11 +101,10 @@ const PriceHolder = styled.div`
   flex-direction: column;
   width: 100%;
   align-items: flex-start;
-  gap: 10px;
 
   p:nth-child(1) {
     color: ${(props) => props.theme.colors.text};
-    font-size: 1.5rem;
+    font-size: 1rem;
     font-weight: 800;
     padding: 1rem;
     border-radius: 100%;

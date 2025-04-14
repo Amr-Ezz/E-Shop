@@ -35,10 +35,10 @@ interface ModalProps {
   children: React.ReactNode;
 }
 const Modal: React.FC<ModalProps> = ({ show, onClose, children }) => {
-  if (!show) return null;
+  if (!show) return;
 
   return (
-    <ModalBackground onClick={onClose}>
+    <ModalBackground>
       <ModalWrapper onClick={(e) => e.stopPropagation()}>
         <CloseButton onClick={onClose}>&times;</CloseButton>
 

@@ -1,5 +1,6 @@
 .Container {
   max-width: 100%;
+  min-height: 100vh;
   width: 100%;
   margin: 0;
   color: white;
@@ -8,6 +9,7 @@
 }
 .App {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-display: swap;
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   height: 100vh;

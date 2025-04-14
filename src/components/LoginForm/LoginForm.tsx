@@ -33,7 +33,10 @@ const Input = styled.input`
   border: 1px solid #ccc;
   border-radius: 5px;
 `;
-const LoginForm: React.FC = () => {
+interface LoginFormTypes {
+  onSuccess: () => void;
+}
+const LoginForm: React.FC<LoginFormTypes> = ({onSuccess}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isRegistered, setIsRegistered] = useState(false);
@@ -44,6 +47,7 @@ const LoginForm: React.FC = () => {
       await signInWithEmailAndPassword(auth, email, password);
       setIsRegistered(true);
       setIsLoginForm(false);
+      onSuccess();
       alert("Login Successful");
     } catch (error) {
       console.error("Authentication error", error);

@@ -4,7 +4,7 @@ import React from "react";
 
 const FooterMain = styled(FlexRow)`
   width: 100%;
-  min-height: 200px;
+  min-height: 250px;
   border-top: 1px solid white;
   overflow: hidden;
   background: ${({ theme }) => theme.colors.quaternary};
@@ -19,10 +19,9 @@ const FooterMain = styled(FlexRow)`
 
 const OfferText = styled(FlexRow)`
   width: 100%;
-  height: auto;
+  min-height: 200px;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 52px;
   text-align: left;
 
   ${({ theme }) => `
@@ -49,8 +48,8 @@ const FooterColumn = styled(FlexColumn)`
   min-height: 150px;
   h3 {
     color: ${({ theme }) => theme.colors.text};
-    font-size: 24px;
     font-weight: bold;
+    white-space: nowrap;
 
     ${({ theme }) => `
   
@@ -63,8 +62,8 @@ font-size: 14px;
 
   h4 {
     color: ${(props) => props.theme.colors.text};
-    font-size: 20px;
     font-weight: medium;
+    white-space: nowrap;
 
     @media (max-width: 768px) {
       font-size: 18px;
@@ -73,8 +72,8 @@ font-size: 14px;
 
   p {
     font-size: 16px;
-    font-weight: regular;
     cursor: pointer;
+    white-space: nowrap;
 
     &:hover {
       color: ${(props) => props.theme.colors.tertiary};
@@ -152,7 +151,7 @@ const Element = styled(FlexRow)`
 
   img {
     width: 100%;
-    height: auto;
+    min-height: 50px;
     border-radius: 10px;
     max-width: 100%;
   }

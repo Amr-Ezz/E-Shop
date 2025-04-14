@@ -124,8 +124,8 @@ const SaleSection = () => {
     setCurrentPage(1);
   };
 
-  const startIndex = (currentPage - 1) * 3;
-  const displayedProducts = products.slice(startIndex, startIndex + 3);
+  const startIndex = (currentPage - 1) * 6;
+  const displayedProducts = products.slice(startIndex, startIndex + 6);
 
   return (
     <MainSection ref={ref} isvisible={isInView ? true : false}>
@@ -142,7 +142,7 @@ const SaleSection = () => {
         ))}
       </GridContainer>
       <HighlightedButtons>
-        {Array(Math.ceil(products.length / 3))
+        {Array(Math.ceil(products.length / 6))
           .fill(0)
           .map((_, index) => (
             <StyledButton

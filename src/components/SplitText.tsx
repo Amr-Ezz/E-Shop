@@ -1,34 +1,27 @@
-import { useEffect } from "react";
+import styled, { keyframes } from "styled-components";
 
 interface SplitTextProps {
   words?: string[];
-  animationDuration?: number;
   className?: string;
-  style?: React.CSSProperties;
-
 }
+const fadeInUp = keyframes`
+from {
+opacity: 0;
+    transform: translateY(20px);
 
-const SplitText: React.FC<SplitTextProps> = ({
-  words,
-  animationDuration = 1000,
-  className,
-}) => {
-  useEffect(() => {
-    const letters = document.querySelectorAll(".letter");
-    letters.forEach((letter, index) => {
-      letter.animate(
-        [
-          { opacity: 0, transform: "translateY(20px)" },
-          { opacity: 1, transform: "translateY(0)" },
-        ],
-        {
-          duration: animationDuration,
-          delay: index * 50,
-          fill: "forwards",
-        }
-      );
-    });
-  }, [animationDuration]);
+} to {
+ opacity: 1;
+ transform: translateY(0)
+ }`;
+ const Letter = styled.span<{delay: number}>`
+  display: inline-block;
+  opacity: 0;
+  animation: ${fadeInUp} 0.8s ease-out forwards;
+  animation-delay: ${(props) => props.delay}ms;
+ `
+
+
+const SplitText: React.FC<SplitTextProps> = ({ words, className }) => {
 
   return (
     <span className={className}>
@@ -41,7 +34,7 @@ const SplitText: React.FC<SplitTextProps> = ({
           }}
         >
           {word.split("").map((char, charIndex) => (
-            <span
+            <Letter
               key={`${wordIndex}-${charIndex}`}
               className="letter"
               style={{
@@ -49,9 +42,10 @@ const SplitText: React.FC<SplitTextProps> = ({
                 opacity: 0,
                 transform: "translateY(20px)",
               }}
+              delay={charIndex * 50}
             >
               {char}
-            </span>
+            </Letter>
           ))}
           <span>&nbsp;</span>
         </span>

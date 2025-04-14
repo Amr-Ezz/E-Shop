@@ -1,4 +1,4 @@
-import React, { Suspense, useState } from "react";
+import React, { Suspense, useCallback, useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../Context/CartContext";
@@ -62,7 +62,9 @@ const Logo = styled.h1`
 //   isopen: boolean;
 // }
 
-const Nav = styled.nav.withConfig({shouldForwardProp: (prop) => prop !== "isopen"})<{ isopen: boolean }>`
+const Nav = styled.nav.withConfig({
+  shouldForwardProp: (prop) => prop !== "isopen",
+})<{ isopen: boolean }>`
   ul {
     display: flex;
     list-style-type: none;
@@ -121,19 +123,7 @@ const ButtonDiv = styled(FlexRow)`
   justify-content: space-between;
   align-content: center;
   position: relative;
-  button {
-    background-color: transparent;
-    color: ${({ theme }) => theme.colors.text};
-    font-weight: bold;
-    font-size: 20px;
-    cursor: pointer;
-    border: none;
-    transition: color 0.3s ease;
-
-    &:hover {
-      color: ${({ theme }) => theme.colors.tertiary};
-    }
-  }
+ 
 
   img {
     width: 20px;
@@ -151,6 +141,29 @@ const ButtonDiv = styled(FlexRow)`
   @media (max-width: 768px) {
     display: none;
   }
+`;
+const Button = styled.button`
+  padding: 1rem 2rem;
+  font-weight: 700;
+  background-color: ${({ theme }) => theme.colors.primary};
+  color: ${({theme}) => theme.colors.text};
+  cursor: pointer;
+  border-radius: 0.5rem;
+  border-bottom: 2px solid blueviolet;
+  border-right: 2px solid blueviolet;
+  border-top: 2px solid ${({theme}) => theme.colors.tertiary};
+  border-left: 2px solid ${({theme}) => theme.colors.secondary};
+  transition-duration: 1s;
+  transition-property: border-top, border-left, border-bottom, border-right,
+    box-shadow;
+    &:hover {
+    border-top: 2px solid blueviolet;
+  border-left: 2px solid blueviolet;
+  border-bottom: 2px solid rgb(238, 103, 238);
+  border-right: 2px solid rgb(238, 103, 238);
+  box-shadow: rgba(240, 46, 170, 0.4) 5px 5px, rgba(240, 46, 170, 0.3) 10px 10px,
+    rgba(240, 46, 170, 0.2) 15px 15px;
+    }
 `;
 
 const CartCount = styled.div`
@@ -201,7 +214,7 @@ const WrapperButtons = styled(FlexColumn)`
 const LabelSwitch = styled.label`
   position: relative;
   display: inline-block;
-  margin-top: 5px;
+  margin-top: 15px;
   width: 60px;
   height: 34px;
 `;
@@ -254,17 +267,17 @@ const StyledCheckbox = styled(CheckBox)`
 `;
 const UserLoggedIn = styled.div`
   display: flex;
-  gap: 5px;
+  gap: 10px;
   align-items: center;
   span {
-    font-size: 1.1rem;
-    font-weight: 500;
+    font-size: 1rem;
+    font-weight: 200;
     color: ${(props) => props.theme.colors.text};
   }
 `;
 const ThemedIconUser = styled(FaUser)`
   color: ${(props) => props.theme.colors.text};
-  font-size: 34px;
+  font-size: 24px;
 `;
 const ThemedIconSearch = styled(FaSearch)`
   color: ${(props) => props.theme.colors.text};
@@ -284,7 +297,7 @@ const FaTimes = React.lazy(() =>
 );
 ///////////////////////////////////////////////////////////////////////
 
-const Navbar = () => {
+const Navbar = React.memo(() => {
   const [showModal, setShowModal] = useState(false);
   const [isRegister, setIsRegister] = useState(true);
   const [cartModal, setCartModal] = useState(false);
@@ -298,44 +311,51 @@ const Navbar = () => {
     e.preventDefault();
     setSearchValue(e.target.value);
   };
-  const handleSearchForm = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchValue.trim()) {
-      try {
-        setIsLoading(true);
-        await navigate(`/search?q=${encodeURIComponent(searchValue)}`);
-        setSearchVisible(false);
-      } finally {
-        setIsLoading(false);
+  const handleSearchForm = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
+      if (searchValue.trim()) {
+        try {
+          setIsLoading(true);
+          await navigate(`/search?q=${encodeURIComponent(searchValue)}`);
+          setSearchVisible(false);
+        } finally {
+          setIsLoading(false);
+        }
       }
-    }
-  };
+    },
+    [searchValue, setIsLoading, navigate]
+  );
 
-  const toggleModal = () => setShowModal(!showModal);
-  const toggleCart = () => {
+  const toggleModal = useCallback(() => setShowModal(!showModal), []);
+  const onClose = () => setShowModal(!showModal);
+  const toggleCart = useCallback(() => {
     setCartModal(!cartModal);
     console.log("Entered");
-  };
-  const toggleMenu = () => {
+  }, []);
+  const toggleMenu = useCallback(() => {
     setMenuOpen((prev) => !prev);
-  };
-  const toggleSearch = () => setSearchVisible(!searchVisible);
+  }, []);
+  const toggleSearch = useCallback(() => setSearchVisible(!searchVisible), []);
 
   const { cartItemsCount } = useCart();
   const { theme, toggleTheme } = useTheme();
   const { user, logOut } = useUser();
-  const handleLogOut = async () => {
+  const handleLogOut = useCallback(async () => {
     try {
       await logOut();
       console.log("User logged out successfully");
     } catch (error) {
       console.error("error logging out", error);
     }
-  };
-  const handleNavigation = (path: string) => {
-    navigate(path);
-    setIsLoading(true);
-  };
+  }, [logOut, navigate]);
+  const handleNavigation = useCallback(
+    (path: string) => {
+      navigate(path);
+      setIsLoading(true);
+    },
+    [navigate, setIsLoading]
+  );
 
   return (
     <>
@@ -404,28 +424,28 @@ const Navbar = () => {
               {user ? (
                 <UserLoggedIn>
                   <ThemedIconUser />
-                  <span>Hello, {user.displayName}</span>
-                  <button onClick={handleLogOut}>Log Out</button>
+                  <span>{user.displayName}</span>
+                  <Button onClick={handleLogOut}>Log Out</Button>
                 </UserLoggedIn>
               ) : (
                 <>
-                  <button
+                  <Button
                     onClick={() => {
                       setIsRegister(false);
                       toggleModal();
                     }}
                   >
                     Login
-                  </button>
-                  /
-                  <button
+                  </Button>
+                  
+                  <Button
                     onClick={() => {
                       setIsRegister(true);
                       toggleModal();
                     }}
                   >
                     Register
-                  </button>
+                  </Button>
                 </>
               )}
             </ButtonDiv>
@@ -442,14 +462,14 @@ const Navbar = () => {
             )}
           </WrapperButtons>
           <Suspense fallback={<Loader />}>
-            <Modal show={showModal} onClose={toggleModal}>
-              {isRegister ? <RegisterForm /> : <LoginForm />}
+            <Modal show={showModal} onClose={() => setShowModal(false)}>
+              {isRegister ? <RegisterForm /> : <LoginForm onSuccess={onClose} />}
             </Modal>
           </Suspense>
         </Header>
       </NavbarContainer>
     </>
   );
-};
+});
 
 export default Navbar;

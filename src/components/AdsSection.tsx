@@ -4,6 +4,7 @@ import { useProduct } from "../Context/ProductContext";
 import useInView from "../Hooks/useInView";
 import { FlexRow } from "../Utilities/StyledUtilities.styled";
 import getDynamicThreshold from "../Utilities/DynamicThreshold";
+import { useCallback } from "react";
 const AdsMain = styled(FlexRow).withConfig({shouldForwardProp: (prop) => prop !== "isvisible"})<{ isvisible: boolean }>`
   color: ${(props) => props.theme.colors.text};
   height: 310px;
@@ -68,14 +69,14 @@ const AdsSection = () => {
   const { setCategory } = useProduct();
   const { ref, isInView } = useInView(getDynamicThreshold);
 
-  const handleNavigate = async (category: string) => {
+  const handleNavigate = useCallback(async (category: string) => {
     try {
       setCategory(category);
       navigate(`/products/category/${category}`);
     } catch (error) {
       console.log("Error fetching Product Category", error);
     }
-  };
+  }, [setCategory, navigate]);
 
   return (
     <AdsMain isvisible={isInView} ref={ref}>

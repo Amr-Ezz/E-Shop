@@ -12,6 +12,7 @@ import LoginForm from "./LoginForm/LoginForm";
 import Modal from "./Modal/Modal";
 // import { useUser } from "../Context/UserContext";
 import BuyModal from "./Modal/BuyModal";
+import { Loader } from "./Loader/Loader";
 
 const Main = styled.div`
   width: 100%;
@@ -198,7 +199,7 @@ const ProductDetail = () => {
       console.log(error, "Error");
     }
     if (loading) {
-      <div>Loading......</div>;
+      <Loader />;
     }
   }, [id]);
 
@@ -311,14 +312,13 @@ const ProductDetail = () => {
               <h1>
                 <SplitText
                   words={product.title.substring(0, 50).split(" ")}
-                  animationDuration={500}
-                  style={{
-                    margin: 0,
-                    padding: "2px",
-                    lineHeight: 1.1,
-                    fontSize: "26px",
-                    fontWeight: 800,
-                  }}
+                  // style={{
+                  //   margin: 0,
+                  //   padding: "2px",
+                  //   lineHeight: 1.1,
+                  //   fontSize: "26px",
+                  //   fontWeight: 800,
+                  // }}
                 />
               </h1>
 
