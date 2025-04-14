@@ -5,8 +5,10 @@ import useInView from "../Hooks/useInView";
 import { FlexRow } from "../Utilities/StyledUtilities.styled";
 import getDynamicThreshold from "../Utilities/DynamicThreshold";
 import { useCallback } from "react";
+import Image3D from "./Image3D";
 const AdsMain = styled(FlexRow).withConfig({shouldForwardProp: (prop) => prop !== "isvisible"})<{ isvisible: boolean }>`
   color: ${(props) => props.theme.colors.text};
+  justify-content: space-around;
   height: 310px;
   background: linear-gradient(
     180deg,
@@ -51,16 +53,12 @@ const ImageDiv = styled.div.withConfig({shouldForwardProp: (prop) => prop !== "i
     }
   }
   h1 {
-    position: absolute;
-    width: 151px;
-    height: 96px;
+    position: relative;
     line-height: 38px;
-    font-size: 30px;
+    font-size: 20px;
     font-weight: 600;
     text-align: center;
-    color: white;
-    top: 102px;
-    left: 129px;
+    color: ${({theme}) => theme.colors.text};
   }
 `;
 
@@ -85,7 +83,7 @@ const AdsSection = () => {
         isvisible={isInView}
         onClick={() => handleNavigate("gaming")}
       >
-        <img src="Rectangle 4.png" alt="Model Image" loading="lazy" />
+        <Image3D url="./Controller.png" width={250} height={250} animationType="bounce"/>
         <h1>Ultimate Gaming Gear</h1>
       </ImageDiv>
       <ImageDiv
@@ -93,7 +91,7 @@ const AdsSection = () => {
         isvisible={isInView}
         onClick={() => handleNavigate("audio")}
       >
-        <img src="Rectangle 6.png" alt="Model Image" loading="lazy" />
+        <Image3D url="./HeadSet.png" width={250} height={250} animationType="scale" />
         <h1>50% Off Premium Sound</h1>
       </ImageDiv>
       <ImageDiv
@@ -101,11 +99,8 @@ const AdsSection = () => {
         isvisible={isInView}
         onClick={() => handleNavigate("mobile")}
       >
-        <img
-          src="Rectangle 5.png"
-          alt="Model Image"
-          style={{ objectPosition: "100% 30%" }}
-          loading="lazy"
+        <Image3D
+        url="./SmartPhone.png" width={250} height={250} animationType="wave"
         />
         <h1>Newest Smartphones</h1>
       </ImageDiv>

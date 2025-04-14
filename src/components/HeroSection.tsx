@@ -1,37 +1,17 @@
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import Image3D from "./Image3D";
 import SplitText from "./SplitText";
 import { FlexColumn, FlexRow } from "../Utilities/StyledUtilities.styled";
 import { useNavigate } from "react-router-dom";
 import React, { useCallback } from "react";
 
-const puffInCenter = keyframes`
- 0% {
-    -webkit-transform: translateZ(-80px);
-            transform: translateZ(-80px);
-    opacity: 0;
-  }
-  100% {
-    -webkit-transform: translateZ(0);
-            transform: translateZ(0);
-    opacity: 1;
-  }`;
+
 const HeroDiv = styled(FlexRow)`
   justify-content: space-between;
   gap: 2rem;
   padding: 2rem;
   div {
-    img {
-      filter: drop-shadow(0 10px 10px rgba(0, 0, 0, 0.3));
-      width: 100%;
-      height: auto;
-      max-width: 500px;
-      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-      object-fit: cover;
-      -webkit-animation: ${puffInCenter} 0.7s
-        cubic-bezier(0.47, 0, 0.745, 0.715) both;
-      animation: ${puffInCenter} 0.7s cubic-bezier(0.47, 0, 0.745, 0.715) both;
-    }
+   
   }
 
   @media (max-width: 768px) {
@@ -214,7 +194,7 @@ const HeroSection = React.memo(() => {
           <button onClick={handleNavigate}>SHOP NOW</button>
         </FontSection>
         <div>
-          <Image3D url={"/Rectangle 3.png"} width={300} height={300}  />
+          <Image3D url={"/Headset.png"} width={300} height={300} animationType="twist" />
         </div>
       </HeroDiv>
       <FooterHeroSection>
