@@ -1,17 +1,18 @@
 import styled from "styled-components";
 import Image3D from "./Image3D";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
+
 import SplitText from "./SplitText";
 import { FlexColumn, FlexRow } from "../Utilities/StyledUtilities.styled";
 import { useNavigate } from "react-router-dom";
 import React, { useCallback } from "react";
-
 
 const HeroDiv = styled(FlexRow)`
   justify-content: space-between;
   gap: 2rem;
   padding: 2rem;
   div {
-   
   }
 
   @media (max-width: 768px) {
@@ -43,12 +44,12 @@ const HeroDiv = styled(FlexRow)`
 `;
 
 const FontSection = styled(FlexColumn)`
-  align-items: flex-start;
+  align-items: start;
+  justify-content: space-around;
   padding: 0.5rem;
   color: ${(props) => props.theme.colors.text};
   min-height: 100px;
   h1 {
-    margin: 1rem;
     line-height: 1.1;
     text-align: start;
     font-size: 56px;
@@ -96,18 +97,27 @@ const FontSection = styled(FlexColumn)`
     color: ${(props) => props.theme.colors.text};
     background-color: ${(props) => props.theme.colors.tertiary};
     border-radius: 50px;
-    width: 200px;
-    height: 60px;
+    width: 180px;
+    height: 40px;
+    border: none;
+    border-radius: 50px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    box-shadow: 1px 3px 0px ${({ theme }) => theme.colors.background};
+    transition-duration: 0.3s;
     border-style: none;
-    font-size: 24px;
+    font-size: 14px;
     margin-top: 16px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
 
     &:hover {
       background-color: ${(props) => props.theme.colors.white};
       border: 1px solid ${(props) => props.theme.colors.primary};
-      color: ${(props) => props.theme.colors.primary};
+      color: ${(props) => props.theme.colors.quaternary};
     }
 
     ${({ theme }) => `
@@ -180,21 +190,30 @@ const HeroSection = React.memo(() => {
   const handleNavigate = useCallback(() => {
     navigate("/pages/Shop/ShopNow");
   }, [navigate]);
+
   return (
     <ContainerDiv>
       <HeroDiv>
         <FontSection>
           <h1>
-            <SplitText words={words}  />
+            <SplitText words={words} />
           </h1>
 
           {/* <p>
             Level up with the latest in gaming, sound, and screen experiences
           </p> */}
-          <button onClick={handleNavigate}>SHOP NOW</button>
+          <button onClick={handleNavigate}>
+            SHOP NOW
+            <FontAwesomeIcon icon={faCartShopping} />{" "}
+          </button>
         </FontSection>
         <div>
-          <Image3D url={"/Headset.png"} width={300} height={300} animationType="twist" />
+          <Image3D
+            url={"/Headset.png"}
+            width={300}
+            height={300}
+            animationType="twist"
+          />
         </div>
       </HeroDiv>
       <FooterHeroSection>

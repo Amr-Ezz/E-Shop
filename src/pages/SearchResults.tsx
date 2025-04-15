@@ -13,6 +13,9 @@ const ResultsDiv = styled.div`
 
 const Main = styled.div`
   background-color: ${(props) => props.theme.colors.primary};
+  padding: 2rem;
+  margin-top: 25px;
+
   h1 {
     padding: 1rem;
   }

@@ -73,7 +73,7 @@ const Nav = styled.nav.withConfig({
 
     li {
       padding: 1rem;
-      font-size: 20px;
+      font-size: 15px;
       cursor: pointer;
       transition: color 0.3s ease;
 
@@ -82,9 +82,20 @@ const Nav = styled.nav.withConfig({
       }
 
       a {
-        text-decoration: none;
-        color: ${({ theme }) => theme.colors.text};
-        position: relative;
+         color: ${({theme}) => theme.colors.text};
+      text-decoration: none;
+      padding: 8px 15px;
+      border-radius: 20px;
+      transition: background-color 0.2s ease, color 0.2s ease,
+        transform 0.2s ease;
+      display: inline-block;
+      border: 1px solid transparent;
+      &:hover {
+        background-color: ${({ theme }) => theme.colors.tertiary};
+        transform: translateY(-2px);
+                 color: ${({theme}) => theme.colors.white};
+
+      }
       }
     }
   }
@@ -189,13 +200,25 @@ const CartCount = styled.div`
   }
 `;
 const SearchInput = styled.input<{ isvisible: boolean }>`
-  width: 200px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  opacity: ${({ isvisible }) => (isvisible ? "1" : "0")};
+ width: 200px;
+  height: 40px;
+  border: none;
+  outline: none;
+  caret-color: rgb(255, 230, 218);
+  background: linear-gradient(to bottom,${({theme}) => theme.colors.tertiary},${({theme}) => theme.colors.secondary});
+  border-radius: 30px;
+  padding-left: 15px;
+  letter-spacing: 0.8px;
+  color: ${({theme}) => theme.colors.text};
+  font-size: 13.4px;
+   opacity: ${({ isvisible }) => (isvisible ? "1" : "0")};
 
   visibility: ${({ isvisible }) => (isvisible ? "visible" : "hidden")};
+  &::placeholder {
+  color: ${({theme}) => theme.colors.text}
+  }
+  
+  
   @media (max-width: 768px) {
     width: 150px;
   }
@@ -281,8 +304,21 @@ const ThemedIconUser = styled(FaUser)`
 `;
 const ThemedIconSearch = styled(FaSearch)`
   color: ${(props) => props.theme.colors.text};
-  font-size: 24px;
+  font-size: 20px;
+  cursor: pointer;
 `;
+const InputContainer = styled.div`
+ width: 210px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 30px;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.075);
+ 
+`
 
 // dynamic imports
 const Modal = React.lazy(() => import("./Modal/Modal"));
@@ -336,7 +372,7 @@ const Navbar = React.memo(() => {
   const toggleMenu = useCallback(() => {
     setMenuOpen((prev) => !prev);
   }, []);
-  const toggleSearch = useCallback(() => setSearchVisible(!searchVisible), []);
+  const toggleSearch = useCallback(() => {setSearchVisible(!searchVisible)}, []);
 
   const { cartItemsCount } = useCart();
   const { theme, toggleTheme } = useTheme();
@@ -420,7 +456,7 @@ const Navbar = React.memo(() => {
           </Nav>
           <WrapperButtons>
             <ButtonDiv>
-              <ThemedIconSearch onClick={toggleSearch} />
+              <ThemedIconSearch onClick={() => setSearchVisible(!searchVisible)} />
               {user ? (
                 <UserLoggedIn>
                   <ThemedIconUser />
@@ -451,6 +487,7 @@ const Navbar = React.memo(() => {
             </ButtonDiv>
             {searchVisible && (
               <form onSubmit={handleSearchForm}>
+                <InputContainer>
                 <SearchInput
                   isvisible={searchVisible}
                   onChange={handleSearchChange}
@@ -458,6 +495,8 @@ const Navbar = React.memo(() => {
                   placeholder="Search..."
                   type="text"
                 />
+                </InputContainer>
+              
               </form>
             )}
           </WrapperButtons>
