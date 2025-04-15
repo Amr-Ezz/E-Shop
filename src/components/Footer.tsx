@@ -1,8 +1,11 @@
 import styled from "styled-components";
 import { FlexColumn, FlexRow } from "../Utilities/StyledUtilities.styled";
-import React from "react";
+import React, { Suspense } from "react";
+import { Loader } from "./Loader/Loader";
+import { Link } from "react-router-dom";
+import CartModal from "./Modal/CartModal";
 
-const FooterMain = styled(FlexRow)`
+const FooterMain = styled(FlexColumn)`
   width: 100%;
   min-height: 250px;
   border-top: 1px solid white;
@@ -160,19 +163,84 @@ const Element = styled(FlexRow)`
     margin-top: 10px;
   }
 `;
+const FooterRow = styled.div`
+  width: 100%;
+  ul {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    list-style: none;
+    padding: 1rem;
+    a {
+      color: inherit;
+      text-decoration: none;
+      padding: 8px 15px;
+      border-radius: 20px;
+      transition: background-color 0.2s ease, color 0.2s ease,
+        transform 0.2s ease;
+      display: inline-block;
+      border: 1px solid transparent;
+      &:hover {
+        background-color: ${({ theme }) => theme.colors.tertiary};
+        transform: translateY(-2px);
+      }
+    }
+  }
+`;
+const FooterBottom = styled.div`
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  text-align: center;
+  margin-top: 40px;
+  padding-top: 20px;
+  font-size: 0.9em;
+  opacity: 0.7;
+`;
 
 const Footer = React.memo(() => {
   return (
     <FooterMain>
-      <OfferText>
+      <h1>Quick Links</h1>
+      <FooterRow>
+        <ul>
+          <Suspense fallback={<Loader />}>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/pages/AboutUs">About Us</Link>
+            </li>
+            <li>
+              <Link to="/pages/Services">Services</Link>
+            </li>
+            <li>
+              <Link to="/pages/ContactUs">Contact Us</Link>
+            </li>
+            {/* <li>
+                           <a onClick={toggleCart}>
+                             Cart{" "}
+                             {cartItemsCount > 0 && (
+                               <CartCount>{cartItemsCount}</CartCount>
+                             )}
+                           </a>
+                           {cartModal && (
+                             <Suspense fallback={<Loader />}>
+                               <CartModal onClose={toggleCart} />
+                             </Suspense>
+                           )}
+                         </li> */}
+          </Suspense>
+        </ul>
+        <FooterBottom>
+          <p>&copy; 2024 Go Shop. All rights reserved.</p>
+        </FooterBottom>
+      </FooterRow>
+
+      {/* <OfferText>
         <FooterColumn>
           <h3>Exclusive</h3>
           <h4>Subscribe</h4>
           <p>Get 10% off your first order</p>
-          {/* <form>
-            <input placeholder="Enter Your Email" />
-            <img src="/icons/icon-send.svg" alt="icon" />
-          </form> */}
+         
         </FooterColumn>
         <FooterColumn>
           <h3>Support</h3>
@@ -230,7 +298,7 @@ const Footer = React.memo(() => {
             </ContentColumn>
           </MobileContainer>
         </FooterColumn>
-      </OfferText>
+      </OfferText> */}
     </FooterMain>
   );
 });

@@ -14,14 +14,12 @@ const CommentsMain = styled.div.withConfig({shouldForwardProp: (prop) => prop !=
   padding: 5rem 1rem;
   flex-direction: column;
   color: ${(props) => props.theme.colors.text};
-
   align-items: center;
-  background: ${(props) => props.theme.colors.quaternary};
   background: linear-gradient(
     180deg,
-    ${(props) => props.theme.colors.tertiary} 0%,
+    ${(props) => props.theme.colors.primary} 0%,
     ${(props) => props.theme.colors.secondary} 50%,
-    ${(props) => props.theme.colors.primary} 100%
+    ${(props) => props.theme.colors.tertiary} 100%
   );
   opacity: ${(props) => (props.isvisible ? 1 : 0)};
   transform: ${(props) =>
