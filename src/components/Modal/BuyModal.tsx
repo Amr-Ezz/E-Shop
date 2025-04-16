@@ -268,7 +268,6 @@ const BuyModal: React.FC = () => {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    console.log("Submitted")
     if (!stripe || !elements) {
       return;
     }
@@ -313,12 +312,15 @@ const BuyModal: React.FC = () => {
         throw new Error("Network response was not ok");
       }
       const data = await response.json();
+      if (!data.clientSecret) {
+        console.error("No clientSecret received from backend.");
+        return;
+      }
       setClientSecret(data.clientSecret);
-      console.log(data.clientSecret);
       const cardElement = elements.getElement(CardElement);
       if (cardElement && clientSecret) {
         const { error, paymentIntent } = await stripe.confirmCardPayment(
-          clientSecret,
+          data.clientSecret,
           {
             payment_method: {
               card: cardElement,
@@ -338,7 +340,7 @@ const BuyModal: React.FC = () => {
         }
       }
     } catch (error) {
-      console.error("Error creating payment intent", error);
+      console.error("Error payment intent", error);
     }
   };
 

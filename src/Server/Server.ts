@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 import { Request, Response } from "express";
 import compression from "compression";
 
-dotenv.config({ path: ".env.local" });
+dotenv.config();
 const app = express();
 app.use(compression());
 if (!process.env.STRIPE_SECRET_KEY) {
