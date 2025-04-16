@@ -372,7 +372,7 @@ const Navbar = React.memo(() => {
   const toggleMenu = useCallback(() => {
     setMenuOpen((prev) => !prev);
   }, []);
-  const toggleSearch = useCallback(() => {setSearchVisible(!searchVisible)}, []);
+  // const toggleSearch = useCallback(() => {setSearchVisible(!searchVisible)}, []);
 
   const { cartItemsCount } = useCart();
   const { theme, toggleTheme } = useTheme();

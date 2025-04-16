@@ -268,6 +268,7 @@ const BuyModal: React.FC = () => {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    console.log("Submitted")
     if (!stripe || !elements) {
       return;
     }

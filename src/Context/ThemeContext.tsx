@@ -13,13 +13,13 @@ interface ThemeProviderProps {
 const ThemeContext = createContext<ThemeContextProps | undefined>(undefined);
 
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
-  const [theme, setTheme] = useState<Themetype>("dark");
+  const [theme, setTheme] = useState<Themetype>("light");
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === "dark" ? "light" : "dark"));
   };
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      <StyledThemeProvider theme={theme === "dark" ? darkTheme : lightTheme}>
+      <StyledThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
         {children}
       </StyledThemeProvider>
     </ThemeContext.Provider>

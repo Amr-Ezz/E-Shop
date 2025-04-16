@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { FlexColumn, FlexRow } from "../Utilities/StyledUtilities.styled";
+import { FlexColumn } from "../Utilities/StyledUtilities.styled";
 import React, { Suspense } from "react";
 import { Loader } from "./Loader/Loader";
 import { Link } from "react-router-dom";
@@ -20,149 +20,149 @@ const FooterMain = styled(FlexColumn)`
   color: ${(props) => props.theme.colors.text};
 `;
 
-const OfferText = styled(FlexRow)`
-  width: 100%;
-  min-height: 200px;
-  align-items: flex-start;
-  justify-content: space-between;
-  text-align: left;
+// const OfferText = styled(FlexRow)`
+//   width: 100%;
+//   min-height: 200px;
+//   align-items: flex-start;
+//   justify-content: space-between;
+//   text-align: left;
 
-  ${({ theme }) => `
+//   ${({ theme }) => `
   
-      @media (max-width: ${theme.breakPoints.md}) {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-    grid-gap: 20px;
-    padding: 1rem;
-      }
-    @media (max-width: ${theme.breakPoints.sm}) {
-    display: flex;
-    flex-direction: column;
-    }
+//       @media (max-width: ${theme.breakPoints.md}) {
+//       display: grid;
+//       grid-template-columns: repeat(2, 1fr);
+//     grid-gap: 20px;
+//     padding: 1rem;
+//       }
+//     @media (max-width: ${theme.breakPoints.sm}) {
+//     display: flex;
+//     flex-direction: column;
+//     }
         
-  `}
-`;
+//   `}
+// `;
 
-const FooterColumn = styled(FlexColumn)`
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 15px;
-  width: 100%;
-  min-height: 150px;
-  h3 {
-    color: ${({ theme }) => theme.colors.text};
-    font-weight: bold;
-    white-space: nowrap;
+// const FooterColumn = styled(FlexColumn)`
+//   justify-content: flex-start;
+//   align-items: flex-start;
+//   gap: 15px;
+//   width: 100%;
+//   min-height: 150px;
+//   h3 {
+//     color: ${({ theme }) => theme.colors.text};
+//     font-weight: bold;
+//     white-space: nowrap;
 
-    ${({ theme }) => `
+//     ${({ theme }) => `
   
-      @media (max-width: ${theme.breakPoints.md}) {
-font-size: 14px;
-    }
+//       @media (max-width: ${theme.breakPoints.md}) {
+// font-size: 14px;
+//     }
         
-  `}
-  }
+//   `}
+//   }
 
-  h4 {
-    color: ${(props) => props.theme.colors.text};
-    font-weight: medium;
-    white-space: nowrap;
+//   h4 {
+//     color: ${(props) => props.theme.colors.text};
+//     font-weight: medium;
+//     white-space: nowrap;
 
-    @media (max-width: 768px) {
-      font-size: 18px;
-    }
-  }
+//     @media (max-width: 768px) {
+//       font-size: 18px;
+//     }
+//   }
 
-  p {
-    font-size: 16px;
-    cursor: pointer;
-    white-space: nowrap;
+//   p {
+//     font-size: 16px;
+//     cursor: pointer;
+//     white-space: nowrap;
 
-    &:hover {
-      color: ${(props) => props.theme.colors.tertiary};
-    }
+//     &:hover {
+//       color: ${(props) => props.theme.colors.tertiary};
+//     }
 
-    @media (max-width: 768px) {
-      font-size: 14px;
-    }
-  }
+//     @media (max-width: 768px) {
+//       font-size: 14px;
+//     }
+//   }
 
-  form {
-    width: 217px;
-    height: 48px;
-    position: relative;
+//   form {
+//     width: 217px;
+//     height: 48px;
+//     position: relative;
 
-    input {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      border-radius: 4px;
-      border: none;
-      padding: 12px 5px 16px;
-      background-color: black;
-      opacity: 80%;
-      color: white;
-      width: 100%;
-    }
+//     input {
+//       position: absolute;
+//       top: 0;
+//       left: 0;
+//       right: 0;
+//       bottom: 0;
+//       border-radius: 4px;
+//       border: none;
+//       padding: 12px 5px 16px;
+//       background-color: black;
+//       opacity: 80%;
+//       color: white;
+//       width: 100%;
+//     }
 
-    img {
-      position: absolute;
-      right: 50px;
-      top: 30px;
-      bottom: 12px;
-      cursor: pointer;
+//     img {
+//       position: absolute;
+//       right: 50px;
+//       top: 30px;
+//       bottom: 12px;
+//       cursor: pointer;
 
-      @media (max-width: 768px) {
-        right: 5px;
-      }
-    }
-  }
-`;
+//       @media (max-width: 768px) {
+//         right: 5px;
+//       }
+//     }
+//   }
+// `;
 
-const MobileContainer = styled(FlexRow)`
-  @media (max-width: 768px) {
-    flex-direction: column;
-  }
-`;
+// const MobileContainer = styled(FlexRow)`
+//   @media (max-width: 768px) {
+//     flex-direction: column;
+//   }
+// `;
 
-const ImageMobileColumn = styled.div`
-  flex: 1;
+// const ImageMobileColumn = styled.div`
+//   flex: 1;
 
-  img {
-    object-fit: cover;
-    width: 100%;
-    min-width: 100px;
-    min-height: 100px;
-    display: block;
-  }
-`;
+//   img {
+//     object-fit: cover;
+//     width: 100%;
+//     min-width: 100px;
+//     min-height: 100px;
+//     display: block;
+//   }
+// `;
 
-const ContentColumn = styled(FlexColumn)`
-  // flex: 1;
-  justify-content: space-between;
+// const ContentColumn = styled(FlexColumn)`
+//   // flex: 1;
+//   justify-content: space-between;
 
-  @media (max-width: 768px) {
-    align-items: center;
-  }
-`;
+//   @media (max-width: 768px) {
+//     align-items: center;
+//   }
+// `;
 
-const Element = styled(FlexRow)`
-  padding: 5px;
-  cursor: pointer;
+// const Element = styled(FlexRow)`
+//   padding: 5px;
+//   cursor: pointer;
 
-  img {
-    width: 100%;
-    min-height: 50px;
-    border-radius: 10px;
-    max-width: 100%;
-  }
+//   img {
+//     width: 100%;
+//     min-height: 50px;
+//     border-radius: 10px;
+//     max-width: 100%;
+//   }
 
-  @media (max-width: 768px) {
-    margin-top: 10px;
-  }
-`;
+//   @media (max-width: 768px) {
+//     margin-top: 10px;
+//   }
+// `;
 const FooterRow = styled.div`
   width: 100%;
   ul {

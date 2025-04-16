@@ -15,9 +15,17 @@ const Main = styled.div`
   background-color: ${(props) => props.theme.colors.primary};
   padding: 2rem;
   margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 
-  h1 {
+  h2 {
     padding: 1rem;
+    align-self: center;
+    color: ${({theme}) => theme.colors.white};
+    background-color: ${({theme}) => theme.colors.tertiary};
+    border-radius: 50px;
+    font-weight: 300;
   }
 `;
 
@@ -55,7 +63,7 @@ const SearchResults = () => {
 
   return (
     <Main>
-      <h1>Search Results for "{query}"</h1>
+      <h2>Search Results for {query}</h2>
 
       <ResultsDiv>
         {filteredProducts.length > 0 ? (
