@@ -16,8 +16,23 @@ const ButtonsContainer = styled.div`
   width: 100%;
   margin-top: 1rem;
   padding-bottom: 1rem;
+    ${({ theme }) => `
+      @media (max-width: ${theme.breakPoints.lg}) {
+align-items: center;
+max-width: 50%;
+
+}
+    @media (max-width: ${theme.breakPoints.xs}) {
+    flex-direction: column;
+  }
+    `}
   button {
     border: none;
+    ${({theme}) => `
+     @media (max-width: ${theme.breakPoints.xs}) {
+   width: 100%;
+  }
+    `}
   }
 `;
 

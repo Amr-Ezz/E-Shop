@@ -17,16 +17,21 @@ import { Loader } from "./Loader/Loader";
 const Main = styled.div`
   width: 100%;
   background: ${(props) => props.theme.background};
-  height: fit-content;
+  ${({ theme }) => `
+  @media (max-width: ${theme.breakPoints.md}) {
+  }
+  `}
 `;
 const ProductDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 4rem;
   background: linear-gradient(#fff2, transparent);
   box-shadow: 10px 40px 40px rgba(0.25, 0.25, 0.25, 0.25);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  ${({ theme }) => `
+  @media(max-width: ${theme.breakPoints.lg}) {
+  padding: 0;
+  
+  }`}
 `;
 const Specifications = styled.div`
   width: 100%;
@@ -44,26 +49,70 @@ const Specifications = styled.div`
 `;
 const ProductRow = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1.5fr;
-  margin: 0 auto;
+  grid-template-columns: 1fr 2fr;
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   border-radius: 20px;
-  padding: 3rem;
+  padding: 2rem;
   color: ${(props) => props.theme.colors.text};
+  transition: all 0.3s ease;
+
+  ${({ theme }) => `
+  @media(max-width: ${theme.breakPoints.lg}) {
+  grid-template-columns: 1fr;
+  padding: 1rem;
+      gap: 1rem;
+
+
+  }
+      @media(max-width: ${theme.breakPoints.sm}) {
+  padding: 0.5rem;
+border-width: 5px;
+
+  }`}
 `;
 const StickyImageContainer = styled.div`
   position: sticky;
   top: 140px;
   width: fit-content;
   height: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  padding-top: 2rem;
+  ${({ theme }) => `
+  @media(max-width: ${theme.breakPoints.lg}) {
+  position: relative;
+  top: 0;
+  }
+  @media(max-width: ${theme.breakPoints.md}) {
+ }
+  
+  @media(max-width: ${theme.breakPoints.sm}) {
+  position: relative;
+  padding-top: 2rem;
+  }`}
 `;
 const ProductImage = styled.img`
-  height: 400px;
+  height: auto;
+  max-width: 100%;
   border-radius: 20px;
   transition: transform 0.3s ease-in-out;
   object-fit: contain;
   cursor: pointer;
+  ${({ theme }) => `
+  @media(max-width: ${theme.breakPoints.lg}) {
+width: 100%;
+max-height: 500px;
+  }
+ @media(max-width: ${theme.breakPoints.md}) {
+width: 100%;
+max-height: 300px;
+  }
+   @media(max-width: ${theme.breakPoints.sm}) {
+      max-width: 90%;
+      height: auto;
+    }`}
 
   ${StickyImageContainer}:hover & {
     transform: scale(1.1);
@@ -72,21 +121,32 @@ const ProductImage = styled.img`
 const Content = styled.div`
   display: flex;
   flex-direction: column;
+ 
   gap: 1.5rem;
   text-align: left;
-  gap: 10px;
+   ${({ theme }) => `
+  @media(max-width: ${theme.breakPoints.lg}) {
+  }`}
+  
   h1 {
     color: ${(props) => props.theme.colors.text};
     font-size: 2.5rem;
     line-height: 1.2;
     margin-bottom: 1rem;
+      ${({ theme }) => `
+  @media(max-width: ${theme.breakPoints.lg}) {
+font-size: 1.5rem;
+align-self: flex-start;
   }
+ @media(max-width: ${theme.breakPoints.md}) {
+width: 80%;
+  }
+ @media(max-width: ${theme.breakPoints.xs}) {
+text-align: left;
+font-size: 1.2rem;  }
+`}
+  
 
-  p:nth-child(3) {
-    font-weight: 600;
-    align-self: flex-end;
-    color: grey;
-  }
   p:nth-child(6) {
     font-weight: 600;
     span {
@@ -103,6 +163,16 @@ const PriceTag = styled.p`
   text-align: left;
   align-self: flex-start;
   color: ${(props) => props.theme.colors.quaternary};
+  ${({ theme }) => `
+    @media (max-width: ${theme.breakPoints.md}) {
+font-size: 1.5rem; 
+font-weight: 200;  
+text-align: center;
+align-self: flex-start;
+
+}
+    `}
+
   span {
     color: grey;
     font-size: 0.6em;
@@ -119,37 +189,45 @@ const ContentDesc = styled.div`
     border-bottom: 1px solid white;
     padding-bottom: 10px;
     font-size: 1.5rem;
+   
   }
   p:nth-child(2) {
     font-weight: 300;
     font-size: 14px;
     padding-top: 10px;
+     ${({theme}) => `
+     @media(max-width: ${theme.breakPoints.lg}) {
+width: 70%;
+  }
+    `}
   }
 `;
 const ColumnCart = styled.div`
   display: flex;
   padding: 1rem;
   width: 100%;
-  gap: 10px;
+  gap: 20px;
   flex-direction: column;
-  justify-content: space-evenly;
-  align-items: flex-start;
-  border-radius: 20px;
 
-  p:nth-child(3) {
-    font-weight: 600;
-    align-self: flex-start;
-    font-size: 25px;
-    color: ${(props) => props.theme.colors.text};
-  }
-  p:nth-child(4) {
-    font-weight: 800;
-    font-size: 1.6rem;
-    border: 1px solid blue;
-    span {
-      color: ${(props) => props.theme.colors.quaternary};
+  justify-content: space-evenly;
+  align-items: center;
+  border-radius: 20px;
+  ${({ theme }) => `
+  @media(max-width: ${theme.breakPoints.lg}) {
+gap: 0;
+  }`}
+
+  div {
+    ${({ theme }) => `
+    @media(max-width: ${theme.breakPoints.lg}) {
+align-self: flex-start;
+padding-top: 10px;
     }
+ @media(max-width: ${theme.breakPoints.xs}) {
+padding-top: 10px;
+    }`}  
   }
+    
 `;
 const ListedSpecifications = styled.ul`
   display: grid;
@@ -157,6 +235,12 @@ const ListedSpecifications = styled.ul`
   gap: 10px;
   list-style-type: none;
   padding: 0;
+   ${({theme}) => `
+     @media(max-width: ${theme.breakPoints.lg}) {
+gap: 0;
+width: 80%;
+  }
+    `}
   li {
     margin: 8px 15px;
     font-size: 16px;
@@ -167,6 +251,10 @@ const ListedSpecifications = styled.ul`
     }
   }
 `;
+const QuantityTag = styled.p`
+  ${({ theme }) => `
+  @media(max-width: ${theme.breakPoints.lg}) {
+align-self: flex-start;  }`}`;
 
 const ProductDetail = () => {
   const [showPayment, setShowPayment] = useState(false);
@@ -303,7 +391,11 @@ const ProductDetail = () => {
       <ProductDiv>
         <ProductRow>
           <StickyImageContainer>
-            <ProductImage src={product.image} alt={product.title} loading="lazy" />
+            <ProductImage
+              src={product.image}
+              alt={product.title}
+              loading="lazy"
+            />
           </StickyImageContainer>{" "}
           <Content>
             <br />
@@ -327,17 +419,14 @@ const ProductDetail = () => {
                 <span>USD</span>
               </PriceTag>
 
-              <p>Quantity</p>
+              <QuantityTag>Quantity</QuantityTag>
 
               <Counter>
                 <CounterButton onClick={decrement}>-</CounterButton>
                 <CounterText>{quantity}</CounterText>
                 <CounterButton onClick={increment}>+</CounterButton>
               </Counter>
-              <ActionButtons
-                product={product}
-                showBuyButton={true}
-              />
+              <ActionButtons product={product} showBuyButton={true} />
               <ContentDesc>
                 <p>Description</p>
                 <p>{product.description}</p>
@@ -374,11 +463,11 @@ const ProductDetail = () => {
                     onClose={() => setShowPayment(false)}
                   >
                     <BuyModal
-                      // product={product}
-                      // onClose={() => setShowPayment(false)}
-                      // localQuantity={localQuantity}
-                      // totalPrice={totalPrice}
-                      // phoneNumber={phoneNumber}
+                    // product={product}
+                    // onClose={() => setShowPayment(false)}
+                    // localQuantity={localQuantity}
+                    // totalPrice={totalPrice}
+                    // phoneNumber={phoneNumber}
                     />
                   </Modal>
                 </>
@@ -388,7 +477,7 @@ const ProductDetail = () => {
         </ProductRow>
       </ProductDiv>
       <Modal show={showModal} onClose={() => setShowModal(false)}>
-        <LoginForm />
+        <LoginForm onSuccess={() => setShowModal(false)} />
       </Modal>
     </Main>
   );

@@ -52,6 +52,11 @@ const ModalWrapper = styled.div`
     padding: 10px;
     max-width: 95%;
   }
+    ${({theme}) => `
+   @media (max-width: ${theme.breakPoints.sm}) {
+   max-width: 300px;
+   }
+    ` }
 `;
 
 export const ProductImage = styled.img`
