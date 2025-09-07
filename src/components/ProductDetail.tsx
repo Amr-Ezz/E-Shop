@@ -5,7 +5,7 @@ import styled from "styled-components";
 import useQuantity from "../Hooks/useQuantity";
 import { Counter, CounterButton, CounterText } from "../shared/Counter";
 import ActionButtons from "../shared/ActionButtons";
-import SplitText from "./SplitText";
+// import SplitText from "./SplitText";
 
 import { auth } from "../firebase";
 import LoginForm from "./LoginForm/LoginForm";
@@ -130,8 +130,9 @@ const Content = styled.div`
   
   h1 {
     color: ${(props) => props.theme.colors.text};
-    font-size: 2.5rem;
-    line-height: 1.2;
+    font-size: 2rem;
+    line-height: 1;
+    font-weight: 600;
     margin-bottom: 1rem;
       ${({ theme }) => `
   @media(max-width: ${theme.breakPoints.lg}) {
@@ -155,13 +156,12 @@ font-size: 1.2rem;  }
   }
 `;
 const PriceTag = styled.p`
-  color: ${(props) => props.theme.colors.grey};
   display: flex;
   gap: 5px;
   font-weight: 500;
   font-size: 2rem;
   text-align: left;
-  align-self: flex-start;
+  align-self: center;
   color: ${(props) => props.theme.colors.quaternary};
   ${({ theme }) => `
     @media (max-width: ${theme.breakPoints.md}) {
@@ -176,7 +176,7 @@ align-self: flex-start;
   span {
     color: grey;
     font-size: 0.6em;
-    vertical-align: super;
+    margin-top: 10px;
   }
 `;
 const ContentDesc = styled.div`
@@ -206,11 +206,7 @@ const ColumnCart = styled.div`
   display: flex;
   padding: 1rem;
   width: 100%;
-  gap: 20px;
   flex-direction: column;
-
-  justify-content: space-evenly;
-  align-items: center;
   border-radius: 20px;
   ${({ theme }) => `
   @media(max-width: ${theme.breakPoints.lg}) {
@@ -255,6 +251,12 @@ const QuantityTag = styled.p`
   ${({ theme }) => `
   @media(max-width: ${theme.breakPoints.lg}) {
 align-self: flex-start;  }`}`;
+const PriceSection = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: space-around;
+`;
 
 const ProductDetail = () => {
   const [showPayment, setShowPayment] = useState(false);
@@ -402,8 +404,9 @@ const ProductDetail = () => {
 
             <ColumnCart>
               <h1>
-                <SplitText
-                  words={product.title.substring(0, 50).split(" ")}
+                {product.title}
+                {/* <SplitText
+                  words={product.title.split(" ")}
                   // style={{
                   //   margin: 0,
                   //   padding: "2px",
@@ -411,21 +414,23 @@ const ProductDetail = () => {
                   //   fontSize: "26px",
                   //   fontWeight: 800,
                   // }}
-                />
+                /> */}
               </h1>
-
+<PriceSection>
               <PriceTag>
                 {totalPrice}.99
                 <span>USD</span>
               </PriceTag>
 
-              <QuantityTag>Quantity</QuantityTag>
 
               <Counter>
+              <QuantityTag>Quantity</QuantityTag>
                 <CounterButton onClick={decrement}>-</CounterButton>
                 <CounterText>{quantity}</CounterText>
                 <CounterButton onClick={increment}>+</CounterButton>
               </Counter>
+
+</PriceSection>
               <ActionButtons product={product} showBuyButton={true} />
               <ContentDesc>
                 <p>Description</p>

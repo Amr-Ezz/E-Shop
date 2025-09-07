@@ -6,6 +6,7 @@ import SaleSection from "../../components/SaleSection";
 import AdsSection from "../../components/AdsSection";
 import CommentsSection from "../../components/CommentsSection";
 import { Loader } from "../../components/Loader/Loader";
+import PhotoList from "../../api/fetchPexels";
 
 const Home: React.FC = () => {
   
@@ -16,6 +17,7 @@ const Home: React.FC = () => {
         <SaleSection />
         <BuyModal />
         <AdsSection />
+        {/* <PhotoList /> */}
         <CommentsSection />
       </Suspense>
     </Container>

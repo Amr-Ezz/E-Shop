@@ -7,9 +7,9 @@ import useInView from "../Hooks/useInView";
 import getDynamicThreshold from "../Utilities/DynamicThreshold";
 
 interface CardProps {
-  to: string;
   isvisible: boolean;
 }
+
 const scaleInCenter = keyframes`
   0% {
     transform: scale(0.5);
@@ -20,235 +20,186 @@ const scaleInCenter = keyframes`
     opacity: 1;
   }
 `;
-const CardGrid = styled.div`
+
+/* ---------- GRID (belongs in parent, but reusable here) ---------- */
+export const CardGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(autofill, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   grid-gap: 1rem;
   width: 100%;
-  justify-items: center;
+  align-items: start;
 `;
-const Card = styled(Link).withConfig({
-  shouldForwardProp: (prop) => prop !== "isvisible",
-})<CardProps>`
-  display: flex;
-  flex-direction: column;
-  padding: 0.5rem;
-  height: fit-content;
-  animation: ${(props) => (props.isvisible ? scaleInCenter : "none")} 0.5s
-    ease-in-out;
-  gap: 10px;
-  text-decoration: none;
-  max-height: 600px;
-  overflow: hidden;
-  align-items: center;
-  background-color: transparent;
-  background: ${({ theme }) => theme.background};
 
-  border-radius: 1rem;
-  box-shadow: 0px -16px 24px 0px rgba(255, 255, 255, 0.25) inset;
-  ${({ theme }) => `
-  
-      @media (max-width: ${theme.breakPoints.md}) {
-gap: 30px;
-
-      }
-        
-  `}
-
-  img {
-    width: 100%;
-    height: 200px;
-    max-height: 200px;
-    border-radius: 50px;
-    object-fit: scale-down;
-    max-width: 150px;
-  }
-
-  h1 {
-    font-size: 1rem;
-    text-align: center;
-    color: ${(props) => props.theme.colors.text};
-    ${({ theme }) => `
-  
-      @media (max-width: ${theme.breakPoints.md}) {
-font-size: 1rem;
-text-align: flex-start;
-
-      }
-        
-  `}
-  }
-
-  p {
-    text-align: left;
-    color: ${(props) => props.theme.colors.text};
-    ${({ theme }) => `
-  
-      @media (max-width: ${theme.breakPoints.md}) {
-font-size: 0.8rem;
-
-      }
-        
-  `}
-
-    span {
-      color: green;
-    }
-  }
-`;
-const PriceHolder = styled.div`
+/* ---------- CARD WRAPPER ---------- */
+const CardWrapper = styled(Link)<CardProps>`
   display: flex;
   flex-direction: column;
   width: 100%;
-  align-items: flex-start;
+  padding: 0.5rem 1rem 1rem;
+  border-radius: 1rem;
+  background: ${({ theme }) => theme.background};
+  box-shadow: 0px -16px 24px 0px rgba(255, 255, 255, 0.25) inset;
+  text-decoration: none;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  animation: ${({ isvisible }) => (isvisible ? scaleInCenter : "none")} 0.5s
+    ease-in-out;
 
-  p:nth-child(1) {
-    color: ${(props) => props.theme.colors.text};
-    font-size: 1rem;
-    font-weight: 800;
-    padding: 1rem;
-    border-radius: 100%;
-    box-shadow: 0px -16px 24px 0px rgba(255, 255, 255, 0.25) inset;
-    ${({ theme }) => `
-  
-      @media (max-width: ${theme.breakPoints.md}) {
-font-size: 1rem;
-padding: 1rem;
-
-      }
-        
-  `}
-
-    img {
-      width: 20px;
-      height: 20px;
-    }
-  }
-
-  p:nth-child(2),
-  p:nth-child(3) {
-    align-self: flex-end;
-
-    img {
-      width: 15px;
-      height: 15px;
-    }
-  }
-
-  div {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
-    margin-top: 1rem;
-    padding-bottom: 1rem;
-
-    button {
-      width: 100px;
-      height: 50px;
-      border-radius: 50px;
-      font-weight: 600;
-      background-color: ${(props) => props.theme.colors.quaternary};
-      color: ${(props) => props.theme.colors.text};
-      border: 1px solid ${(props) => props.theme.colors.white};
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-
-      &:hover {
-        background-color: ${(props) => props.theme.colors.primary};
-        color: ${(props) => props.theme.colors.text};
-      }
-    }
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.15);
   }
 `;
-// const CircleDiv = styled.div`
-//   display: flex;
-//   flex-direction: row;
-//   width: 108px;
-//   height: 28px;
-//   justify-content: space-between;
 
-//   div {
-//     width: 28px;
-//     height: 28px;
-//     border-radius: 100%;
-//     background-color: #c47530;
+/* ---------- MEDIA ---------- */
+const CardImage = styled.img`
+  width: 100%;
+  height: 60vh;
+  object-fit: contain; /* changed from contain for consistency */
+  border-radius: 1rem;
+  margin-bottom: 0.5rem;
+`;
 
-//     &:nth-child(2) {
-//       background-color: #fac585;
-//     }
+/* ---------- TEXT ---------- */
+const CardTitle = styled.h1`
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: ${({ theme }) => theme.colors.text};
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; 
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
-//     &:nth-child(3) {
-//       background-color: #05697c;
-//     }
-//   }
+  ${({ theme }) => `
+    @media (max-width: ${theme.breakPoints.md}) {
+      font-size: 1rem;
+      text-align: start;
+    }
+  `}
+`;
 
-//   @media (max-width: 768px) {
-//     width: 84px;
-//     height: 22px;
+const CardDescription = styled.p`
+  font-size: 0.75rem;
+  color: ${({ theme }) => theme.colors.text};
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; 
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
-//     div {
-//       width: 22px;
-//       height: 22px;
-//     }
-//   }
-// `;
-interface productProps {
+  ${({ theme }) => `
+    @media (max-width: ${theme.breakPoints.md}) {
+      font-size: 0.8rem;
+    }
+  `}
+`;
+
+const ToggleButton = styled.button`
+  background: none;
+  border: none;
+  color: grey;
+  cursor: pointer;
+  font-size: 0.75rem;
+  margin-left: 0.25rem;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+/* ---------- PRICE & DETAILS ---------- */
+const PriceHolder = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  margin-top: auto;
+  align-items: center;
+  gap: 1.5rem;
+`;
+
+const PriceText = styled.p`
+  color: ${({ theme }) => theme.colors.text};
+  font-size: 1.5rem;
+  font-weight: 800;
+  padding: 1rem;
+  border-radius: 100%;
+  box-shadow: 0px -16px 24px 0px rgba(255, 255, 255, 0.25) inset;
+
+  img {
+    width: 20px;
+    height: 20px;
+    margin-left: 0.25rem;
+  }
+
+  ${({ theme }) => `
+    @media (max-width: ${theme.breakPoints.md}) {
+      font-size: 1rem;
+      padding: 1rem;
+    }
+  `}
+`;
+
+const InfoText = styled.p`
+  font-size: 1.2rem;
+  color: ${({ theme }) => theme.colors.text};
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+
+
+  img {
+    width: 20px;
+  }
+`;
+
+/* ---------- COMPONENT ---------- */
+interface ProductProps {
   product: Product;
 }
 
-export const CardContainer: React.FC<productProps> = ({ product }) => {
-  const { truncateDescription, toggleDescription, toggleHandler } =
-    useTruncate();
+export const CardContainer: React.FC<ProductProps> = ({ product }) => {
+  // const { truncateDescription, toggleDescription, toggleHandler } = useTruncate();
   const { ref, isInView } = useInView(getDynamicThreshold);
 
+  const imageUrl =
+    product.image || product.thumbnail || product.images?.[0] || "/icons/placeholder.png";
+
   return (
-    <CardGrid ref={ref}>
-      <Card
-        key={product.id}
-        to={`/products/${product.id}`}
-        isvisible={isInView}
-      >
-        <img src={product.image} alt={product.title} loading="lazy" />
-        <h1>{product.title.substring(0, 50)}</h1>
-        {/* <CircleDiv>
-          <div></div>
-          <div></div>
-          <div></div>
-        </CircleDiv> */}
-        <p style={{ lineHeight: "20px" }}>
-          {truncateDescription(product.description, 100, product.id)}
-          {product.description.length > 100 && (
-            <span
-              onClick={() => toggleHandler(product.id)}
-              style={{ color: "grey" }}
-            >
-              {toggleDescription[product.id] ? "See Less" : "See More"}
-            </span>
-          )}
-        </p>
+    <CardWrapper ref={ref} to={`/products/${product.id}`} isvisible={isInView}>
+      <CardImage src={imageUrl} alt={`Image of ${product.title}`} />
+      <CardTitle>{product.title}</CardTitle>
 
-        <PriceHolder>
-          <p>
-            {product.price}
-            <img src="/icons/dollar-symbol.png" alt="dollar" loading="lazy" />
-          </p>
-          <p>
-            {product.brand}{" "}
-            <img src="/icons/star.png" alt="star" loading="lazy" />
-          </p>
-          <p>
-            {product.discount}{" "}
-            <img src="/icons/trolley.png" alt="Items left" loading="lazy" />
-          </p>
-          <p>Model: {product.model}</p>
-        </PriceHolder>
+      {/* <CardDescription>
+        {truncateDescription(product.description, 100, product.id)}
+        {product.description.length > 100 && (
+          <ToggleButton onClick={() => toggleHandler(product.id)}>
+            {toggleDescription[product.id] ? "See Less" : "See More"}
+          </ToggleButton>
+        )}
+      </CardDescription> */}
 
-        <ActionButtons product={product} showBuyButton={true} quantity={1} />
-        {/* {showPayment && (
-          <BuyModal />
-        )} */}
-      </Card>
-    </CardGrid>
+      <PriceHolder>
+        <PriceText>
+          {product.price}
+          <img src="/icons/dollar-symbol.png" alt="dollar" loading="lazy" />
+        </PriceText>
+        <InfoText>
+        4.5 <img src="/icons/star.png" alt="star" loading="lazy" />
+        </InfoText>
+        {/* <InfoText>
+          {product.discount}{" "}
+          <img src="/icons/trolley.png" alt="Items left" loading="lazy" />
+        </InfoText> */}
+        {/* <InfoText>Model: {product.model}</InfoText> */}
+      </PriceHolder>
+
+      <ActionButtons product={product} showBuyButton={true} quantity={1} />
+    </CardWrapper>
   );
 };

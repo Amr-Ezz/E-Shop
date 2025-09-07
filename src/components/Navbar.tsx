@@ -9,6 +9,7 @@ import { useUser } from "../Context/UserContext";
 import { FaUser } from "react-icons/fa";
 import { Loader } from "./Loader/Loader";
 import { useLoader } from "../Context/LoaderContext";
+import {debounce} from "lodash";
 
 const NavbarContainer = styled.div`
   width: 100%;
@@ -45,10 +46,11 @@ const Header = styled.header`
   }
 `;
 
-const Logo = styled.h1`
+const Logo = styled.h3`
   font-size: 30px;
   font-weight: bold;
   color: ${({ theme }) => theme.colors.text};
+  font-display: swap;
   span {
     color: ${({ theme }) => theme.colors.tertiary};
   }
@@ -344,30 +346,35 @@ const Navbar = React.memo(() => {
 
   const navigate = useNavigate();
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
     setSearchValue(e.target.value);
+    debouncedSearch(e.target.value);
+    setSearchValue("");
   };
+  const performSearch =  useCallback( async (value: string) => {
+    if (value.trim()) {
+      try {
+        setIsLoading(true);
+        await navigate(`/search?q=${encodeURIComponent(value)}`);
+        setSearchVisible(false);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  }, [navigate, setIsLoading])
+const debouncedSearch = useCallback(debounce(performSearch), [performSearch])
+  
   const handleSearchForm = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault();
-      if (searchValue.trim()) {
-        try {
-          setIsLoading(true);
-          await navigate(`/search?q=${encodeURIComponent(searchValue)}`);
-          setSearchVisible(false);
-        } finally {
-          setIsLoading(false);
-        }
-      }
+     performSearch(searchValue)
     },
-    [searchValue, setIsLoading, navigate]
+    [searchValue, performSearch]
   );
 
   const toggleModal = useCallback(() => setShowModal(!showModal), []);
   const onClose = () => setShowModal(!showModal);
   const toggleCart = useCallback(() => {
     setCartModal(!cartModal);
-    console.log("Entered");
   }, []);
   const toggleMenu = useCallback(() => {
     setMenuOpen((prev) => !prev);
@@ -391,7 +398,7 @@ const Navbar = React.memo(() => {
       setIsLoading(true);
     },
     [navigate, setIsLoading]
-  );
+  ); 
 
   return (
     <>

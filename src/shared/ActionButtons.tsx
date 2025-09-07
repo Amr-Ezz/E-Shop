@@ -15,7 +15,6 @@ const ButtonsContainer = styled.div`
   justify-content: space-between;
   width: 100%;
   margin-top: 1rem;
-  padding-bottom: 1rem;
     ${({ theme }) => `
       @media (max-width: ${theme.breakPoints.lg}) {
 align-items: center;

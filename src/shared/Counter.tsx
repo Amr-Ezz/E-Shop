@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const Counter = styled.div`
   display: flex;
   align-items: center;
+  gap: 10px;
   margin-bottom: 24px;
 
   @media (max-width: 480px) {

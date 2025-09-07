@@ -4,8 +4,12 @@ import { fetchProductsByCategory, Product } from "../api/requests";
 import { CardContainer } from "../shared/Card";
 import useInView from "../Hooks/useInView";
 import getDynamicThreshold from "../Utilities/DynamicThreshold";
+import { searchPexels } from "../api/fetchPexels";
+import { mergePexelsImages } from "../Utilities/mergePexels";
 
-const MainSection = styled.div.withConfig({shouldForwardProp: (prop) => prop !== "isvisible"})<{ isvisible: boolean }>`
+const MainSection = styled.div.withConfig({
+  shouldForwardProp: (prop) => prop !== "isvisible",
+})<{ isvisible: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -103,17 +107,29 @@ const SaleSection = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const { ref, isInView } = useInView(getDynamicThreshold);
 
-  useEffect(() => {
-    const getProducts = async () => {
-      try {
-        const productData = await fetchProductsByCategory(selectedCategory);
-        setProducts(productData);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      }
-    };
-    getProducts();
-  }, [selectedCategory]);
+useEffect(() => {
+  let cancelled = false;
+
+  const getProducts = async () => {
+    try {
+      const productData = await fetchProductsByCategory(selectedCategory);
+      console.log("Fetched products:", productData);
+      const photos = await searchPexels(
+        selectedCategory || "electronics",
+        Math.min(productData.length, 30)
+      );
+      const enriched = mergePexelsImages(productData, photos);
+      if (!cancelled) setProducts(enriched);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
+  };
+  getProducts();
+
+  return () => {
+    cancelled = true;
+  };
+}, [selectedCategory]);
 
   const handlePage = (index: number) => {
     setCurrentPage(index + 1);

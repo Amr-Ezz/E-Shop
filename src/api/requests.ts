@@ -1,6 +1,8 @@
 import axios from "axios";
 
 export interface Product {
+  images: any;
+  thumbnail: string;
   id: number;
   name: string;
   title: string;
@@ -48,3 +50,5 @@ export const fetchProductsById = async (id: number): Promise<Product> => {
     throw new Error("Could not fetch product");
   }
 };
+
+
