@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { fetchProductsByCategory, Product } from "../api/requests";
+import { fetchProductsByCategory, NewProduct, Product } from "../api/requests";
 import { CardContainer } from "../shared/Card";
 import useInView from "../Hooks/useInView";
 import getDynamicThreshold from "../Utilities/DynamicThreshold";
@@ -102,8 +102,8 @@ const StyledButton = styled.button<StyledButtonProps>`
 `;
 
 const SaleSection = () => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string>("audio");
+  const [products, setProducts] = useState<NewProduct[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>("men's clothing");
   const [currentPage, setCurrentPage] = useState<number>(1);
   const { ref, isInView } = useInView(getDynamicThreshold);
 
@@ -112,18 +112,16 @@ useEffect(() => {
 
   const getProducts = async () => {
     try {
-      const productData = await fetchProductsByCategory(selectedCategory);
-      console.log("Fetched products:", productData);
-      const photos = await searchPexels(
-        selectedCategory || "electronics",
-        Math.min(productData.length, 30)
-      );
-      const enriched = mergePexelsImages(productData, photos);
-      if (!cancelled) setProducts(enriched);
+      const products = await fetchProductsByCategory(selectedCategory);
+      if (!cancelled) {
+        console.log("Fetched products:", products);
+        setProducts(products); // <-- update your state here
+      }
     } catch (error) {
       console.error("Error fetching products:", error);
     }
   };
+
   getProducts();
 
   return () => {
@@ -147,10 +145,10 @@ useEffect(() => {
     <MainSection ref={ref} isvisible={isInView ? true : false}>
       <h1>Flash Sale</h1>
       <ul>
-        <li onClick={() => handleCategory("audio")}>Audio</li>
-        <li onClick={() => handleCategory("gaming")}>Gaming</li>
-        <li onClick={() => handleCategory("mobile")}>Mobile</li>
-        <li onClick={() => handleCategory("tv")}>TV</li>
+        <li onClick={() => handleCategory("men's clothing")}>men's clothing</li>
+        <li onClick={() => handleCategory("women's clothing")}>women's clothing</li>
+        <li onClick={() => handleCategory("jewelery")}>jewelery</li>
+        <li onClick={() => handleCategory("electronics")}>electronics</li>
       </ul>
       <GridContainer>
         {displayedProducts.map((product) => (

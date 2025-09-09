@@ -1,13 +1,13 @@
 import { createContext, ReactNode, useContext, useState } from "react";
-import { Product } from "../api/requests";
+import { NewProduct, Product } from "../api/requests";
 
 interface BuyModalProps {
   isModalOpen: boolean;
-  product: Product | null;
+  product: NewProduct | null;
   localQuantity: number;
   totalPrice?: number;
   openModal: (
-    product: Product,
+    product: NewProduct,
     quantity?: number,
     totalPrice?: number,
   ) => void;
@@ -20,11 +20,11 @@ export const BuyModalProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [product, setProduct] = useState<Product | null>(null);
+  const [product, setProduct] = useState<NewProduct | null>(null);
   const [localQuantity, setLocalQuantity] = useState(1);
   const [totalPrice, setTotalPrice] = useState(0);
   const openModal = (
-    product: Product,
+    product: NewProduct,
     quantity: number = 1,
     totalPrice: number = 0,
   ) => {

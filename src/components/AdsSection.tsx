@@ -81,28 +81,28 @@ const AdsSection = () => {
       <ImageDiv
         ref={ref}
         isvisible={isInView}
-        onClick={() => handleNavigate("gaming")}
+        onClick={() => handleNavigate("electronics")}
       >
-        <Image3D url="./Controller.png" width={250} height={250} animationType="bounce"/>
-        <h1>Ultimate Gaming Gear</h1>
+        <Image3D url="./Rectangle 3.png" width={250} height={250} animationType="bounce"/>
+        <h1>Ultimate Electronics Gear</h1>
       </ImageDiv>
       <ImageDiv
         ref={ref}
         isvisible={isInView}
-        onClick={() => handleNavigate("audio")}
+        onClick={() => handleNavigate("men's clothing")}
       >
-        <Image3D url="./HeadSet.png" width={250} height={250} animationType="scale" />
-        <h1>50% Off Premium Sound</h1>
+        <Image3D url="./Men.png" width={250} height={250} animationType="scale" />
+        <h1>50% Off Men's clothing</h1>
       </ImageDiv>
       <ImageDiv
         ref={ref}
         isvisible={isInView}
-        onClick={() => handleNavigate("mobile")}
+        onClick={() => handleNavigate("jewelery")}
       >
         <Image3D
-        url="./SmartPhone.png" width={250} height={250} animationType="wave"
+        url="./Jewelery.png" width={250} height={250} animationType="wave"
         />
-        <h1>Newest Smartphones</h1>
+        <h1>Jewelery</h1>
       </ImageDiv>
     </AdsMain>
   );

@@ -1,10 +1,10 @@
-import { Product } from "../api/requests";
+import { NewProduct, Product } from "../api/requests";
 import { useBuyModal } from "../Context/BuyContext";
 import { useCart } from "../Context/CartContext";
 import styled from "styled-components";
 
 interface ButtonProps {
-  product: Product;
+  product: NewProduct;
   showBuyButton?: boolean;
   quantity?: number;
 }

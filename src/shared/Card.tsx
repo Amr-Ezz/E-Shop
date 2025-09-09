@@ -1,6 +1,6 @@
 import styled, { keyframes } from "styled-components";
 import { Link } from "react-router-dom";
-import { Product } from "../api/requests";
+import { NewProduct, Product } from "../api/requests";
 import { useTruncate } from "../Hooks/useTruncate";
 import ActionButtons from "./ActionButtons";
 import useInView from "../Hooks/useInView";
@@ -160,7 +160,7 @@ const InfoText = styled.p`
 
 /* ---------- COMPONENT ---------- */
 interface ProductProps {
-  product: Product;
+  product: NewProduct;
 }
 
 export const CardContainer: React.FC<ProductProps> = ({ product }) => {
@@ -168,7 +168,7 @@ export const CardContainer: React.FC<ProductProps> = ({ product }) => {
   const { ref, isInView } = useInView(getDynamicThreshold);
 
   const imageUrl =
-    product.image || product.thumbnail || product.images?.[0] || "/icons/placeholder.png";
+    product.image;
 
   return (
     <CardWrapper ref={ref} to={`/products/${product.id}`} isvisible={isInView}>

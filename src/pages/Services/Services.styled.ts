@@ -190,12 +190,10 @@ export const CardsContainer = styled.div`
 export const Card = styled.div`
   display: flex;
   max-width: 384vw;
-  height: auto;
-  min-height: 784px;
+  height: 500px;
+  max-height: 600px;
   border-radius: 20px;
   width: 384px;
-  padding: 1rem;
-  height: 704px;
   flex-direction: column;
   justify-content: space-around;
   box-sizing: border-box;
@@ -227,6 +225,8 @@ export const Card = styled.div`
 export const ImageCard = styled(FullHeightImage)`
   border-radius: 50px;
   object-fit: cover;
+  max-height: 400px;
+  object-position: center;
 `;
 export const SaleBanner = styled.div`
   width: 100%;
@@ -237,8 +237,8 @@ export const SaleBanner = styled.div`
   height: 100vh;
   min-height: 553px;
   background-image: url("/purple_background.jpg");
-  background-size: cover; /* This makes the image cover the entire div */
-  background-repeat: no-repeat; /* Prevents the image from repeating */
+  background-size: cover; 
+  background-repeat: no-repeat; 
   background-position: center;
   div {
     display: flex;

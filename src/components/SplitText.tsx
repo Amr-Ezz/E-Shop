@@ -3,6 +3,7 @@ import styled, { keyframes } from "styled-components";
 interface SplitTextProps {
   words?: string[];
   className?: string;
+  animationDuration: number;
 }
 const fadeInUp = keyframes`
 from {

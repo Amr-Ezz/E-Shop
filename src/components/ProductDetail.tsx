@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { fetchProductsById, Product } from "../api/requests";
+import { fetchProductsById, NewProduct, Product } from "../api/requests";
 import styled from "styled-components";
 import useQuantity from "../Hooks/useQuantity";
 import { Counter, CounterButton, CounterText } from "../shared/Counter";
@@ -260,7 +260,7 @@ const PriceSection = styled.div`
 
 const ProductDetail = () => {
   const [showPayment, setShowPayment] = useState(false);
-  const [product, setProduct] = useState<Product | undefined>();
+  const [product, setProduct] = useState<NewProduct | undefined>();
   const [showModal, setShowModal] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -446,19 +446,15 @@ const ProductDetail = () => {
                     <span>In Stock</span>
                   </li>
                   <li>
-                    Color: <span>{product.color}</span>
+              Rating:<span>{product.rating.rate}</span>
                   </li>
 
                   <li>
-                    Model: <span>{product.model}</span>
+                    Count <span>{product.rating.count}</span>
                   </li>
 
-                  <li>
-                    Discount: <span>{product.discount}%</span>
-                  </li>
-                  <li>
-                    Brand: <span>{product.brand}</span>
-                  </li>
+                 
+        
                 </ListedSpecifications>
               </Specifications>
               {showPayment && (

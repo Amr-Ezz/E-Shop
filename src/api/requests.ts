@@ -15,36 +15,50 @@ export interface Product {
   model: string;
   color: string;
 }
-export const fetchProducts = async (): Promise<Product[]> => {
+export interface Rating {
+  rate: number;
+  count: number;
+}
+
+export interface NewProduct {
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  category: Category;
+  image: string;
+  rating: Rating;
+}
+export type Category = "men's clothing" | "women's clothing" | "jewelery" | "electronics";
+
+
+export const fetchProducts = async (): Promise<NewProduct[]> => {
   try {
-    const response = await axios.get("https://fakestoreapi.in/api/products");
-    const products = response.data.products || response.data;
+    const response = await axios.get("https://fakestoreapi.com/products");
+    const products =  response.data;
     return products;
   } catch (error: any) {
     console.error("Error fetching the products:", error.message);
     return [];
   }
 };
-export const fetchProductsByCategory = async (
-  category: string
-): Promise<Product[]> => {
+
+export const fetchProductsByCategory = async (category: string): Promise<NewProduct[]> => {
   try {
-    const response = await axios.get(
-      `https://fakestoreapi.in/api/products/category?type=${category}`
-    );
-    return response.data.products || [];
+    const response = await axios.get<NewProduct[]>(`https://fakestoreapi.com/products/category/${encodeURIComponent(category)}`);
+    return response.data;
   } catch (error) {
     console.error("Error fetching products by category:", error);
-    return [];
+    throw error;
   }
 };
 
-export const fetchProductsById = async (id: number): Promise<Product> => {
+export const fetchProductsById = async (id: number): Promise<NewProduct> => {
   try {
     const response = await axios.get(
-      `https://fakestoreapi.in/api/products/${id}`
+      `https://fakestoreapi.com/products/${id}`
     );
-    return response.data.product || response.data;
+    return response.data;
   } catch (error) {
     console.error(error, "error fetch single product");
     throw new Error("Could not fetch product");

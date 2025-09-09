@@ -57,7 +57,7 @@ const Services: React.FC = () => {
                 "and",
                 "foremost",
               ]}
-              animationDuration={1000}
+             animationDuration ={1000}
             />
 
             <h4>Priority</h4>
@@ -81,26 +81,26 @@ const Services: React.FC = () => {
         <BackgroundVector src="/Vector 8.png" />
         <HeadingText>New Arrivals</HeadingText>
         <CardsContainer>
-          <Card onClick={() => handleNavigateByCategory("gaming")}>
+          <Card onClick={() => handleNavigateByCategory("electronics")}>
             <ImageCard src="/Rectangle 20.png" />
             <div>
-              <h4> Gaming Sets</h4>
+              <h4> Electronic Sets</h4>
               <p> Explore Now!</p>
               <img src="/Arrow 1.png" />
             </div>
           </Card>
-          <Card onClick={() => handleNavigateByCategory("mobile")}>
-            <ImageCard src="/Rectangle 21.png" />
+          <Card onClick={() => handleNavigateByCategory("men's clothing")}>
+            <ImageCard src="/Men's.jpg" />
             <div>
-              <h4> Phones</h4>
+              <h4> Men's Clothing</h4>
               <p> Explore Now!</p>
               <img src="/Arrow 1.png" />
             </div>
           </Card>
-          <Card onClick={() => handleNavigateByCategory("audio")}>
-            <ImageCard src="/Rectangle 22.png" />
+          <Card onClick={() => handleNavigateByCategory("women's clothing")}>
+            <ImageCard src="/womens.jpg" />
             <div>
-              <h4>Earphones</h4>
+              <h4>Women's Clothing</h4>
               <p> Explore Now!</p>
               <img src="/Arrow 1.png" />
             </div>
