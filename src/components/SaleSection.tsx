@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { fetchProductsByCategory, NewProduct, Product } from "../api/requests";
+import { fetchProductsByCategory, NewProduct } from "../api/requests";
 import { CardContainer } from "../shared/Card";
 import useInView from "../Hooks/useInView";
 import getDynamicThreshold from "../Utilities/DynamicThreshold";
-import { searchPexels } from "../api/fetchPexels";
-import { mergePexelsImages } from "../Utilities/mergePexels";
 
 const MainSection = styled.div.withConfig({
   shouldForwardProp: (prop) => prop !== "isvisible",
@@ -145,10 +143,10 @@ useEffect(() => {
     <MainSection ref={ref} isvisible={isInView ? true : false}>
       <h1>Flash Sale</h1>
       <ul>
-        <li onClick={() => handleCategory("men's clothing")}>men's clothing</li>
-        <li onClick={() => handleCategory("women's clothing")}>women's clothing</li>
-        <li onClick={() => handleCategory("jewelery")}>jewelery</li>
-        <li onClick={() => handleCategory("electronics")}>electronics</li>
+        <li onClick={() => handleCategory("men's clothing")}>Men's clothing</li>
+        <li onClick={() => handleCategory("women's clothing")}>Women's clothing</li>
+        <li onClick={() => handleCategory("jewelery")}>Jewelery</li>
+        <li onClick={() => handleCategory("electronics")}>Electronics</li>
       </ul>
       <GridContainer>
         {displayedProducts.map((product) => (

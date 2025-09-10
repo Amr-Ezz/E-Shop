@@ -1,7 +1,7 @@
 import styled, { keyframes } from "styled-components";
 import { Link } from "react-router-dom";
-import { NewProduct, Product } from "../api/requests";
-import { useTruncate } from "../Hooks/useTruncate";
+import { NewProduct } from "../api/requests";
+// import { useTruncate } from "../Hooks/useTruncate";
 import ActionButtons from "./ActionButtons";
 import useInView from "../Hooks/useInView";
 import getDynamicThreshold from "../Utilities/DynamicThreshold";
@@ -34,6 +34,7 @@ export const CardGrid = styled.div`
 const CardWrapper = styled(Link)<CardProps>`
   display: flex;
   flex-direction: column;
+  max-height: 500px;
   width: 100%;
   padding: 0.5rem 1rem 1rem;
   border-radius: 1rem;
@@ -54,10 +55,10 @@ const CardWrapper = styled(Link)<CardProps>`
 /* ---------- MEDIA ---------- */
 const CardImage = styled.img`
   width: 100%;
-  height: 60vh;
+  height: 40vh;
   object-fit: contain; /* changed from contain for consistency */
   border-radius: 1rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
 `;
 
 /* ---------- TEXT ---------- */
@@ -81,36 +82,36 @@ const CardTitle = styled.h1`
   `}
 `;
 
-const CardDescription = styled.p`
-  font-size: 0.75rem;
-  color: ${({ theme }) => theme.colors.text};
-  margin-bottom: 0.5rem;
-  line-height: 1.4;
-  display: -webkit-box;
-  -webkit-line-clamp: 3; 
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
+// const CardDescription = styled.p`
+//   font-size: 0.75rem;
+//   color: ${({ theme }) => theme.colors.text};
+//   margin-bottom: 0.5rem;
+//   line-height: 1.4;
+//   display: -webkit-box;
+//   -webkit-line-clamp: 3; 
+//   -webkit-box-orient: vertical;
+//   overflow: hidden;
+//   text-overflow: ellipsis;
 
-  ${({ theme }) => `
-    @media (max-width: ${theme.breakPoints.md}) {
-      font-size: 0.8rem;
-    }
-  `}
-`;
+//   ${({ theme }) => `
+//     @media (max-width: ${theme.breakPoints.md}) {
+//       font-size: 0.8rem;
+//     }
+//   `}
+// `;
 
-const ToggleButton = styled.button`
-  background: none;
-  border: none;
-  color: grey;
-  cursor: pointer;
-  font-size: 0.75rem;
-  margin-left: 0.25rem;
+// const ToggleButton = styled.button`
+//   background: none;
+//   border: none;
+//   color: grey;
+//   cursor: pointer;
+//   font-size: 0.75rem;
+//   margin-left: 0.25rem;
 
-  &:hover {
-    text-decoration: underline;
-  }
-`;
+//   &:hover {
+//     text-decoration: underline;
+//   }
+// `;
 
 /* ---------- PRICE & DETAILS ---------- */
 const PriceHolder = styled.div`
@@ -190,7 +191,7 @@ export const CardContainer: React.FC<ProductProps> = ({ product }) => {
           <img src="/icons/dollar-symbol.png" alt="dollar" loading="lazy" />
         </PriceText>
         <InfoText>
-        4.5 <img src="/icons/star.png" alt="star" loading="lazy" />
+       {product.rating.rate} <img src="/icons/star.png" alt="star" loading="lazy" />
         </InfoText>
         {/* <InfoText>
           {product.discount}{" "}

@@ -3,7 +3,6 @@ import { FlexColumn } from "../Utilities/StyledUtilities.styled";
 import React, { Suspense } from "react";
 import { Loader } from "./Loader/Loader";
 import { Link } from "react-router-dom";
-import CartModal from "./Modal/CartModal";
 
 const FooterMain = styled(FlexColumn)`
   width: 100%;
@@ -235,70 +234,7 @@ const Footer = React.memo(() => {
         </FooterBottom>
       </FooterRow>
 
-      {/* <OfferText>
-        <FooterColumn>
-          <h3>Exclusive</h3>
-          <h4>Subscribe</h4>
-          <p>Get 10% off your first order</p>
-         
-        </FooterColumn>
-        <FooterColumn>
-          <h3>Support</h3>
-          <p>111 Bijoy sarani, Dhaka, DH 1515, Bangladesh.</p>
-          <p>exclusive@gmail.com</p>
-          <p>+88015-88888-9999</p>
-        </FooterColumn>
-        <FooterColumn>
-          <h3>Account</h3>
-          <p>My Account</p>
-          <p>Login / Register</p>
-          <p>Cart</p>
-          <p>Wishlist</p>
-          <p>Shop</p>
-        </FooterColumn>
-        <FooterColumn>
-          <h3>Quick Link</h3>
-          <p>Privacy Policy</p>
-          <p>Terms Of Use</p>
-          <p>FAQ</p>
-          <p>Contact</p>
-        </FooterColumn>
-        <FooterColumn>
-          <h3>Download App</h3>
-          <p>Save $3 with App New User Only</p>
-          <MobileContainer>
-            <ImageMobileColumn>
-              <img
-                src="/Qrcode 1.png"
-                alt="QR Code"
-                loading="lazy"
-                width="100"
-                height="100"
-              />
-            </ImageMobileColumn>
-            <ContentColumn>
-              <Element>
-                <img
-                  src="/GooglePlay.png"
-                  alt="GooglePlay"
-                  loading="lazy"
-                  width={135}
-                  height={40}
-                />
-              </Element>
-              <Element>
-                <img
-                  src="/download-appstore.png"
-                  alt="App Store"
-                  loading="lazy"
-                  width={135}
-                  height={40}
-                />
-              </Element>
-            </ContentColumn>
-          </MobileContainer>
-        </FooterColumn>
-      </OfferText> */}
+     
     </FooterMain>
   );
 });
