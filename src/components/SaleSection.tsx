@@ -4,18 +4,19 @@ import { fetchProductsByCategory, NewProduct } from "../api/requests";
 import { CardContainer } from "../shared/Card";
 import useInView from "../Hooks/useInView";
 import getDynamicThreshold from "../Utilities/DynamicThreshold";
+import CategoryMenu from "../shared/CategoryMenu";
 
 const MainSection = styled.div.withConfig({
   shouldForwardProp: (prop) => prop !== "isvisible",
 })<{ isvisible: boolean }>`
   display: flex;
   flex-direction: column;
+  gap: 1rem;
   justify-content: space-between;
   align-items: center;
   padding: 2rem;
   color: ${(props) => props.theme.colors.text};
   width: 100%;
-  background: ${(props) => props.theme.colors.secondary};
   background: linear-gradient(
     180deg,
     ${(props) => props.theme.colors.primary} 0%,
@@ -26,25 +27,6 @@ const MainSection = styled.div.withConfig({
   transform: ${(props) =>
     props.isvisible ? "translateY(0)" : "translateY(20px)"};
   transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-
-  ul {
-    display: flex;
-    flex-direction: row;
-    list-style: none;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin: 0;
-    padding: 0;
-
-    li {
-      padding: 1rem;
-      cursor: pointer;
-      text-decoration: underline;
-      &:active {
-        color: ${(props) => props.theme.colors.primary};
-      }
-    }
-  }
 
   @media (max-width: 768px) {
     padding: 1rem;
@@ -58,15 +40,12 @@ const GridContainer = styled.div`
   width: 100%;
 
   ${({ theme }) => `
-  
-      @media (max-width: ${theme.breakPoints.sm}) {
+    @media (max-width: ${theme.breakPoints.sm}) {
       grid-template-columns: repeat(2, 1fr);
-
-      }
-         @media (max-width: ${theme.breakPoints.xs}) {
+    }
+    @media (max-width: ${theme.breakPoints.xs}) {
       grid-template-columns: 1fr;
-
-      }
+    }
   `}
 `;
 
@@ -92,12 +71,14 @@ const StyledButton = styled.button<StyledButtonProps>`
     props.$clicked ? props.theme.colors.primary : props.theme.colors.grey};
   cursor: pointer;
   transition: width 0.3s, height 0.3s;
-
-  @media (max-width: 768px) {
-    width: ${(props) => (props.$clicked ? "20px" : "10px")};
-    height: 10px;
-  }
 `;
+
+const categories = [
+  { key: "men's clothing", label: "Men's Clothing" },
+  { key: "women's clothing", label: "Women's Clothing" },
+  { key: "jewelery", label: "Jewelery" },
+  { key: "electronics", label: "Electronics" },
+];
 
 const SaleSection = () => {
   const [products, setProducts] = useState<NewProduct[]>([]);
@@ -105,27 +86,25 @@ const SaleSection = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const { ref, isInView } = useInView(getDynamicThreshold);
 
-useEffect(() => {
-  let cancelled = false;
+  useEffect(() => {
+    let cancelled = false;
 
-  const getProducts = async () => {
-    try {
-      const products = await fetchProductsByCategory(selectedCategory);
-      if (!cancelled) {
-        console.log("Fetched products:", products);
-        setProducts(products); // <-- update your state here
+    const getProducts = async () => {
+      try {
+        const products = await fetchProductsByCategory(selectedCategory);
+        if (!cancelled) {
+          setProducts(products);
+        }
+      } catch (error) {
+        console.error("Error fetching products:", error);
       }
-    } catch (error) {
-      console.error("Error fetching products:", error);
-    }
-  };
+    };
 
-  getProducts();
-
-  return () => {
-    cancelled = true;
-  };
-}, [selectedCategory]);
+    getProducts();
+    return () => {
+      cancelled = true;
+    };
+  }, [selectedCategory]);
 
   const handlePage = (index: number) => {
     setCurrentPage(index + 1);
@@ -142,17 +121,21 @@ useEffect(() => {
   return (
     <MainSection ref={ref} isvisible={isInView ? true : false}>
       <h1>Flash Sale</h1>
-      <ul>
-        <li onClick={() => handleCategory("men's clothing")}>Men's clothing</li>
-        <li onClick={() => handleCategory("women's clothing")}>Women's clothing</li>
-        <li onClick={() => handleCategory("jewelery")}>Jewelery</li>
-        <li onClick={() => handleCategory("electronics")}>Electronics</li>
-      </ul>
+
+     <CategoryMenu
+  categories={categories.map((cat) => cat.key)}
+  selectedCategory={selectedCategory}
+  onSelectCategory={handleCategory}
+  mode="horizontal"
+  style={{ marginBottom: "1rem", borderRadius: "12px"}}
+/>
+
       <GridContainer>
         {displayedProducts.map((product) => (
           <CardContainer product={product} key={product.id} />
         ))}
       </GridContainer>
+
       <HighlightedButtons>
         {Array(Math.ceil(products.length / 6))
           .fill(0)
@@ -164,11 +147,6 @@ useEffect(() => {
             />
           ))}
       </HighlightedButtons>
-      {/* {showBuyModal && selectedProduct && (
-        <BuyModal
-       
-        />
-      )} */}
     </MainSection>
   );
 };

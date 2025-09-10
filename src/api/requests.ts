@@ -64,5 +64,13 @@ export const fetchProductsById = async (id: number): Promise<NewProduct> => {
     throw new Error("Could not fetch product");
   }
 };
+export const fetchSuggestedProducts = async (
+  category: string,
+  excludeId: number,
+  limit = 4
+): Promise<NewProduct[]> => {
+  const products = await fetchProductsByCategory(category);
+  return products.filter((p) => p.id !== excludeId).slice(0, limit);
+};
 
 

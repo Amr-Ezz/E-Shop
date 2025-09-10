@@ -1,8 +1,8 @@
 import React, { createContext, useState, useEffect, ReactNode } from "react";
-import { fetchProductsByCategory, Product } from "../api/requests"; 
+import { fetchProductsByCategory, NewProduct } from "../api/requests"; 
 
 interface ProductContextProps {
-  products: Product[];
+  products: NewProduct[];
   selectedCategory: string;
   setCategory: (category: string) => void;
 }
@@ -10,7 +10,7 @@ interface ProductContextProps {
 const ProductContext = createContext<ProductContextProps | undefined>(undefined);
 
 export const ProductProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<NewProduct[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("");
 
   useEffect(() => {

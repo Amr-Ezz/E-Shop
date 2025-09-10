@@ -1,36 +1,63 @@
-import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import  { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { CardContainer } from "../shared/Card";
 import { useProduct } from "../Context/ProductContext";
+import CategoryMenu from "../shared/CategoryMenu";
 
-const ProductsContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, minmax(200px, 1fr));
-  gap: 1rem;
-  padding: 2rem;
-  background-color: ${(props) => props.theme.colors.primary};
+const PageLayout = styled.div`
+  display: flex;
+  min-height: 100vh;
+  background: ${(props) => props.theme.colors.primary};
   color: ${(props) => props.theme.colors.text};
 `;
 
+const Sidebar = styled.aside`
+  width: 250px;
+  margin-top: 2rem;
+  background: ${(props) => props.theme.colors.secondary};
+  @media (max-width: ${(props) => props.theme.breakPoints.md}) {
+    display: none; 
+  }
+`;
+
+const ProductsContainer = styled.div`
+    flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 1rem;
+
+  padding: 2rem;
+  margin-top: 10px;
+
+  @media (max-width: ${(props) => props.theme.breakPoints.md}) {
+    grid-template-columns: repeat(2, 1fr); 
+  }
+
+  @media (max-width: ${(props) => props.theme.breakPoints.sm}) {
+    grid-template-columns: 1fr; 
+  }
+`;
+
 const LoadingMessage = styled.div`
+  flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
   font-size: 1.5rem;
-  color: ${(props) => props.theme.colors.text};
 `;
 
 const ProductPage = () => {
   const { category } = useParams<{ category: string }>();
   const { products, setCategory } = useProduct();
- 
+  const [selectedCategory, setSelectedCategory] = useState<string>(category || "");
+  const navigate = useNavigate();
+
+  const categories = ["men's clothing", "women's clothing", "jewelery", "electronics"];
 
   useEffect(() => {
     if (category) {
       setCategory(category);
-      console.log(products, "Products");
     }
   }, [category, setCategory]);
 
@@ -42,12 +69,26 @@ const ProductPage = () => {
     );
   }
 
+  const handleMenuClick = (category: string) => {
+    setSelectedCategory(category);
+    navigate(`/products/category/${category}`);
+  };
+
   return (
-    <ProductsContainer>
-      {products.map((product) => (
-        <CardContainer product={product}  key={product.id}/>
-      ))}
-    </ProductsContainer>
+    <PageLayout>
+      <Sidebar>
+        <CategoryMenu
+          categories={categories}
+          selectedCategory={selectedCategory}
+          onSelectCategory={handleMenuClick}
+        />
+      </Sidebar>
+      <ProductsContainer>
+        {products.map((product) => (
+          <CardContainer product={product} key={product.id} />
+        ))}
+      </ProductsContainer>
+    </PageLayout>
   );
 };
 

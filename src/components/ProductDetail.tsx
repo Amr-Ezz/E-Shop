@@ -1,177 +1,108 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { fetchProductsById, NewProduct, Product } from "../api/requests";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  fetchProductsById,
+  NewProduct,
+  fetchSuggestedProducts,
+} from "../api/requests";
 import styled from "styled-components";
 import useQuantity from "../Hooks/useQuantity";
 import { Counter, CounterButton, CounterText } from "../shared/Counter";
 import ActionButtons from "../shared/ActionButtons";
-// import SplitText from "./SplitText";
 
 import { auth } from "../firebase";
 import LoginForm from "./LoginForm/LoginForm";
 import Modal from "./Modal/Modal";
-// import { useUser } from "../Context/UserContext";
 import BuyModal from "./Modal/BuyModal";
 import { Loader } from "./Loader/Loader";
+import CategoryMenu from "../shared/CategoryMenu";
+import { CardContainer } from "../shared/Card";
 
+// ✅ categories for menu
+const categories = ["men's clothing", "women's clothing", "jewelery", "electronics"];
+
+// ---------- STYLES ----------
 const Main = styled.div`
   width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  padding: 2rem;
   background: ${(props) => props.theme.background};
-  ${({ theme }) => `
-  @media (max-width: ${theme.breakPoints.md}) {
-  }
-  `}
 `;
+
+const Sidebar = styled.div`
+  flex: 0 0 220px;
+  background: ${(props) => props.theme.colors.secondary};
+  border-radius: 12px;
+  padding: 1rem;
+  height: fit-content;
+  position: sticky;
+  top: 120px;
+`;
+
+const ContentWrapper = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+`;
+
 const ProductDiv = styled.div`
   background: linear-gradient(#fff2, transparent);
   box-shadow: 10px 40px 40px rgba(0.25, 0.25, 0.25, 0.25);
   backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  ${({ theme }) => `
-  @media(max-width: ${theme.breakPoints.lg}) {
-  padding: 0;
-  
-  }`}
-`;
-const Specifications = styled.div`
-  width: 100%;
-  display: flex;
+  border-radius: 20px;
   padding: 1rem;
-  flex-direction: column;
-  color: ${(props) => props.theme.colors.text};
-  h4 {
-    border-bottom: 1px solid white;
-    width: 100%;
-    text-align: left;
-    padding: 1rem;
-    font-size: 20px;
-  }
 `;
+
 const ProductRow = styled.div`
   display: grid;
   grid-template-columns: 1fr 2fr;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
-  padding: 2rem;
-  color: ${(props) => props.theme.colors.text};
-  transition: all 0.3s ease;
+  gap: 2rem;
 
   ${({ theme }) => `
   @media(max-width: ${theme.breakPoints.lg}) {
-  grid-template-columns: 1fr;
-  padding: 1rem;
-      gap: 1rem;
-
-
-  }
-      @media(max-width: ${theme.breakPoints.sm}) {
-  padding: 0.5rem;
-border-width: 5px;
-
+    grid-template-columns: 1fr;
   }`}
 `;
+
 const StickyImageContainer = styled.div`
   position: sticky;
   top: 140px;
-  width: fit-content;
-  height: fit-content;
   display: flex;
   justify-content: center;
   align-items: start;
-  padding-top: 2rem;
-  ${({ theme }) => `
-  @media(max-width: ${theme.breakPoints.lg}) {
-  position: relative;
-  top: 0;
-  }
-  @media(max-width: ${theme.breakPoints.md}) {
- }
-  
-  @media(max-width: ${theme.breakPoints.sm}) {
-  position: relative;
-  padding-top: 2rem;
-  }`}
 `;
+
 const ProductImage = styled.img`
-  height: auto;
   max-width: 100%;
   border-radius: 20px;
-  transition: transform 0.3s ease-in-out;
   object-fit: contain;
+  transition: transform 0.3s ease-in-out;
   cursor: pointer;
-  ${({ theme }) => `
-  @media(max-width: ${theme.breakPoints.lg}) {
-width: 100%;
-max-height: 500px;
-  }
- @media(max-width: ${theme.breakPoints.md}) {
-width: 100%;
-max-height: 300px;
-  }
-   @media(max-width: ${theme.breakPoints.sm}) {
-      max-width: 90%;
-      height: auto;
-    }`}
 
   ${StickyImageContainer}:hover & {
     transform: scale(1.1);
   }
 `;
+
 const Content = styled.div`
   display: flex;
   flex-direction: column;
- 
   gap: 1.5rem;
-  text-align: left;
-   ${({ theme }) => `
-  @media(max-width: ${theme.breakPoints.lg}) {
-  }`}
-  
   h1 {
-    color: ${(props) => props.theme.colors.text};
     font-size: 2rem;
-    line-height: 1;
-    font-weight: 600;
-    margin-bottom: 1rem;
-      ${({ theme }) => `
-  @media(max-width: ${theme.breakPoints.lg}) {
-font-size: 1.5rem;
-align-self: flex-start;
-  }
- @media(max-width: ${theme.breakPoints.md}) {
-width: 80%;
-  }
- @media(max-width: ${theme.breakPoints.xs}) {
-text-align: left;
-font-size: 1.2rem;  }
-`}
-  
-
-  p:nth-child(6) {
-    font-weight: 600;
-    span {
-      color: ${(props) => props.theme.colors.quaternary};
-    }
+    color: ${(props) => props.theme.colors.text};
   }
 `;
+
 const PriceTag = styled.p`
   display: flex;
   gap: 5px;
   font-weight: 500;
   font-size: 2rem;
-  text-align: left;
-  align-self: center;
   color: ${(props) => props.theme.colors.quaternary};
-  ${({ theme }) => `
-    @media (max-width: ${theme.breakPoints.md}) {
-font-size: 1.5rem; 
-font-weight: 200;  
-text-align: center;
-align-self: flex-start;
-
-}
-    `}
 
   span {
     color: grey;
@@ -179,118 +110,118 @@ align-self: flex-start;
     margin-top: 10px;
   }
 `;
+
+const CounterWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`;
+
 const ContentDesc = styled.div`
   padding: 1rem;
   border-radius: 20px;
   box-shadow: 10px 40px 40px rgba(0.95, 0.95, 0.25, 0.15);
-  p:nth-child(1) {
+
+  p:first-child {
     color: ${(props) => props.theme.colors.text};
     font-weight: 800;
     border-bottom: 1px solid white;
     padding-bottom: 10px;
     font-size: 1.5rem;
-   
   }
+
   p:nth-child(2) {
     font-weight: 300;
     font-size: 14px;
     padding-top: 10px;
-     ${({theme}) => `
-     @media(max-width: ${theme.breakPoints.lg}) {
-width: 70%;
-  }
-    `}
   }
 `;
-const ColumnCart = styled.div`
-  display: flex;
-  padding: 1rem;
-  width: 100%;
-  flex-direction: column;
-  border-radius: 20px;
-  ${({ theme }) => `
-  @media(max-width: ${theme.breakPoints.lg}) {
-gap: 0;
-  }`}
 
-  div {
-    ${({ theme }) => `
-    @media(max-width: ${theme.breakPoints.lg}) {
-align-self: flex-start;
-padding-top: 10px;
-    }
- @media(max-width: ${theme.breakPoints.xs}) {
-padding-top: 10px;
-    }`}  
+const Specifications = styled.div`
+  display: flex;
+  flex-direction: column;
+  color: ${(props) => props.theme.colors.text};
+
+  h4 {
+    border-bottom: 1px solid white;
+    padding: 1rem 0;
+    font-size: 20px;
   }
-    
 `;
+
 const ListedSpecifications = styled.ul`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
-  list-style-type: none;
-  padding: 0;
-   ${({theme}) => `
-     @media(max-width: ${theme.breakPoints.lg}) {
-gap: 0;
-width: 80%;
-  }
-    `}
+  list-style-type: disc;
+  padding-left: 1.5rem;
+
   li {
-    margin: 8px 15px;
     font-size: 16px;
-    text-align: left;
-    list-style-type: disc;
     span {
       font-weight: 600;
     }
   }
 `;
-const QuantityTag = styled.p`
-  ${({ theme }) => `
-  @media(max-width: ${theme.breakPoints.lg}) {
-align-self: flex-start;  }`}`;
-const PriceSection = styled.div`
+
+const SuggestedSection = styled.div`
   display: flex;
-  flex-direction: row;
-  gap: 10px;
-  justify-content: space-around;
+  flex-direction: column;
+  align-items: space-between;
+  gap: 1rem;
+  h2 {
+    color: ${(props) => props.theme.colors.text};
+    font-size: 1.8rem;
+  }
 `;
 
+const SuggestedGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+`;
+
+// ---------- COMPONENT ----------
 const ProductDetail = () => {
   const [showPayment, setShowPayment] = useState(false);
   const [product, setProduct] = useState<NewProduct | undefined>();
+  const [suggested, setSuggested] = useState<NewProduct[]>([]);
   const [showModal, setShowModal] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
   const { id } = useParams<{ id: string }>();
   const { increment, decrement, quantity } = useQuantity();
-  // const localQuantity = quantity;
   const totalPrice = product ? product.price * quantity : 0;
-  // const { phoneNumber } = useUser();
-  //////////////////////////////////////////////////// useEffect ////////////////////////////////////
+    const navigate = useNavigate();
+
+
   useEffect(() => {
     const fetchProducts = async () => {
+      if (!id) return;
+      setLoading(true);
+      setError(null);
+
       try {
         const response = await fetchProductsById(Number(id));
         setProduct(response);
-        setLoading(false);
-      } catch (error) {
+
+        if (response?.category) {
+          const suggestedList = await fetchSuggestedProducts(
+            response.category,
+            response.id
+          );
+          setSuggested(suggestedList);
+        }
+      } catch (err) {
         setError("Failed to fetch product");
+      } finally {
         setLoading(false);
       }
     };
 
-    if (id) {
-      fetchProducts();
-    }
-    if (error) {
-      console.log(error, "Error");
-    }
-    if (loading) {
-      <Loader />;
-    }
+    fetchProducts();
   }, [id]);
 
   useEffect(() => {
@@ -298,144 +229,55 @@ const ProductDetail = () => {
       setShowModal(true);
     }
   }, []);
-  ////////////////////////////////////////////////////////////////////////////////////////////////////
-  if (!product) {
-    return <div>Loading...</div>;
-  }
-  // const handleBuyButton = () => {
-  //   if (!user) {
-  //     setShowModal(true);
-  //   } else {
-  //     setShowPayment(true);
-  //     return {quantity, totalPrice}
-  //   }
-  // };
-  // const handleSubmit = async (event: React.FormEvent) => {
-  //   event.preventDefault();
-  //   if (!stripe || !elements) {
-  //     return;
-  //   }
-  //   if (!auth.currentUser) {
-  //     setShowModal(true);
-  //     return;
-  //   }
-  //   try {
-  //     const customerCreate = await fetch(
-  //       "http://localhost:3001/create-customer",
-  //       {
-  //         method: "POST",
-  //         headers: { "Content-Type": "application/json" },
-  //         body: JSON.stringify({
-  //           name: userName,
-  //           email: userEmail,
-  //         }),
-  //       }
-  //     );
-  //     if (!customerCreate.ok) {
-  //       throw new Error("Error creating customer!");
-  //     }
-  //     const customerData = await customerCreate.json();
-  //     const customerId = customerData.id;
-  //     const response = await fetch(
-  //       "http://localhost:3001/create-payment-intent",
-  //       {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify({
-  //           price: product.price,
-  //           quantity: quantity,
-  //           productId: product.id,
-  //           productName: product.title,
-  //           customer_name: userName,
-  //           customer_email: userEmail,
-  //           customerId: customerId,
-  //           phone: phoneNumber,
-  //         }),
-  //       }
-  //     );
-  //     if (!response.ok) {
-  //       throw new Error("Network response was not ok");
-  //     }
-  //     const data = await response.json();
-  //     setClientSecret(data.clientSecret);
-  //     console.log(data.clientSecret);
-  //     const cardElement = elements.getElement(CardElement);
-  //     if (cardElement && clientSecret) {
-  //       const { error, paymentIntent } = await stripe.confirmCardPayment(
-  //         clientSecret,
-  //         {
-  //           payment_method: {
-  //             card: cardElement,
-  //             billing_details: {
-  //               email: userEmail,
-  //               name: userName || "Anonmynus",
-  //               phone: phoneNumber,
-  //             },
-  //           },
-  //         }
-  //       );
 
-  //       if (error) {
-  //         console.error("payment Error:", error);
-  //       } else if (paymentIntent && paymentIntent.status === "succeeded") {
-  //         console.log("Successfull:", paymentIntent);
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.error("Error creating payment intent", error);
-  //   }
-  // };
+  const handleMenuClick = (category: string) => {
+    setSelectedCategory(category);
+        navigate(`/products/category/${category}`);
+
+  };
+
+  if (loading) return <Loader />;
+  if (error) return <div>{error}</div>;
+  if (!product) return <div>No product found.</div>;
 
   return (
     <Main>
-      <ProductDiv>
-        <ProductRow>
-          <StickyImageContainer>
-            <ProductImage
-              src={product.image}
-              alt={product.title}
-              loading="lazy"
-            />
-          </StickyImageContainer>{" "}
-          <Content>
-            <br />
+      <Sidebar>
+        <CategoryMenu
+          categories={categories}
+          selectedCategory={selectedCategory || product.category || ""}
+          onSelectCategory={handleMenuClick}
+        />
+      </Sidebar>
 
-            <ColumnCart>
-              <h1>
-                {product.title}
-                {/* <SplitText
-                  words={product.title.split(" ")}
-                  // style={{
-                  //   margin: 0,
-                  //   padding: "2px",
-                  //   lineHeight: 1.1,
-                  //   fontSize: "26px",
-                  //   fontWeight: 800,
-                  // }}
-                /> */}
-              </h1>
-<PriceSection>
-              <PriceTag>
-                {totalPrice}.99
-                <span>USD</span>
-              </PriceTag>
+      <ContentWrapper>
+        <ProductDiv>
+          <ProductRow>
+            <StickyImageContainer>
+              <ProductImage src={product.image} alt={product.title} />
+            </StickyImageContainer>
 
+            <Content>
+              <h1>{product.title}</h1>
 
-              <Counter>
-              <QuantityTag>Quantity</QuantityTag>
-                <CounterButton onClick={decrement}>-</CounterButton>
-                <CounterText>{quantity}</CounterText>
-                <CounterButton onClick={increment}>+</CounterButton>
-              </Counter>
+              <CounterWrapper>
+                <PriceTag>
+                  {totalPrice.toFixed(2)} <span>USD</span>
+                </PriceTag>
+                <Counter>
+                  <CounterButton onClick={decrement}>-</CounterButton>
+                  <CounterText>{quantity}</CounterText>
+                  <CounterButton onClick={increment}>+</CounterButton>
+                </Counter>
+              </CounterWrapper>
 
-</PriceSection>
               <ActionButtons product={product} showBuyButton={true} />
+
               <ContentDesc>
                 <p>Description</p>
                 <p>{product.description}</p>
               </ContentDesc>
+
               <Specifications>
                 <h4>Specifications</h4>
                 <ListedSpecifications>
@@ -446,37 +288,37 @@ const ProductDetail = () => {
                     <span>In Stock</span>
                   </li>
                   <li>
-              Rating:<span>{product.rating.rate}</span>
+                    Rating: <span>{product.rating.rate}</span>
                   </li>
-
                   <li>
                     Count <span>{product.rating.count}</span>
                   </li>
-
-                 
-        
                 </ListedSpecifications>
               </Specifications>
+
               {showPayment && (
-                <>
-                  <Modal
-                    show={showPayment}
-                    onClose={() => setShowPayment(false)}
-                  >
-                    <BuyModal
-                    // product={product}
-                    // onClose={() => setShowPayment(false)}
-                    // localQuantity={localQuantity}
-                    // totalPrice={totalPrice}
-                    // phoneNumber={phoneNumber}
-                    />
-                  </Modal>
-                </>
+                <Modal show={showPayment} onClose={() => setShowPayment(false)}>
+                  <BuyModal />
+                </Modal>
               )}
-            </ColumnCart>
-          </Content>
-        </ProductRow>
-      </ProductDiv>
+            </Content>
+          </ProductRow>
+        </ProductDiv>
+
+        {/* Suggested Products */}
+        {suggested.length > 0 && (
+          <SuggestedSection>
+            <h2>Suggested Products</h2>
+            <SuggestedGrid>
+              {suggested.map((item) => (
+                <CardContainer key={item.id} product={item} />
+              ))}
+            </SuggestedGrid>
+          </SuggestedSection>
+        )}
+      </ContentWrapper>
+
+      {/* Login Modal */}
       <Modal show={showModal} onClose={() => setShowModal(false)}>
         <LoginForm onSuccess={() => setShowModal(false)} />
       </Modal>
