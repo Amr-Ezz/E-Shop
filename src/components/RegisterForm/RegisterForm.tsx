@@ -11,20 +11,22 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
 `;
-const Button = styled.button`
+const Button = styled.button<{ disabled?: boolean }>`
   margin-top: 1rem;
   padding: 0.5rem;
   border: none;
-  background-color: ${(props) => props.theme.colors.primary};
+  background-color: ${({ theme, disabled }) =>
+    disabled ? theme.colors.grey : theme.colors.primary};
   color: black;
   border-radius: 5px;
-  cursor: pointer;
+  cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
   transition: background-color 0.3s ease;
   font-weight: 600;
   &:hover {
-    background-color: ${(props) => props.theme.colors.secondary};
-    border: 1px solid ${(props) => props.theme.colors.primary};
-    color: ${(props) => props.theme.colors.grey};
+    background-color: ${({ theme, disabled }) =>
+      disabled ? theme.colors.grey : theme.colors.secondary};
+    border: 1px solid ${({ theme }) => theme.colors.primary};
+    color: ${({ theme }) => theme.colors.grey};
   }
 `;
 const Input = styled.input`
@@ -33,33 +35,86 @@ const Input = styled.input`
   border: 1px solid #ccc;
   border-radius: 5px;
 `;
+
+const ErrorMsg = styled.p`
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+`;
+
+const SuccessMsg = styled.p`
+  color: green;
+  font-size: 1rem;
+  font-weight: bold;
+`;
+
 const RegisterForm = () => {
   const [email, setEmail] = useState("");
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [isRegistered, setIsRegistered] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const { setPhoneNumber } = useUser();
+
+  const validateForm = () => {
+    if (!userName || !email || !password || !phone) {
+      return "All fields are required.";
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return "Please enter a valid email address.";
+    }
+    if (password.length < 6) {
+      return "Password must be at least 6 characters long.";
+    }
+    if (!/^\d{10,15}$/.test(phone)) {
+      return "Phone number must contain 10–15 digits only.";
+    }
+    return null;
+  };
+
   const handleAuth = async () => {
-    if (!email || !password || !phone) {
-      alert(" All fields cannot be empty");
+    setErrorMsg(null);
+    const validationError = validateForm();
+    if (validationError) {
+      setErrorMsg(validationError);
       return;
     }
+
     try {
-      const userCredientials = await createUserWithEmailAndPassword(
+      setLoading(true);
+      const userCredentials = await createUserWithEmailAndPassword(
         auth,
         email,
         password
       );
 
-      await updateProfile(userCredientials.user, { displayName: userName });    
+      await updateProfile(userCredentials.user, { displayName: userName });
+
       setPhoneNumber(phone);
       setIsRegistered(true);
-      alert("Register Successfull");
-    } catch (error) {
-      console.error("Authentication error", error);
+    } catch (error: any) {
+      switch (error.code) {
+        case "auth/email-already-in-use":
+          setErrorMsg("This email is already registered.");
+          break;
+        case "auth/invalid-email":
+          setErrorMsg("Invalid email format.");
+          break;
+        case "auth/weak-password":
+          setErrorMsg("Password is too weak.");
+          break;
+        default:
+          setErrorMsg("Something went wrong. Please try again.");
+          break;
+      }
+    } finally {
+      setLoading(false);
     }
   };
+
   return (
     <div>
       {!isRegistered ? (
@@ -94,10 +149,14 @@ const RegisterForm = () => {
             type="text"
             placeholder="Phone Number"
           />
-          <Button type="submit">Register</Button>
+
+          {errorMsg && <ErrorMsg>{errorMsg}</ErrorMsg>}
+          <Button type="submit" disabled={loading}>
+            {loading ? "Registering..." : "Register"}
+          </Button>
         </Form>
       ) : (
-        <h2>Welcome, {userName}!</h2>
+        <SuccessMsg>Welcome, {userName}! Registration successful 🎉</SuccessMsg>
       )}
     </div>
   );

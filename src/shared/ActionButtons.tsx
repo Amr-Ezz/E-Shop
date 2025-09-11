@@ -92,7 +92,6 @@ const ActionButtons: React.FC<ButtonProps> = ({
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation();
     e.preventDefault();
-
     addToCart(product);
   };
 

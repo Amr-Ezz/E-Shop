@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
-import { Product } from "../api/requests";
+import { NewProduct } from "../api/requests";
 import { CardContainer } from "../shared/Card";
 
 const ResultsDiv = styled.div`
@@ -22,7 +22,7 @@ const Main = styled.div`
   h2 {
     padding: 1rem;
     align-self: center;
-    color: ${({theme}) => theme.colors.white};
+    color: ${({theme}) => theme.colors.text};
     background-color: ${({theme}) => theme.colors.tertiary};
     border-radius: 50px;
     font-weight: 300;
@@ -31,16 +31,16 @@ const Main = styled.div`
 
 const SearchResults = () => {
   const location = useLocation();
-  const [products, setProducts] = useState<Product[]>([]);
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<NewProduct[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<NewProduct[]>([]);
 
   const searchParams = new URLSearchParams(location.search);
   const query = searchParams.get("q");
 
   useEffect(() => {
     axios
-      .get(`https://fakestoreapi.in/api/products`)
-      .then((response) => setProducts(response.data.products))
+      .get(`https://fakestoreapi.com/products`)
+      .then((response) => setProducts(response.data))
       .catch((error) => console.error(error, "error fetch search"));
   }, []);
   useEffect(() => {

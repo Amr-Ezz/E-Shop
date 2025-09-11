@@ -9,7 +9,6 @@ import { useUser } from "../Context/UserContext";
 import { FaUser } from "react-icons/fa";
 import { Loader } from "./Loader/Loader";
 import { useLoader } from "../Context/LoaderContext";
-import {debounce} from "lodash";
 
 const NavbarContainer = styled.div`
   width: 100%;
@@ -182,7 +181,7 @@ const Button = styled.button`
 const CartCount = styled.div`
   position: absolute;
   top: -10px;
-  right: -20px;
+  right: -13px;
   background-color: purple;
   color: ${(props) => props.theme.colors.text};
   border-radius: 50%;
@@ -321,6 +320,24 @@ const InputContainer = styled.div`
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.075);
  
 `
+const CartWrapper = styled.div`
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  text-decoration: none;
+  color: ${({ theme }) => theme.colors.text};
+  padding: 8px 15px;
+  border-radius: 20px;
+  transition: background-color 0.2s ease, color 0.2s ease,
+    transform 0.2s ease;
+  display: inline-block;
+  border: 1px solid transparent;
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.tertiary};
+    transform: translateY(-2px);
+    color: ${({ theme }) => theme.colors.white};
+  }
+`;
 
 // dynamic imports
 const Modal = React.lazy(() => import("./Modal/Modal"));
@@ -345,36 +362,34 @@ const Navbar = React.memo(() => {
   const { isLoading, setIsLoading } = useLoader();
 
   const navigate = useNavigate();
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(e.target.value);
-    debouncedSearch(e.target.value);
-    setSearchValue("");
+   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchValue(value);
   };
-  const performSearch =  useCallback( async (value: string) => {
-    if (value.trim()) {
-      try {
-        setIsLoading(true);
-        await navigate(`/search?q=${encodeURIComponent(value)}`);
-        setSearchVisible(false);
-      } finally {
-        setIsLoading(false);
+const performSearch = useCallback(
+    async (value: string) => {
+      if (value.trim()) {
+        try {
+          setIsLoading(true);
+          navigate(`/search?q=${encodeURIComponent(value)}`);
+          setSearchVisible(false);
+        } finally {
+          setIsLoading(false);
+        }
       }
-    }
-  }, [navigate, setIsLoading])
-const debouncedSearch = useCallback(debounce(performSearch), [performSearch])
-  
-  const handleSearchForm = useCallback(
-    async (e: React.FormEvent) => {
-      e.preventDefault();
-     performSearch(searchValue)
     },
-    [searchValue, performSearch]
+    [navigate, setIsLoading]
   );
-
+  
+   
+const handleSearchForm = (e: React.FormEvent) => {
+  e.preventDefault();
+  performSearch(searchValue);
+};
   const toggleModal = useCallback(() => setShowModal(!showModal), []);
   const onClose = () => setShowModal(!showModal);
   const toggleCart = useCallback(() => {
-    setCartModal(!cartModal);
+    setCartModal((prev) => !prev);
   }, []);
   const toggleMenu = useCallback(() => {
     setMenuOpen((prev) => !prev);
@@ -438,12 +453,12 @@ const debouncedSearch = useCallback(debounce(performSearch), [performSearch])
                   </Link>
                 </li>
                 <li>
-                  <a onClick={toggleCart}>
+                  <CartWrapper onClick={toggleCart}>
                     Cart{" "}
                     {cartItemsCount > 0 && (
                       <CartCount>{cartItemsCount}</CartCount>
                     )}
-                  </a>
+                  </CartWrapper>
                   {cartModal && (
                     <Suspense fallback={<Loader />}>
                       <CartModal onClose={toggleCart} />

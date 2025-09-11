@@ -1,5 +1,5 @@
 import styled, { keyframes } from "styled-components";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { NewProduct } from "../api/requests";
 // import { useTruncate } from "../Hooks/useTruncate";
 import ActionButtons from "./ActionButtons";
@@ -31,7 +31,7 @@ export const CardGrid = styled.div`
 `;
 
 /* ---------- CARD WRAPPER ---------- */
-const CardWrapper = styled(Link)<CardProps>`
+const CardWrapper = styled.div<CardProps>`
   display: flex;
   flex-direction: column;
   max-height: 500px;
@@ -167,12 +167,16 @@ interface ProductProps {
 export const CardContainer: React.FC<ProductProps> = ({ product }) => {
   // const { truncateDescription, toggleDescription, toggleHandler } = useTruncate();
   const { ref, isInView } = useInView(getDynamicThreshold);
+  const navigate = useNavigate();
 
   const imageUrl =
     product.image;
+    const handleNavigate = () => {
+      navigate(`/products/${product.id}`);
+    };
 
   return (
-    <CardWrapper ref={ref} to={`/products/${product.id}`} isvisible={isInView}>
+    <CardWrapper ref={ref} onClick={handleNavigate} isvisible={isInView}>
       <CardImage src={imageUrl} alt={`Image of ${product.title}`} />
       <CardTitle>{product.title}</CardTitle>
 

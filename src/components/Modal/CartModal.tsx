@@ -19,7 +19,7 @@ const ModalContent = styled.div`
   box-shadow: 15px 15px 30px rgb(25, 25, 25), -15px -15px 30px rgb(60, 60, 60);
 
   padding: 20px;
-  color: white;
+  color: ${(props) => props.theme.colors.text};
   border-radius: 8px;
   max-width: 500px;
   width: 100%;
@@ -33,13 +33,13 @@ const ModalContent = styled.div`
     border-radius: 50px;
     font-weight: 600;
     background-color: ${(props) => props.theme.colors.primary};
-    color: ${(props) => props.theme.colors.white};
+    color: ${(props) => props.theme.colors.text};
     border: 1px solid ${(props) => props.theme.colors.white};
     cursor: pointer;
     transition: background-color 0.3s ease;
     &:hover {
       background-color: ${(props) => props.theme.colors.white};
-      color: ${(props) => props.theme.colors.primary};
+      color: ${(props) => props.theme.colors.quadrary};
       border: 1px solid ${(props) => props.theme.colors.primary};
     }
   }
@@ -56,7 +56,7 @@ const CartItem = styled.div`
     h3 {
       text-align: left;
       font-size: 12px;
-      color: ${(props) => props.theme.colors.white};
+      color: ${(props) => props.theme.colors.text};
       font-weight: 600;
     }
     p {
@@ -72,14 +72,13 @@ const CartItem = styled.div`
       border-radius: 50px;
       font-weight: 600;
       background-color: ${(props) => props.theme.colors.white};
-      color: ${(props) => props.theme.colors.primary};
+      color: ${(props) => props.theme.colors.text};
       border: 1px solid ${(props) => props.theme.colors.primary};
       cursor: pointer;
       transition: background-color 0.3s ease;
       align-self: flex-start;
       &:hover {
         background-color: ${(props) => props.theme.colors.primary};
-        color: ${(props) => props.theme.colors.white};
       }
     }
   }
